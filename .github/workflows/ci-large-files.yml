@@ -1,0 +1,28 @@
+name: "Large file lint"
+
+on: 
+  pull_request:
+  push:
+
+jobs:
+  check-large-files:
+    runs-on: zondax-runners
+    steps:
+      - uses: actions/checkout@v3
+      - name: Find oversized files
+        env:
+          SEARCH_DIRS: "public/ apps/web/public/ apps/expo/assets/"
+          SIZE_LIMIT_KB: 100
+          FILE_TYPES: "*.*"
+        run: | # Script commands must be under 'run:'
+          echo "Looking for files >${SIZE_LIMIT_KB} KB…"
+          for dir in $SEARCH_DIRS; do
+            if [ -d "$dir" ]; then
+              find "$dir" -type f \( $(echo "$FILE_TYPES" | sed 's/ / -o -name /g; s/^/-name /') \) \
+                -size "+${SIZE_LIMIT_KB}k" -print \
+                && { echo "::error file=$PWD::Please optimize or resize these files found in $dir."; exit 1; } \
+                || echo "All files in $dir under threshold."
+            else
+              echo "Warning: Directory $dir not found."
+            fi
+          done

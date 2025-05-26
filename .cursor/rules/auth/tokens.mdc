@@ -1,0 +1,32 @@
+---
+description: Rules and best practices for authentication token management
+globs: ["**/auth/tokens/**/*", "**/auth/lib/**/*"]
+alwaysApply: false
+---
+# Authentication Token Guidelines
+
+## Token Storage
+
+- Use expo-secure-store for storing sensitive data like auth tokens
+- Always implement comprehensive error handling for all storage operations
+- Calculate token expiration using Unix timestamps (seconds, not milliseconds)
+- Include type and runtime validation for token data
+- Use Promise.all for concurrent storage operations but wrap in try/catch
+- Clear all related tokens when logging out or clearing storage
+
+## Token Refresh Management
+
+- When implementing token refresh logic, centralize it in a single function that can be reused across different contexts
+- Use optional callbacks to handle success/error cases without tight coupling
+- Make token-related configuration types flexible enough to accommodate different authentication providers
+- Always maintain backward compatibility when extending token management functions
+
+## Authentication State Management
+
+- Always pair loading state updates with error state updates
+- Clear error states when operations succeed
+- Preserve Error instance messages when available, fallback to predefined error types
+- Validate auth responses before processing them
+- Handle all possible response types explicitly
+- Sign out operations should always be followed by state reset
+- Token refresh operations should update both tokens and user state atomically 

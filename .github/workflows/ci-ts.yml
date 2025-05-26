@@ -1,0 +1,56 @@
+name: CI-ts
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+      - dev
+  schedule:
+    - cron: "0 0 * * *" # Every day at midnight UTC
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.head.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ts-checks:
+    uses: zondax/_workflows/.github/workflows/_checks-ts.yaml@v0.1.0
+    with:
+      package_manager: pnpm
+
+  playwright-tests:
+    needs: ts-checks
+    uses: zondax/_workflows/.github/workflows/_checks-playwright.yaml@v0.1.0
+    with:
+      working_directory: "apps/web"
+    secrets:
+      env_local: |
+        # Project-specific variables
+        PROJECT="prio-frontend"
+        NAMESPACE="prio-frontend"
+
+        # CI testing related settings
+        AUTH_CI_USERNAME="${{ secrets.AUTH_CI_USERNAME }}"
+        AUTH_CI_PASSWORD="${{ secrets.AUTH_CI_PASSWORD }}"
+        AUTH_TRUST_HOST="true"
+
+        # Auth.js variables (set via auth environment)
+        AUTH_URL="${{ secrets.PULUMI_AUTH_URI }}"
+        AUTH_SECRET="${{ secrets.PULUMI_AUTH_CLIENT_SECRET }}"
+
+        # Zitadel configuration (set via zitadel setting / code)
+        AUTH_ZITADEL_ID="${{ secrets.PULUMI_AUTH_CLIENT_ID }}"         
+        AUTH_ZITADEL_SECRET="${{ secrets.PULUMI_AUTH_CLIENT_SECRET }}"
+        AUTH_ZITADEL_ISSUER="${{ secrets.PULUMI_AUTH_ISSUER }}"
+        AUTH_DEBUG="${{ secrets.PULUMI_AUTH_DEBUG }}"
+
+        # API keys
+        NEXT_PUBLIC_LOCATIONIQ_TOKEN="${{ secrets.NEXT_PUBLIC_LOCATIONIQ_TOKEN }}"
+        NEXT_PUBLIC_GRPC_SERVER="${{ secrets.NEXT_PUBLIC_GRPC_SERVER }}"
+
+        # Database
+        DATABASE_NEON_URL="${{ secrets.DATABASE_NEON_URL }}"

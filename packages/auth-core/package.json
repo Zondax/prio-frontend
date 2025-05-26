@@ -1,0 +1,27 @@
+{
+  "name": "@zondax/auth-core",
+  "version": "0.1.0",
+  "private": true,
+  "description": "zondax auth core",
+  "keywords": ["zondax", "auth-core"],
+  "license": "UNLICENSED",
+  "author": "Zondax AG <hello@zondax.ch>",
+  "scripts": {
+    "deps:check": "echo 'nothing to check'",
+    "deps:fix": "echo 'nothing to fix'",
+    "deps:update": "pnpm exec npm-check-updates -u -t semver && pnpm install && pnpm run deps:fix",
+    "env:init": "echo 'nothing to do'",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "upgrade": "pnpm exec npm-check-updates -i"
+  },
+  "dependencies": {
+    "axios": "^1.9.0",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@types/node": ">=22.13.11",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.3"
+  }
+}

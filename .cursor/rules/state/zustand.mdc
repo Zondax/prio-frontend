@@ -1,0 +1,39 @@
+---
+description: Rules and best practices for Zustand state management
+globs: ["**/*.ts", "**/*.tsx"]
+alwaysApply: false
+---
+# Zustand State Management Guidelines
+
+## Store Design
+
+- Structure Zustand stores with separation between internal state, actions, and exposed state
+- Use interface/type separation: define internal state and actions separately, then combine with union types
+- Create selectors to expose only necessary portions of state to components
+- Separate selectors for state and actions improve component reusability and testability
+- Keep UI-specific state (like sidebar visibility, input field values) in component state, not in global state stores
+- Use @prio-state alias to import from the state package in app components
+- State packages should focus on data, business logic, and application state, not UI concerns
+- Use Pick<Type, 'property'> to create derived types from state package interfaces
+
+## Store Implementation
+
+- When initializing state properties in Zustand stores with generic types, avoid using `undefined` for objects 
+- Use empty objects with appropriate type assertions (`{} as TType`) instead of `undefined` for cleaner state handling
+- This prevents "metadata cannot be undefined" type errors when accessing properties later in the code
+- In TypeScript, checks for undefined values earlier in a function don't carry through to later destructured variables
+- For gRPC client operations, always add null checks immediately before using the client, even if checked earlier
+- When destructuring potentially undefined values from state, TypeScript requires additional type narrowing
+- When adding new items to a state array with typed objects, use array spread syntax [...existingArray, newItem] instead of concat() to avoid TypeScript errors
+
+## Store Organization
+
+- When splitting Zustand stores, maintain backward compatibility by proxying properties from one store to another using subscribe
+- To avoid breaking changes when refactoring stores, keep the same external API while internally delegating to other stores
+- Use store.subscribe() to keep proxied state in sync between multiple stores
+- Initialize proxied store values directly in create() to avoid undefined values during initial render
+- When refactoring stores, carefully consider which components are consuming the store and how they access the state
+- Structure Zustand stores with clear separation: use interfaces for internal state, actions, and combined store type
+- Create dedicated selector hooks (like useAgentState and useAgentActions) to expose only relevant parts of the store
+- When proxying properties from another store, use ReturnType<typeof store.getState>['property'] for type safety
+- To maximize code organization, split complex stores into multiple smaller stores that work together 

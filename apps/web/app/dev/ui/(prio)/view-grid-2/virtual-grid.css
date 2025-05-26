@@ -1,0 +1,31 @@
+/* Custom grid classes to supplement Tailwind defaults */
+
+.grid-cols-6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.lg\:grid-cols-6 {
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+/* Column span classes */
+.col-span-1 {
+  grid-column: span 1 / span 1;
+}
+
+.col-span-2 {
+  grid-column: span 2 / span 2;
+}
+
+.col-span-3 {
+  grid-column: span 3 / span 3;
+}
+
+/* Make sure items get smaller with more columns */
+@media (min-width: 1024px) {
+  .lg\:grid-cols-6 .card-title {
+    font-size: 0.875rem;
+  }
+}

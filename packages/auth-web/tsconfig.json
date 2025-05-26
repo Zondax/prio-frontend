@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "plugins": [],
+    "paths": {
+      "@/*": ["src/*"],
+      "@zondax/auth-core": ["../../packages/auth-core/src"],
+      "@zondax/auth-core/*": ["../../packages/auth-core/src/*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx", "**/*.test.ts", "**/*.test.tsx"]
+}

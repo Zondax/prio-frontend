@@ -1,0 +1,39 @@
+{
+  "name": "prio-state",
+  "version": "0.1.0",
+  "private": true,
+  "description": "prio state",
+  "keywords": ["zondax", "prio-state"],
+  "license": "UNLICENSED",
+  "author": "Zondax AG <hello@zondax.ch>",
+  "scripts": {
+    "deps:check": "echo 'nothing to check'",
+    "deps:fix": "echo 'nothing to fix'",
+    "deps:update": "pnpm exec npm-check-updates -u -t semver && pnpm install && pnpm run deps:fix",
+    "env:init": "echo 'nothing to do'",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "upgrade": "pnpm exec npm-check-updates -i"
+  },
+  "dependencies": {
+    "@date-fns/tz": "^1.2.0",
+    "@zondax/stores": "workspace:*",
+    "axios": "^1.9.0",
+    "date-fns": "^4.1.0",
+    "lodash": "^4.17.21",
+    "nanoid": "^5.1.5",
+    "next-auth": "beta",
+    "prio-grpc": "workspace:*",
+    "react": "^19.1.0",
+    "zundo": "^2.3.0",
+    "zustand": "^5.0.4"
+  },
+  "devDependencies": {
+    "@testing-library/react": "16.3.0",
+    "@types/lodash": "^4.17.16",
+    "@types/node": ">=22.15.17",
+    "@types/react": "^19.1.4",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.3"
+  }
+}

@@ -1,0 +1,35 @@
+---
+description: Rules and best practices for error handling
+globs: ["**/*.ts", "**/*.tsx"]
+alwaysApply: false
+---
+# Error Handling Guidelines
+
+## General Best Practices
+
+- Prefer throwing errors over returning boolean flags for error conditions
+- Use descriptive error messages that explain what went wrong
+- Be consistent with error handling patterns across related functions
+- When a function name implies success (like handleX), it should throw on failure rather than return a status
+- Always clean up resources (like signing out) before throwing errors
+- Use try/catch blocks to handle errors at the appropriate level of abstraction
+
+## Error Types
+
+- Define custom error classes with specific error codes and additional context
+- Use type guards (isXError) instead of instanceof for custom error type checking
+- Ensure error hierarchies are properly typed with discriminated unions
+- When catching unknown errors, convert them to your custom error types
+- Include original errors as a property in custom error types for debugging
+- Use specific error types that describe what went wrong, not generic ones
+- Error types should be part of the public API and properly exported
+
+## Error Type Hierarchy
+
+- Create a base abstract error class for common error properties and behavior
+- Make all custom error types extend the base error class
+- Use abstract properties in base class to enforce required fields
+- Keep constructor signatures consistent across error hierarchy
+- Centralize common error handling logic in the base class
+- Use type guards that check against the base class
+- Prefer instanceof checks over property existence checks for better type safety 

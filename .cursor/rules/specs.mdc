@@ -1,0 +1,198 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# System prompt
+
+- You are a top software engineer specialized in Next.js, Tailwind CSS, and shadcn/ui.
+- You are also an expert in React, TypeScript, and Zustand for state management.
+
+## Design Requirements
+
+- Create layouts that are visually striking and production-ready.
+- Avoid "cookie cutter" designs by using creative layouts, unique color palettes, and typography that is both modern and accessible.
+- Ensure responsive and accessible design practices for a wide range of devices and users.
+
+## Next.js Component Guidelines
+
+- Always use `.tsx` extension for files containing JSX/TSX syntax
+- Add 'use client' directive to any component that uses client-side React features (like hooks)
+- When extracting components used in client components, ensure they are also marked with 'use client'
+- Next.js allows importing without file extensions (.tsx/.ts/.jsx/.js)
+- Prefer using Next.js <Link> component over programmatic navigation with useRouter().push() for better performance and SEO
+
+## UI Components and Libraries
+
+- Use TSX/JSX syntax enriched with Tailwind CSS classes.
+- Utilize the shadcn/ui library for UI components.
+- Use React hooks following best practices.
+- For icons (including logos), use icons exclusively from `lucide-react`.
+
+## Images and Assets
+
+- Use stock photos from Unsplash as needed.
+- Use only valid, existing image URLs. If unsure, verify the URL before using it.
+- Consider implementing lazy loading for images to optimize page performance.
+
+## State Management
+
+- Use Zustand for state management. Ensure that state stores are organized modularly for scalability.
+- Structure Zustand stores with separation between internal state, actions, and exposed state
+- Use interface/type separation: define internal state and actions separately, then combine with union types
+- Create selectors to expose only necessary portions of state to components
+- Separate selectors for state and actions improve component reusability and testability
+
+## Error Handling
+
+- Implement comprehensive error handling for all components and services.
+- Use Zod for schema validation.
+
+## String Formatting
+
+- Avoid using escaped quotes (`"`) with HTML entities like `&quot;`, `&ldquo;`, `&#34;`, or `&rdquo;`
+
+# Lessons
+
+## Cloudflare Turnstile Development
+
+- When using Cloudflare Turnstile in development, prefer using the React component from react-turnstile instead of manual script injection
+- Avoid duplicate widget instances as they can cause conflicts
+- Properly manage the turnstile token state and validation
+- The submit button should be disabled until verification is complete
+- Use proper token state management instead of relying on form data directly
+- Content Security Policy must include 'unsafe-hashes' in script-src directive to allow Turnstile's inline scripts and event handlers
+
+## Zustand State Management
+
+- In TypeScript, checks for undefined values earlier in a function don't carry through to later destructured variables
+- For gRPC client operations, always add null checks immediately before using the client, even if checked earlier
+- When destructuring potentially undefined values from state, TypeScript requires additional type narrowing
+- When adding new items to a state array with typed objects, use array spread syntax [...existingArray, newItem] instead of concat() to avoid TypeScript errors
+- For agent chat functionality, create a comprehensive state store with UI state, messages, and chat sessions management
+- Structure agent store with clearly separated concerns: UI actions, chat actions, and session management
+- Keep UI-specific state (like sidebar visibility, input field values) in component state, not in global state stores
+- Use @prio-state alias to import from the state package in app components
+- State packages should focus on data, business logic, and application state, not UI concerns
+- Use Pick<Type, 'property'> to create derived types from state package interfaces
+- For chat systems, always implement a fallback default session when no sessions exist
+- Persist messages in both the current messages array and within the related chat session object
+- Create helper functions like ensureDefaultSession() to handle initialization logic
+- Move mock response generation to the state store instead of component code to maintain separation of concerns
+- Create dedicated methods in state stores for handling complex state transitions (like generateMockResponse)
+- Avoid logic duplication by centralizing business logic in store actions
+- When splitting Zustand stores, maintain backward compatibility by proxying properties from one store to another using subscribe
+- To avoid breaking changes when refactoring stores, keep the same external API while internally delegating to other stores
+- Use store.subscribe() to keep proxied state in sync between multiple stores
+- Initialize proxied store values directly in create() to avoid undefined values during initial render
+- When refactoring stores, carefully consider which components are consuming the store and how they access the state
+- Structure Zustand stores with clear separation: use interfaces for internal state, actions, and combined store type
+- Create dedicated selector hooks (like useAgentState and useAgentActions) to expose only relevant parts of the store
+- When proxying properties from another store, use ReturnType<typeof store.getState>['property'] for type safety
+- To maximize code organization, split complex stores into multiple smaller stores that work together
+
+### Next.js AI Chat Interface
+
+- Extract reusable UI components for chat areas (ChatArea, ChatInput) to improve maintainability
+- Chat interfaces should be structured with a collapsible sidebar, main chat area, and user input
+- Message components should be designed to handle different content types (text, markdown, code)
+- Use interfaces to define message structure with properties like id, role, content, type, and timestamp
+- Implement helper components like ChatMessageContent to handle different message rendering formats
+- Use React's useState for managing chat state and sidebar visibility
+- Support keyboard shortcuts (Enter to send, Shift+Enter for newline) for better UX
+- Implement auto-scrolling to the bottom when new messages arrive using refs
+- Consider gradients and subtle shadows for message bubbles to enhance visual appeal
+- Prefer narrower sidebars (w-64 instead of w-80) for better space utilization
+- Add sufficient bottom padding on mobile to prevent input area from being obscured
+- Design input areas with proper proportions between textarea and send button
+- Use rounded-xl or rounded-2xl for softer, more modern UI elements
+- Enhance message bubbles with proper leading-relaxed for better text readability
+- Combine the Card component with flexbox for elegant input areas
+- Remove borders from textareas inside cards for a cleaner, more integrated look
+- Format relative times in chat sessions ("Just now", "2 hours ago", etc.) for better UX
+- When using relative time formatting in Next.js, use suppressHydrationWarning on the element or consistent date formatting between server and client to prevent hydration errors
+- Display message counts in session lists to provide context about conversation length
+- For chat layouts, use absolute positioning with fixed heights to keep input at bottom without scrolling
+- Implement responsive sidebar toggle buttons for mobile interfaces that appear only on smaller screens
+- Use media queries or JS-based responsive adjustments to handle different screen sizes
+- Calculate chat container heights carefully to avoid overflow and unnecessary scrollbars
+- Component props should only contain what's necessary for the component to function
+- Clean up component interfaces by removing unused props when refactoring components
+
+## Monorepo Dependency Management
+
+- In a monorepo with multiple projects, pin specific package versions in each project's package.json to avoid unwanted inheritance
+- Use exact version numbers instead of caret (^) or tilde (~) for critical dependencies like Next.js, React, and React DOM
+- Ensure matching versions for related packages (e.g., Next.js and eslint-config-next should be the same version)
+- When Expo is part of the monorepo, be particularly careful about React and React DOM versions as they may be different from web requirements
+- When using pnpm workspaces, define packages in pnpm-workspace.yaml instead of the workspaces field in package.json
+- Use `pnpm --filter <package-name>` instead of `bun -F <package-name>` for targeting specific workspace packages
+- Replace `bunx` with `pnpm exec` to execute binaries from node_modules
+- When referencing workspace packages as dependencies, use the `workspace:*` protocol instead of just `*` (e.g., `"@zondax/auth-web": "workspace:*"` instead of `"@zondax/auth-web": "*"`)
+- To prevent hoisting for specific packages or directories (like apps/expo), add entries to the `.npmrc` file with `hoist-pattern[]=!**/path/to/dir/**`
+
+## React Component Design
+
+- Avoid passing too many props to components directly, as it creates maintenance issues and makes component interfaces hard to understand
+- When a component requires many parameters, use one of these strategies to simplify the interface:
+  1. Group related props into logical objects (e.g., `layout`, `handlers`, etc.)
+  2. Use React Context for sharing widely-needed configuration or layout settings
+  3. Provide sensible defaults to make most props optional
+- For layout-related properties shared across many components, use a Context Provider at a high level
+- Don't rely on prop drilling for layout-specific values that rarely change
+- Consider whether a prop truly belongs to a component or if it's just passing through to children
+- Use TypeScript interfaces to clearly document grouped props
+
+## Date & Time Handling
+
+- Use date-fns for all date and time manipulation instead of native Date methods
+- Prefer functions like `startOfDay()`, `endOfDay()`, `addDays()`, etc. over manual date calculations
+- For timezone handling, explicitly use date-fns-tz functions when dealing with timezone conversions
+- Avoid direct manipulation of timestamps with arithmetic operations when date-fns provides an equivalent function
+- When displaying dates to users, use date-fns format function with explicit format strings for consistency
+
+## VSCode Development Environment
+
+- Add a `.vscode/extensions.json` file to recommend essential extensions for the project
+- Essential extensions for Next.js projects include: Prettier, ESLint, Tailwind CSS IntelliSense, TypeScript support
+- Additional helpful extensions: React snippets, auto-rename/close tags, path intellisense, PostCSS support
+- Developer productivity can be enhanced with: Pretty TypeScript Errors, Code Spell Checker, Color Highlight, GitLens
+- Collaborative extensions like GitHub Copilot and Live Share can be recommended but marked as optional
+- Keep `.vscode/settings.json` in sync with extension recommendations (e.g., Prettier as default formatter)
+- Consider workspace-specific settings that enforce project conventions (tab size, quote style, etc.)
+
+## Next.js Hydration and Date Handling
+
+- Avoid locale-dependent date/time formatting with `toLocaleString()`, `toLocaleTimeString()`, or `toLocaleDateString()` in components that render on both server and client
+- Use fixed date/time formats that don't depend on locale settings to prevent hydration mismatches
+- Prefer using the date-fns library for all date formatting needs with consistent formats across server and client
+- For relative times, use a "hydration-safe" approach: render the same formatted date on server and client initially, then use useEffect to update to relative time format after hydration completes
+- Create separate utility functions: one for consistent date formatting (used for initial render) and another for client-side relative formatting (used after hydration)
+- Track client-side rendering state with useState and useEffect to safely switch to relative formatting
+- Store dates as ISO strings in state and convert to Date objects when formatting
+- Other potential hydration error sources include: Math.random(), Date.now(), conditional window/document usage, and locale-specific number formatting
+- For content that must vary between client and server, consider using useEffect and useState to update the content only on the client side after hydration
+- When client/server mismatch is unavoidable, use the `suppressHydrationWarning` prop on the affected element
+
+### API Integration with Zustand
+
+- When integrating API clients with Zustand stores, store the client instance and configuration in the state
+- Create an initialization function (like initApiClient) that's called before making API requests
+- Add null checks before using the API client to prevent runtime errors
+- Implement a fallback mechanism (like mock responses) when the API client is unavailable
+- Use the Promise chain (.then/.catch/.finally) pattern for handling async operations in store actions
+- Update loading/processing state at the beginning of an API call and in the finally block
+- Include proper error handling within store actions to maintain a good user experience
+- When making API calls, derive parameters from the current state (like the current session ID)
+- Consider adding the API response to both the current state and any persistence structures (like the session object)
+- For development, maintain separate code paths for real API calls and mock data generation
+
+## Component Extraction and Composition
+
+- Extract reusable rendering logic into dedicated components to improve maintainability and code organization
+- When a component has complex rendering logic for multiple types of elements, consider separating them into individual components
+- Use composition to build complex UI elements from smaller, focused components
+- Always pass the minimum props needed to each component to maintain clear interfaces
+- When extracting components from client components, ensure they also have the 'use client' directive if needed
+- Keep component responsibilities focused - separate visual presentation from data fetching and business logic
+- Ensure components have clear and documented interfaces with TypeScript types or interfaces

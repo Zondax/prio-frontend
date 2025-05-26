@@ -1,0 +1,23 @@
+---
+description: Rules and best practices for user preferences state management
+globs: ["**/state/preferences/**/*", "**/hooks/preferences/**/*"]
+alwaysApply: false
+---
+# User Preferences Guidelines
+
+## Core Concepts
+
+- User preferences are stored in a GRPC-based system with `accessibility_settings` as a map for boolean flags and settings
+- Changes to user preferences can be made by using the `usePreferencesStore` hook from `@prio-state`
+- When updating preferences, always clone the current preferences object before modifying it
+- Boolean settings should be stored as string values ('true'/'false') in the accessibility_settings map
+
+## Implementation Best Practices
+
+- Always validate preference values before applying them
+- Use TypeScript types to ensure type safety when accessing preference values
+- Consider implementing a preference change history for undo/redo functionality
+- Handle preference loading states appropriately
+- Implement proper error handling for failed preference updates
+- Use optimistic updates for better user experience
+- Consider implementing preference presets for common configurations 

@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "plugins": [],
+    "paths": {
+      "@/*": ["src/*"],
+      "@prio-grpc": ["../grpc/src/"],
+      "@prio-grpc/*": ["../grpc/src/*"],
+      "@/entities/*": ["src/entities/*"],
+      "@zondax/stores": ["../stores/src"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx", "**/*.test.ts", "**/*.test.tsx"]
+}

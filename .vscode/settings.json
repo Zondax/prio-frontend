@@ -1,0 +1,75 @@
+{
+  "editor.formatOnSave": true,
+  // "editor.defaultFormatter": "esbenp.prettier-vscode", // Commented out to prioritize Biome for supported languages
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "cSpell.words": [
+    "cmdk",
+    "crxjs",
+    "Cyanish",
+    "devui",
+    "drei",
+    "embla",
+    "enhanceable",
+    "eventscollections",
+    "Figtree",
+    "Filterbar",
+    "Focusable",
+    "Hourtime",
+    "ianvs",
+    "jspb",
+    "lefthook",
+    "LOCATIONIQ",
+    "maplibre",
+    "marsidev",
+    "mfnna",
+    "Multiselection",
+    "nativewind",
+    "netinfo",
+    "newtab",
+    "NEXTAUTH",
+    "nosniff",
+    "Nplus",
+    "overscan",
+    "Pageable",
+    "Parkinsans",
+    "PKCE",
+    "Pressable",
+    "prio",
+    "protoc",
+    "PULUMI",
+    "qzhasis",
+    "rebranded",
+    "Recents",
+    "shadcn",
+    "sonner",
+    "topbar",
+    "turbopack",
+    "unrs",
+    "vaul",
+    "Waitlist",
+    "webextension",
+    "zitadel",
+    "zondax",
+    "zundo"
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always"
+}

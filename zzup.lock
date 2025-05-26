@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2025-04-11T06:37:02.812Z",
+  "entries": {
+    "zondax/zup-make:v0.0.4": {
+      "imageName": "zondax/zup-make",
+      "tag": "v0.0.4",
+      "digest": "sha256:5cc46d2ad40b8bbda55bb1d464a2fe6027de789411cb098888b1f8893282a742"
+    },
+    "zondax/prio-grpc:latest": {
+      "imageName": "zondax/prio-grpc",
+      "tag": "latest",
+      "digest": "sha256:2d45d675f69165ae87c423bdec5c77d27a273321542857e4ec04e0a18218d10e"
+    }
+  }
+}

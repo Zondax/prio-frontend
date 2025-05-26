@@ -1,0 +1,5 @@
+# lefthook.yml
+pre-commit:
+  commands:
+    format:
+      run: pnpm format

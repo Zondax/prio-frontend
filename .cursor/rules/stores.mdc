@@ -1,0 +1,75 @@
+# Testing Zustand Stores
+
+When testing Zustand stores, especially those with complex behavior:
+
+1. Mock the Zustand `create` function to bypass the React hooks restrictions
+2. For simpler tests, focus on testing the public API rather than implementation details
+3. Use a simplified mock approach when testing async behavior to avoid TypeScript errors
+4. Mock timing functions (performance.now, Date.now) when testing features that use them
+5. Prefer testing interface properties and methods exist rather than testing full implementations
+6. For async tests, consider using controllable promises for more predictable test behavior
+7. Remember to restore mocked global functions in afterAll or afterEach hooks
+
+Example mock for Zustand:
+
+```typescript
+vi.mock('zustand', async () => {
+  const actual = await vi.importActual('zustand')
+  return {
+    ...actual,
+    create: fn => {
+      // Create a store-like object with the basic state
+      const store = {}
+      
+      // Setup functions to manipulate the store
+      const setState = (partial) => {
+        const nextState = typeof partial === 'function' ? partial(store) : partial
+        Object.assign(store, nextState)
+      }
+      
+      const getState = () => store
+      
+      // Initialize the store with functions
+      const initialStore = fn(setState, getState)
+      Object.assign(store, initialStore)
+      
+      // Return a hook-like function that returns the store
+      return () => store
+    },
+  }
+})
+```
+
+# GRPC Store Builders
+
+This codebase includes several store builder patterns for different use cases when working with GRPC:
+
+1. **grpcSingleMethodStore** - For simple single-method GRPC calls
+   - Best for individual queries that return a single result
+   - Provides simple interface with setParams, setInput, and getData methods
+   - Handles loading/error states automatically
+
+2. **grpcPageableStore** - For paginated data loading from GRPC services
+   - Manages cursor-based pagination
+   - Accumulates data from multiple page loads
+   - Tracks pagination state including hasReachedEnd flag
+   - Includes performance metrics tracking
+
+3. **grpcOptimisticStore** - For GRPC operations with optimistic updates
+   - Provides optimistic UI updates before backend confirms changes
+   - Supports both complete data replacement and partial updates
+   - Uses temporal middleware for tracking update history
+   - Handles automatic rollback on backend errors
+   - Includes connection and queue management
+
+4. **grpcReadStreamStore** - For streaming data from GRPC services
+   - Handles continuous data streams
+   - Manages connection lifecycle
+
+## Common Store Features:
+- All stores handle loading and error states
+- All support client creation and connection management
+- All track performance metrics and timestamps
+- All separate internal implementation from public API
+
+When implementing tests for these stores, focus on testing the public API functions and state properties that components will interact with, rather than internal implementation details. 

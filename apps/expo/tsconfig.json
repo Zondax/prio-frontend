@@ -1,0 +1,23 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "jsx": "react",
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./*"],
+      "@/*": ["./*"],
+      "@/auth": ["./auth"],
+      "@prio-grpc": ["../../packages/grpc/src"],
+      "@prio-grpc/*": ["../../packages/grpc/src/*"],
+      "@zondax/auth-core": ["../../packages/auth-core/src"],
+      "@zondax/auth-core/*": ["../../packages/auth-core/src/*"],
+      "@zondax/auth-expo": ["../../packages/auth-expo/src"],
+      "@zondax/auth-expo/*": ["../../packages/auth-expo/src/*"],
+      "@prio-state": ["../../packages/state/src"],
+      "@prio-state/*": ["../../packages/state/src/*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "nativewind-env.d.ts"],
+  "exclude": ["node_modules", "dist"]
+}

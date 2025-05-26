@@ -1,0 +1,24 @@
+---
+description: Rules and best practices for authentication providers
+globs: ["**/auth/providers/**/*", "**/components/auth/**/*"]
+alwaysApply: false
+---
+# Authentication Provider Guidelines
+
+## Provider Setup
+
+- AuthProvider requires a `routes` prop defining protected and unprotected navigation paths
+- Routes should be imported from routeConfig and passed directly to AuthProvider
+- Routes configuration is used for handling protected route access and navigation control
+
+## Implementation Best Practices
+
+- Implement proper loading states during authentication checks
+- Handle authentication errors gracefully with user-friendly messages
+- Use TypeScript for type-safe route configuration
+- Consider implementing role-based access control (RBAC)
+- Handle session persistence appropriately
+- Implement proper cleanup on unmount
+- Use proper error boundaries for authentication-related errors
+- Consider implementing authentication state persistence
+- Handle deep linking and authentication flows properly

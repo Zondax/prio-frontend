@@ -1,0 +1,33 @@
+{
+  "name": "prio-grpc",
+  "version": "0.1.0",
+  "private": true,
+  "description": "prio grpc",
+  "keywords": ["zondax", "prio-grpc"],
+  "license": "UNLICENSED",
+  "author": "Zondax AG <hello@zondax.ch>",
+  "scripts": {
+    "deps:check": "echo 'nothing to check'",
+    "deps:fix": "echo 'nothing to fix'",
+    "deps:update": "pnpm exec npm-check-updates -u -t semver && pnpm install && pnpm run deps:fix",
+    "env:init": "echo 'nothing to do'",
+    "gen:proto": "./scripts/gen-proto.sh && pnpm exec biome format --write .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "upgrade": "pnpm exec npm-check-updates -i"
+  },
+  "dependencies": {
+    "google-protobuf": "^3.21.4",
+    "grpc-web": "^1.5.0"
+  },
+  "devDependencies": {
+    "@protobuf-ts/protoc": "2.9.6",
+    "@types/google-protobuf": "^3.15.12",
+    "@types/node": ">=22.13.11",
+    "google-protobuf": "^3.21.4",
+    "grpc-web": "^1.5.0",
+    "ts-proto": "^2.7.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.3"
+  }
+}

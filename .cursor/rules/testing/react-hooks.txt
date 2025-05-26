@@ -1,0 +1,37 @@
+# Testing React Hooks
+
+## Challenges with Complex Hook Testing
+
+When testing React hooks with complex state management, consider these challenges:
+
+1. **State Updates are Asynchronous**: React's state updates don't immediately reflect in test environments
+2. **Effects Need Time to Run**: useEffect functions may not run synchronously in tests
+3. **Mocking Dependencies is Tricky**: Complex hooks often have dependencies that are hard to mock
+4. **Debounced Functions**: Timers and debounced functions need special handling
+
+## Effective Hook Testing Strategies
+
+1. **Test Public API Structure**: Verify the hook returns the expected properties and functions
+2. **Test Simple Behavior**: Test straightforward, synchronous functionality first
+3. **Skip Complex State Tests** when they're brittle or difficult to set up
+4. **Document Testing Limitations**: Add comments explaining why certain tests are skipped
+5. **Use Integration Tests**: For complex state interactions, integration tests often work better
+
+## Example - Simple Hook Test
+
+```typescript
+it('should return expected public API', () => {
+  const { result } = renderHook(() => useMyHook())
+  
+  expect(result.current).toHaveProperty('value')
+  expect(result.current).toHaveProperty('setValue')
+  expect(typeof result.current.setValue).toBe('function')
+})
+```
+
+## Common Workarounds
+
+- **Mock useState**: Try spying on React.useState to verify setters are called
+- **WaitFor**: Use waitFor to wait for asynchronous updates
+- **No Side Effects**: Avoid tests that depend on side effects completing
+- **Simple Assertions**: Focus on testing structure rather than state values 

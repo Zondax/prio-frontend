@@ -1,0 +1,9 @@
+{
+  "schema": "1.0",
+  "name": "prio-grpc",
+  "description": "prio grpc",
+  "sourceDir": "packages/grpc",
+  "targetDir": "packages/grpc",
+  "author": "Zondax AG",
+  "homepage": "https://zondax.ch"
+}

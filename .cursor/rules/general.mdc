@@ -1,0 +1,61 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# General Development Guidelines
+
+## Code Organization
+- Use `.tsx` extension for files containing JSX/TSX syntax
+- Follow consistent file naming conventions
+- Keep components focused and single-responsibility
+- Extract reusable logic into dedicated hooks or utilities
+- Maintain clear separation between UI components and business logic
+
+## Development Workflow
+- Write tests first when functionality is unclear
+- Mark uncertain test cases with "REVIEW" comments for user validation
+- Fix code to match expected test values after review
+- Commit frequently with short, descriptive messages
+- Document important decisions and patterns
+
+## Error Handling
+- Implement comprehensive error handling for all components and services
+- Use Zod for schema validation
+- Address root causes rather than symptoms when debugging
+- Add descriptive logging and error messages
+
+## Best Practices
+- Follow TypeScript best practices and maintain strict type safety
+- Ensure responsive and accessible design for all components
+- Optimize performance through proper code splitting and lazy loading
+- Keep dependencies up to date and pin versions appropriately
+- Document complex logic and important decisions
+- Always read the docs and update them!
+
+## Security
+- Never hardcode sensitive information (API keys, tokens, etc.). If you find them, tell the user immediately.
+- Follow security best practices for authentication and authorization
+- Implement proper CORS and CSP policies
+- Validate all user inputs
+
+## Testing
+- Write tests for critical functionality
+- Use descriptive test names that explain the behavior being tested
+- Mock external dependencies appropriately
+- Test error cases and edge conditions
+
+## Documentation
+- Maintain up-to-date documentation in code
+- Document complex algorithms and business logic
+- Keep README files current and helpful
+- Include setup instructions and requirements
+
+## Lessons
+
+### gRPC and API Requests
+- When using gRPC stores (like useActivityStore), always create proper request objects using the helper functions (e.g., createActivityRequest)
+- Don't pass plain objects to setInput, as they won't match the expected protobuf message type
+- For date filtering in activity requests, use dateToTimestamp with startOfDay/endOfDay for precise date ranges
+- Request objects should be created using the specific creators from their respective API modules
+- Always import the right creator function, like: import { createActivityRequest } from '@prio-state/api/activity'
