@@ -1,4 +1,4 @@
-import type { MockLink } from './sidebar'
+import type { MockLink } from './menu-top'
 
 export const mockDevLinks: MockLink[] = [
   { name: 'Prio - Empty', href: '/dev/ui/empty' },
@@ -7,20 +7,8 @@ export const mockDevLinks: MockLink[] = [
   { name: 'Prio - Topbar Custom', href: '/dev/ui/topbar-custom' },
   { name: 'View Grid 1', href: '/dev/ui/view-grid' },
   { name: 'View Grid 2', href: '/dev/ui/view-grid-2' },
-  { name: 'Explore - View Grid', href: '/dev/ui/explore-view-grid' },
-  { name: 'Explore - View Map', href: '/dev/ui/explore-view-map' },
-  { name: 'Explore - Map Web', href: '/dev/ui/explore-map-web' },
-  { name: 'Map - Marker', href: '/dev/ui/map-marker' },
   { name: 'Prio - Navigation', href: '/dev/ui/navigation' },
   { name: 'Prio - Theme Toggle', href: '/dev/ui/theme-toggle' },
-  { name: 'Prio - Card Promo', href: '/dev/ui/promo-card' },
-  { name: 'Prio - Event Card', href: '/dev/ui/event-card' },
-  { name: 'Prio - Filterbar', href: '/dev/ui/filterbar' },
-  { name: 'Prio - Share Dialog', href: '/dev/ui/share' },
-  { name: 'Prio - Sort Selector', href: '/dev/ui/sort-selector' },
-  { name: 'Prio - Tag Selector', href: '/dev/ui/tag-selector' },
-  { name: 'Prio - Filter Tags Utilities', href: '/dev/ui/filter-tags' },
-  { name: 'Prio - Multiselection', href: '/dev/ui/multiselection-bar' },
   { name: 'Shadcn - Buttons', href: '/dev/ui/buttons' },
   { name: 'Shadcn - Forms & Inputs', href: '/dev/ui/forms-inputs' },
   { name: 'Shadcn - Displays', href: '/dev/ui/displays' },

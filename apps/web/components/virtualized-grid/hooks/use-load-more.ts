@@ -40,7 +40,7 @@ export function useLoadMore(
 
       return { scrollPercentage, isScrollingDown, isNearBottom, hasOverflow, hasScrolled }
     },
-    [loadMoreThreshold, debug, logger]
+    [loadMoreThreshold]
   )
 
   // Callback to try loading more data

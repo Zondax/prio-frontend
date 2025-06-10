@@ -55,34 +55,34 @@ export function getGridColumnClasses(numColumns: number): string {
   // Add more cases if grids can exceed 12 columns, though up to 8 is in tests.
   switch (cols) {
     case 1:
-      return 'grid grid-cols-1'
+      return 'grid-cols-1'
     case 2:
-      return 'grid grid-cols-2'
+      return 'grid-cols-2'
     case 3:
-      return 'grid grid-cols-3'
+      return 'grid-cols-3'
     case 4:
-      return 'grid grid-cols-4'
+      return 'grid-cols-4'
     case 5:
-      return 'grid grid-cols-5'
+      return 'grid-cols-5'
     case 6:
-      return 'grid grid-cols-6'
+      return 'grid-cols-6'
     case 7:
-      return 'grid grid-cols-7'
+      return 'grid-cols-7'
     case 8:
-      return 'grid grid-cols-8'
+      return 'grid-cols-8'
     case 9:
-      return 'grid grid-cols-9'
+      return 'grid-cols-9'
     case 10:
-      return 'grid grid-cols-10'
+      return 'grid-cols-10'
     case 11:
-      return 'grid grid-cols-11'
+      return 'grid-cols-11'
     case 12:
-      return 'grid grid-cols-12'
+      return 'grid-cols-12'
     default:
       // Fallback for > 12, though Tailwind might not have these by default without safelisting patterns
       // or if your config only supports up to 12.
       // For safety, cap at 12 or return a known good default if that makes sense.
       console.warn(`[getGridColumnClasses] Unexpected column count: ${cols}. Defaulting to grid-cols-1.`)
-      return 'grid grid-cols-1' // Or handle as an error, or ensure your safelist covers it.
+      return 'grid-cols-1' // Or handle as an error, or ensure your safelist covers it.
   }
 }

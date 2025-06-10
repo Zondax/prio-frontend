@@ -201,7 +201,7 @@ export default function VirtualGridExample() {
           loadMore={loadMore}
           hasMore={true}
           layoutConfig={{
-            columnConfig: { sm: 1, md: 2, lg: Number.parseInt(gridSize) },
+            itemMinWidth: Math.floor(300 / Number.parseInt(gridSize)),
             rowHeight: rowHeight,
             spacing: spacing,
           }}

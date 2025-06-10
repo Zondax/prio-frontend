@@ -1,5 +1,5 @@
 import * as asyncLib from 'async'
-import { debounce } from 'lodash'
+import { debounce } from 'es-toolkit'
 import { temporal } from 'zundo'
 import { create } from 'zustand'
 

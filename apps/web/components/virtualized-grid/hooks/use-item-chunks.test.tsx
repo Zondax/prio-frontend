@@ -104,7 +104,9 @@ describe('useItemChunks', () => {
     const actual = result.current
     const allItemsFlat = actual.flat()
     expect(allItemsFlat).toHaveLength(6)
-    items.forEach((item) => expect(allItemsFlat.map((i) => i.id)).toContain(item.id))
+    for (const item of items) {
+      expect(allItemsFlat.map((i) => i.id)).toContain(item.id)
+    }
     for (const row of actual) {
       const totalSpan = row.reduce((sum, item) => sum + (item.colSpan || 1), 0)
       expect(totalSpan).toBeLessThanOrEqual(4)
@@ -218,7 +220,9 @@ describe('useItemChunks', () => {
     }
     const allItemsFlat = chunks.flat()
     expect(allItemsFlat).toHaveLength(5)
-    items.forEach((item) => expect(allItemsFlat.map((i) => i.id)).toContain(item.id))
+    for (const item of items) {
+      expect(allItemsFlat.map((i) => i.id)).toContain(item.id)
+    }
   })
 
   it('handles a large number of items efficiently', () => {

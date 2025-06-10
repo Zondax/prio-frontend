@@ -157,7 +157,7 @@ export default function VirtualizedGrid<T extends GridRenderItem>({
   useEffect(() => {
     logger.info('Vertical spacing or rowVirtualizer changed, recalculating virtualizer')
     rowVirtualizer.measure()
-  }, [numColumns, rowHeight, verticalSpacing, rowVirtualizer, logger]) // Keep rowVirtualizer if its identity can change
+  }, [rowVirtualizer, logger]) // Add logger to dependencies
 
   const virtualItems = rowVirtualizer.getVirtualItems()
 
@@ -231,7 +231,7 @@ export default function VirtualizedGrid<T extends GridRenderItem>({
             return (
               <div
                 key={virtualRow.key}
-                className={cn(`absolute top-0 left-0 w-full ${gridColumnClasses}`)}
+                className={cn(`absolute top-0 left-0 w-full grid ${gridColumnClasses}`)}
                 style={{
                   transform: `translateY(${virtualRow.start}px)`,
                   height: `${rowHeight}px`,
