@@ -1,6 +1,6 @@
 'use client'
 
-import type { AmbiguousEntity } from '@prio-state/feature/events'
+import type { AmbiguousEntity } from '@mono-state/feature/events'
 import { BlurView } from 'expo-blur'
 import {
   Accessibility,

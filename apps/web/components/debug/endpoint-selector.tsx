@@ -1,6 +1,6 @@
 'use client'
 
-import { useEndpointStore } from '@prio-state'
+import { useEndpointStore } from '@mono-state'
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 

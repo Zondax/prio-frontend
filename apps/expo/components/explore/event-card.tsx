@@ -1,8 +1,8 @@
 'use client'
 
-import { extractEventData } from '@prio-state/feature/events/utils'
-import type { Event } from '@prio-state/stores/event'
-import { getGoogleMapsLink } from '@prio-state/utils'
+import { extractEventData } from '@mono-state/feature/events/utils'
+import type { Event } from '@mono-state/stores/event'
+import { getGoogleMapsLink } from '@mono-state/utils'
 import { Image } from 'expo-image'
 import { Calendar, ExternalLink, MapPin, Tag } from 'lucide-react-native'
 import React, { useMemo, useState } from 'react'

@@ -5,8 +5,8 @@ import {
   createGetCollectionPermissionsRequest,
   useCollectionPermissionsStore,
   useEndpointStore,
-} from '@prio-state'
-import { useCollectionPermissionsLogic } from '@prio-state/feature/collections/hooks/useCollectionPermissions'
+} from '@mono-state'
+import { useCollectionPermissionsLogic } from '@mono-state/feature/collections/hooks/useCollectionPermissions'
 import { useGrpcSetup } from '@zondax/auth-expo'
 import React, { useEffect, useMemo, useState } from 'react'
 import { type DialogSharedPerson, ShareDialog } from '~/components/ui/share-dialog'

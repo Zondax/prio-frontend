@@ -1,6 +1,5 @@
 'use client'
 
-import { EventStatus } from '@prio-grpc/entities/proto/api/v1/common_pb' // TODO: change it
 import {
   type Event,
   type EventCollection,
@@ -10,8 +9,9 @@ import {
   ViewType,
   useEditCollectionDialog,
   useShareCollectionDialog,
-} from '@prio-state'
-import { usePinnedEvents } from '@prio-state/feature/events/hooks'
+} from '@mono-state'
+import { usePinnedEvents } from '@mono-state/feature/events/hooks'
+import { EventStatus } from '@prio-grpc/entities/proto/api/v1/common_pb' // TODO: change it
 import React, { useCallback, useState } from 'react'
 import { View } from 'react-native'
 

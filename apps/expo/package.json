@@ -96,7 +96,7 @@
     "lodash": "^4.17.21",
     "lucide-react-native": "^0.510.0",
     "nativewind": "^4.1.23",
-    "prio-state": "workspace:*",
+    "mono-state": "workspace:*",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-native": "0.76.9",
@@ -135,11 +135,11 @@
     "doctor": {
       "reactNativeDirectoryCheck": {
         "listUnknownPackages": false,
-        "exclude": ["prio-state", "@zondax/auth-web", "lucide-react-native"]
+        "exclude": ["mono-state", "@zondax/auth-web", "lucide-react-native"]
       }
     },
     "install": {
-      "exclude": ["prio-state", "@zondax/auth-web"]
+      "exclude": ["mono-state", "@zondax/auth-web"]
     }
   }
 }

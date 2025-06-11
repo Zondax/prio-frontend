@@ -1,4 +1,4 @@
-import { type MapMarker, MapMarkerKind } from '@prio-state'
+import { type MapMarker, MapMarkerKind } from '@mono-state'
 import React, { memo, useCallback } from 'react'
 import { Pressable, Text, TouchableOpacity, View } from 'react-native'
 import { Avatar, AvatarImage } from '~/components/ui/avatar'

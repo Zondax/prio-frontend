@@ -1,4 +1,4 @@
-import type { Activity } from '@prio-state'
+import type { Activity } from '@mono-state'
 import { Image } from 'expo-image'
 import { ChevronDown, ChevronUp } from 'lucide-react-native'
 import React from 'react'

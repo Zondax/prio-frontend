@@ -1,4 +1,4 @@
-import type { MapMarker } from '@prio-state'
+import type { MapMarker } from '@mono-state'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 

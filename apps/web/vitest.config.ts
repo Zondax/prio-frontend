@@ -17,7 +17,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './'),
-      'prio-state': path.resolve(__dirname, '../../packages/state/src'),
+      'mono-state': path.resolve(__dirname, '../../packages/state/src'),
       '@zondax/auth-web': path.resolve(__dirname, '../../packages/auth-web/src'),
       '@zondax/auth-core': path.resolve(__dirname, '../../packages/auth-core/src'),
     },

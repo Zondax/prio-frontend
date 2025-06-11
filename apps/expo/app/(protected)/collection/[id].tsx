@@ -1,4 +1,4 @@
-import { useCollectionById, useCollectionEvents, useEndpointStore } from '@prio-state'
+import { useCollectionById, useCollectionEvents, useEndpointStore } from '@mono-state'
 import { useGrpcSetup } from '@zondax/auth-expo/hooks'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import React, { useCallback } from 'react'

@@ -1,5 +1,5 @@
 // Import from the correct module
-import type { Activity, Event } from '@prio-state'
+import type { Activity, Event } from '@mono-state'
 import type React from 'react'
 import { Dimensions, StyleSheet, Text, View, type ViewStyle } from 'react-native'
 

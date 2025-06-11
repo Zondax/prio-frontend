@@ -1,4 +1,4 @@
-import { type EventCollection, EventCollectionVisibilityType, type EventCollectionWithSummary, type ViewType } from '@prio-state'
+import { type EventCollection, EventCollectionVisibilityType, type EventCollectionWithSummary, type ViewType } from '@mono-state'
 import { ArrowLeft, File, Globe, Lock, Settings, Share2, User } from 'lucide-react-native'
 import React from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'

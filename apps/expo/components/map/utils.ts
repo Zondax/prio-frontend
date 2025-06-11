@@ -1,4 +1,4 @@
-import type { MapBounds } from '@prio-state'
+import type { MapBounds } from '@mono-state'
 
 // Helper functions
 export const convertToMapBounds = (bounds: GeoJSON.Position[]): MapBounds | undefined => {

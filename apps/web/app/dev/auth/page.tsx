@@ -1,31 +1,77 @@
-import type { Role } from '@zondax/auth-web'
-import { format, formatDuration, fromUnixTime, intervalToDuration } from 'date-fns'
-import { KeyRound, Shield, User } from 'lucide-react'
+'use client'
 
-import { auth } from '@/app/auth'
+import { useAuth, useUser } from '@zondax/auth-web'
+import { format } from 'date-fns'
+import { Clock, KeyRound, Shield, User } from 'lucide-react'
+import { useEffect, useState } from 'react'
+
+import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 
 import { CopyButton } from './copy-button'
 
-export default async function WhoAmIPage() {
-  const session = await auth()
-  const user = session?.user
+interface TokenInfo {
+  token: string
+  expiresAt: Date | null
+}
 
-  // Get expiration date using date-fns
-  const expirationDate = session?.token?.expires_at ? fromUnixTime(session.token.expires_at) : undefined
+export default function WhoAmIPage() {
+  const { user, isLoaded } = useUser()
+  const { getToken } = useAuth()
+  const [tokenInfo, setTokenInfo] = useState<TokenInfo | null>(null)
+  const [isLoadingToken, setIsLoadingToken] = useState(false)
 
-  // Create a duration object with the time remaining
-  const duration = intervalToDuration({
-    start: new Date(),
-    end: expirationDate || new Date(),
-  })
+  useEffect(() => {
+    const fetchToken = async () => {
+      if (!user) return
 
-  // Prepare roles data for display
-  const rolesArray: Role[] = session?.roles || []
+      setIsLoadingToken(true)
+      try {
+        const token = await getToken()
+        if (token) {
+          // Decode JWT to get expiration
+          const payload = JSON.parse(atob(token.split('.')[1]))
+          const expiresAt = payload.exp ? new Date(payload.exp * 1000) : null
 
-  return user ? (
+          setTokenInfo({ token, expiresAt })
+        }
+      } catch (error) {
+        console.error('Failed to get token:', error)
+      } finally {
+        setIsLoadingToken(false)
+      }
+    }
+
+    if (user) {
+      fetchToken()
+    }
+  }, [user, getToken])
+
+  if (!isLoaded) {
+    return (
+      <Card className="mt-4">
+        <CardContent className="p-6">
+          <div className="flex items-center justify-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+            <span className="ml-2 text-muted-foreground">Loading...</span>
+          </div>
+        </CardContent>
+      </Card>
+    )
+  }
+
+  if (!user) {
+    return (
+      <Card className="mt-4">
+        <CardContent className="p-6">
+          <p className="text-center text-muted-foreground">Please sign in to view your authentication information.</p>
+        </CardContent>
+      </Card>
+    )
+  }
+
+  return (
     <Card className="mt-4">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
@@ -34,84 +80,104 @@ export default async function WhoAmIPage() {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="space-y-4">
-          <div>
-            <Label>Username:</Label>
-            <pre className="bg-muted p-2 rounded-lg text-xs sm:text-sm overflow-x-auto">{user.email}</pre>
-          </div>
-          {session?.token && (
-            <div className="space-y-2">
+        <div className="space-y-6">
+          {/* User Information */}
+          <section className="space-y-4">
+            <div>
+              <Label>User ID:</Label>
+              <div className="flex items-center gap-2">
+                <pre className="bg-muted p-2 rounded-lg text-xs sm:text-sm overflow-x-auto flex-1">{user.id}</pre>
+                <CopyButton text={user.id} />
+              </div>
+            </div>
+
+            <div>
+              <Label>Email:</Label>
+              <pre className="bg-muted p-2 rounded-lg text-xs sm:text-sm overflow-x-auto">
+                {user.primaryEmailAddress?.emailAddress || 'No email set'}
+              </pre>
+            </div>
+
+            <div>
+              <Label>Full Name:</Label>
+              <pre className="bg-muted p-2 rounded-lg text-xs sm:text-sm overflow-x-auto">{user.fullName || 'No name set'}</pre>
+            </div>
+
+            <div>
+              <Label>Username:</Label>
+              <pre className="bg-muted p-2 rounded-lg text-xs sm:text-sm overflow-x-auto">{user.username || 'No username set'}</pre>
+            </div>
+          </section>
+
+          {/* Account Information */}
+          <section className="space-y-4">
+            <Label className="flex items-center gap-2">
+              <Clock className="h-4 w-4" />
+              Account Information:
+            </Label>
+
+            <div>
+              <Label>Account Created:</Label>
+              <pre className="bg-muted p-2 rounded-lg text-xs sm:text-sm overflow-x-auto">
+                {user.createdAt ? format(user.createdAt, 'yyyy-MM-dd HH:mm:ss') : 'N/A'}
+              </pre>
+            </div>
+
+            <div>
+              <Label>Last Sign In:</Label>
+              <pre className="bg-muted p-2 rounded-lg text-xs sm:text-sm overflow-x-auto">
+                {user.lastSignInAt ? format(user.lastSignInAt, 'yyyy-MM-dd HH:mm:ss') : 'N/A'}
+              </pre>
+            </div>
+
+            <div>
+              <Label>Email Verified:</Label>
+              <div className="bg-muted p-2 rounded-lg">
+                <Badge variant={user.primaryEmailAddress?.verification?.status === 'verified' ? 'default' : 'secondary'}>
+                  {user.primaryEmailAddress?.verification?.status || 'unverified'}
+                </Badge>
+              </div>
+            </div>
+          </section>
+
+          {/* Token Information */}
+          <section className="space-y-4">
+            <div className="flex items-center justify-between">
               <Label className="flex items-center gap-2">
                 <KeyRound className="h-4 w-4" />
-                Token:
+                Session Token:
               </Label>
-              <div className="relative">
-                <div className="flex justify-between items-center">
-                  <Label>Access Token:</Label>
-                  <CopyButton text={session.token.access_token} />
+            </div>
+
+            {tokenInfo ? (
+              <>
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <Label>JWT Token:</Label>
+                    <CopyButton text={tokenInfo.token} />
+                  </div>
+                  <pre className="bg-muted p-2 rounded-lg overflow-x-auto">
+                    <code className="text-xs sm:text-sm text-foreground break-all">{tokenInfo.token}</code>
+                  </pre>
                 </div>
-                <pre className="bg-muted p-2 rounded-lg overflow-x-auto">
-                  <code className="text-xs sm:text-sm text-foreground break-all">{session.token.access_token}</code>
-                </pre>
+
+                {tokenInfo.expiresAt && (
+                  <div>
+                    <Label>Token Expires At:</Label>
+                    <pre className="bg-muted p-2 rounded-lg text-xs sm:text-sm overflow-x-auto">
+                      {format(tokenInfo.expiresAt, 'yyyy-MM-dd HH:mm:ss')}
+                    </pre>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="bg-muted p-4 rounded-lg">
+                <p className="text-sm text-muted-foreground">Click "Refresh Token" to load session token information.</p>
               </div>
-              <div className="relative">
-                <Label>Refresh Token:</Label>
-                <pre className="bg-muted p-2 rounded-lg overflow-x-auto">
-                  <code className="text-xs sm:text-sm text-foreground break-all">{session.token.refresh_token}</code>
-                </pre>
-              </div>
-              {/* Expires At Section */}
-              <Label className="flex items-center">
-                Expires At: {session?.token?.expires_at && <span className="text-xs text-gray-400 ml-2">{session.token.expires_at}</span>}
-              </Label>
-              <pre className="bg-muted p-2 rounded-lg overflow-x-auto">
-                <code className="text-xs sm:text-sm text-foreground">
-                  {expirationDate ? format(expirationDate, 'yyyy-MM-dd HH:mm:ss') : 'N/A'}
-                </code>
-              </pre>
-              {/* Optionally show raw value for debugging/clarity */}
-            </div>
-          )}
-          {session?.roles && (
-            <div className="space-y-2">
-              <Label className="flex items-center gap-2">
-                <Shield className="h-4 w-4" />
-                Roles:
-              </Label>
-              <div className="max-w-3xl overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Role</TableHead>
-                      <TableHead>Organization ID</TableHead>
-                      <TableHead>Organization URL</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {rolesArray.map((role) => (
-                      <TableRow key={`${role.org_id}-${role.role}`}>
-                        <TableCell>{role.role}</TableCell>
-                        <TableCell>{role.org_id}</TableCell>
-                        <TableCell>
-                          {role.org_url ? (
-                            <a href={role.org_url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                              {role.org_url}
-                            </a>
-                          ) : (
-                            <span className="text-muted-foreground">N/A</span>
-                          )}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            </div>
-          )}
+            )}
+          </section>
         </div>
       </CardContent>
     </Card>
-  ) : (
-    <p>Please sign in to view your authentication information.</p>
   )
 }

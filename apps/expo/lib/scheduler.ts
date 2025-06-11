@@ -1,4 +1,4 @@
-import { TransportMode } from '@prio-state'
+import { TransportMode } from '@mono-state'
 import { Bike, Car, FootprintsIcon } from 'lucide-react-native'
 
 // Icon mapping for transport modes

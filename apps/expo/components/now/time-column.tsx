@@ -1,5 +1,5 @@
-import { formatTimeWithDayIndicator, getTimezoneDisplay } from '@prio-state/feature/activity'
-import { formatTimeWithTimezone } from '@prio-state/utils'
+import { formatTimeWithDayIndicator, getTimezoneDisplay } from '@mono-state/feature/activity'
+import { formatTimeWithTimezone } from '@mono-state/utils'
 import type React from 'react'
 import { forwardRef } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'

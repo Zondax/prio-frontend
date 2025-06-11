@@ -10,7 +10,7 @@
  *
  * Usage in tests:
  * ```
- * import { withFixedDate } from '@prio-state/vitest/setup/timezone-setup'
+ * import { withFixedDate } from '@mono-state/vitest/setup/timezone-setup'
  *
  * it('should format time correctly regardless of host timezone', () => {
  *   withFixedDate(new Date('2023-10-10T10:00:00Z'), () => {

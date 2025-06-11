@@ -72,7 +72,7 @@ alwaysApply: true
 - For agent chat functionality, create a comprehensive state store with UI state, messages, and chat sessions management
 - Structure agent store with clearly separated concerns: UI actions, chat actions, and session management
 - Keep UI-specific state (like sidebar visibility, input field values) in component state, not in global state stores
-- Use @prio-state alias to import from the state package in app components
+- Use @mono-state alias to import from the state package in app components
 - State packages should focus on data, business logic, and application state, not UI concerns
 - Use Pick<Type, 'property'> to create derived types from state package interfaces
 - For chat systems, always implement a fallback default session when no sessions exist

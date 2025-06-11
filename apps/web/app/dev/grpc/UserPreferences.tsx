@@ -1,7 +1,7 @@
 'use client'
 
-import { usePreferencesStore } from '@prio-state'
-import { useEndpointStore } from '@prio-state/stores'
+import { usePreferencesStore } from '@mono-state'
+import { useEndpointStore } from '@mono-state/stores'
 import { useGrpcSetup } from '@zondax/auth-web/hooks'
 import { RefreshCcw } from 'lucide-react'
 

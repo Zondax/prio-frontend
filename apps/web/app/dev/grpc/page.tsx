@@ -1,6 +1,5 @@
 import { User } from 'lucide-react'
 
-import { auth } from '@/app/auth'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 import UserPreferencesPage from './UserPreferences'

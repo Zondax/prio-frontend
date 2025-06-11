@@ -1,6 +1,6 @@
 'use client'
 
-import type { EventCollection, EventCollectionWithSummary } from '@prio-state'
+import type { EventCollection, EventCollectionWithSummary } from '@mono-state'
 import React, { useCallback } from 'react'
 import { FlatList, View } from 'react-native'
 

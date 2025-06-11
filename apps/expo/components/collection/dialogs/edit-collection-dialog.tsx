@@ -1,4 +1,4 @@
-import { useEditCollection } from '@prio-state/feature/collections/hooks/useCollectionActions'
+import { useEditCollection } from '@mono-state/feature/collections/hooks/useCollectionActions'
 import { Lock, Pencil } from 'lucide-react-native'
 import React from 'react'
 import { ActivityIndicator, KeyboardAvoidingView, Modal, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native'

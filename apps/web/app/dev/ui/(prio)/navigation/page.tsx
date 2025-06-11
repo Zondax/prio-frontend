@@ -1,8 +1,8 @@
 'use client'
 
+import { topBarItems } from '@/app/(app)/config'
 import { DebugScenarioWrapper, widthVariants } from '@/components/debug/debug-scenario-wrapper'
 import { NavDesktop } from '@/components/topbar/nav-desktop'
-import { topBarItems } from '@/app/(app)/config'
 
 export default function NavigationPage() {
   return (

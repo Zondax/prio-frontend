@@ -1,9 +1,9 @@
 'use client'
 
-import { getDisplayEvents, usePinnedEvents } from '@prio-state/feature/events'
-import { useEventFilters } from '@prio-state/feature/events/filter-management'
-import { useEndpointStore } from '@prio-state/stores/endpoints'
-import { type Event, type EventDetailState, useEventStore } from '@prio-state/stores/event'
+import { getDisplayEvents, usePinnedEvents } from '@mono-state/feature/events'
+import { useEventFilters } from '@mono-state/feature/events/filter-management'
+import { useEndpointStore } from '@mono-state/stores/endpoints'
+import { type Event, type EventDetailState, useEventStore } from '@mono-state/stores/event'
 import { useGrpcSetup } from '@zondax/auth-expo/src/hooks/useGrpcSetup'
 import { useLocalSearchParams } from 'expo-router'
 import React, { useCallback, useEffect, useState } from 'react'

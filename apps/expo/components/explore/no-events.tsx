@@ -1,6 +1,6 @@
 'use client'
 
-import { EventKeys, eventLabels } from '@prio-state/feature/events/config'
+import { EventKeys, eventLabels } from '@mono-state/feature/events/config'
 import { SearchIcon } from 'lucide-react-native'
 import React from 'react'
 import { type StyleProp, View, type ViewStyle } from 'react-native'

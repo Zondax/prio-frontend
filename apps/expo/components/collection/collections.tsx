@@ -1,7 +1,7 @@
 'use client'
 
-import { useCollectionsStore, useEndpointStore } from '@prio-state'
-import { useCollectionFilters, useCollectionSearchHandler, useNewCollectionDialog } from '@prio-state/feature/collections/hooks'
+import { useCollectionsStore, useEndpointStore } from '@mono-state'
+import { useCollectionFilters, useCollectionSearchHandler, useNewCollectionDialog } from '@mono-state/feature/collections/hooks'
 import { useGrpcSetup } from '@zondax/auth-expo/hooks'
 import React, { useCallback, useEffect } from 'react'
 import { View } from 'react-native'

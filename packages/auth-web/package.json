@@ -6,6 +6,12 @@
   "keywords": ["zondax", "auth-web"],
   "license": "UNLICENSED",
   "author": "Zondax AG <hello@zondax.ch>",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./server": "./src/server.ts",
+    "./components": "./src/components/index.tsx"
+  },
   "scripts": {
     "deps:check": "echo 'nothing to check'",
     "deps:fix": "echo 'nothing to fix'",
@@ -17,6 +23,7 @@
   },
   "dependencies": {
     "@zondax/auth-core": "workspace:*",
+    "@clerk/nextjs": "^6.20.2",
     "axios": "^1.9.0",
     "next-auth": "beta",
     "react": "^19.1.0",

@@ -1,27 +1,23 @@
-import { auth } from '@/app/auth'
+'use client'
+
 import DebugLayout from '@/components/debug/debug-layout'
 import EndpointSelector from '@/components/debug/endpoint-selector'
 import { FloatingSettingsPanel } from '@/components/debug/floating-settings-panel'
 import { TopBar } from '@/components/topbar'
+import { useUser } from '@zondax/auth-web'
 import { topBarItems } from './config'
 
-export const metadata = {
-  title: 'Dev Environment',
-  description: 'Development and testing environment',
-}
+function CustomNavigation() {
+  const { user, isLoaded } = useUser()
 
-async function CustomNavigation() {
-  const session = await auth()
-  const isAuthenticated = !!session?.user
-
-  if (!isAuthenticated) {
-    return <></>
+  if (!isLoaded || !user) {
+    return null
   }
 
   return <EndpointSelector />
 }
 
-export default async function DevLayout({ children }: { children: React.ReactNode }) {
+export default function DevLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col h-full max-w-7xl mx-auto">
       <DebugLayout index={1}>

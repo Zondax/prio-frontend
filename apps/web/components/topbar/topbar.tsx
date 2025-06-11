@@ -1,11 +1,11 @@
 'use client'
 
+import { UserButton } from '@zondax/auth-web'
 import { useState } from 'react'
 import { ThemeSelector } from '../theming/theme-selector'
 import { Logo } from './logo'
 import { NavDesktop } from './nav-desktop'
 import { NavMobile } from './nav-mobile'
-import { NavUser } from './nav-user'
 import type { TopBarItems } from './types'
 
 export interface TopBarProps {
@@ -31,7 +31,7 @@ export function TopBar({ menuItems, children }: TopBarProps) {
         <div className="flex mr-0 items-center space-x-4 flex-shrink-0">
           {children}
           <ThemeSelector />
-          <NavUser />
+          <UserButton />
         </div>
       </div>
     </header>

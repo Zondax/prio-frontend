@@ -1,6 +1,6 @@
 import type MapLibreGL from '@maplibre/maplibre-react-native'
 import { Camera, MapView as MapLibreView, type RegionPayload } from '@maplibre/maplibre-react-native'
-import type { Coordinate, MapMarker, MapMoveEvent } from '@prio-state'
+import type { Coordinate, MapMarker, MapMoveEvent } from '@mono-state'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 

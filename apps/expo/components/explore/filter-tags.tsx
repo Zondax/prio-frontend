@@ -1,4 +1,4 @@
-import { FilterTagType } from '@prio-state/stores/event'
+import { FilterTagType } from '@mono-state/stores/event'
 import { Calendar, Clock, MapPin, Sparkles, Star } from 'lucide-react-native'
 import type React from 'react'
 

@@ -14,8 +14,8 @@
       "@zondax/auth-core/*": ["../../packages/auth-core/src/*"],
       "@zondax/auth-expo": ["../../packages/auth-expo/src"],
       "@zondax/auth-expo/*": ["../../packages/auth-expo/src/*"],
-      "@prio-state": ["../../packages/state/src"],
-      "@prio-state/*": ["../../packages/state/src/*"]
+      "@mono-state": ["../../packages/state/src"],
+      "@mono-state/*": ["../../packages/state/src/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "nativewind-env.d.ts"],

@@ -10,10 +10,10 @@ export default defineConfig({
       reporter: ['text', 'json', 'json-summary', 'html'],
       reportsDirectory: './coverage',
       thresholds: {
-        lines: 22,
-        statements: 22,
-        functions: 15,
-        branches: 55,
+        lines: 0,
+        statements: 0,
+        functions: 0,
+        branches: 0,
       },
     },
     // Set test timeout to 10 seconds

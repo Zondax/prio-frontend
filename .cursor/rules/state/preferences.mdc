@@ -8,7 +8,7 @@ alwaysApply: false
 ## Core Concepts
 
 - User preferences are stored in a GRPC-based system with `accessibility_settings` as a map for boolean flags and settings
-- Changes to user preferences can be made by using the `usePreferencesStore` hook from `@prio-state`
+- Changes to user preferences can be made by using the `usePreferencesStore` hook from `@mono-state`
 - When updating preferences, always clone the current preferences object before modifying it
 - Boolean settings should be stored as string values ('true'/'false') in the accessibility_settings map
 

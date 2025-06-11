@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 import type { Locator } from '@playwright/test'
 
 // Helper function to extract the pixel value from variant names like "XS (max-w-xs / 320px)"

@@ -1,133 +1,182 @@
-# auth-web
+# @zondax/auth-web
 
-Authentication utilities for Next.js web applications.
+Modern authentication and authorization package for Next.js applications using Clerk.
 
-## Overview
+## Features
 
-This package provides authentication utilities for Next.js web applications, including integration with Zitadel identity provider, server actions for authentication, and hooks for gRPC authentication setup.
+- 🔐 **Clerk Integration** - Complete authentication with Clerk
+- 🛡️ **SaaS Authorization** - Subscription-based access control
+- 🎯 **Feature Gates** - Granular permission system
+- 📊 **Usage Limits** - Track and limit resource usage
+- 🚩 **Feature Flags** - Beta features and gradual rollouts
+- ⚡ **Zero Backend Calls** - All checks use local JWT claims
+- 🎨 **React Components** - Ready-to-use protection components
 
-## Files and Components
+## Installation
 
-### Main Files
-
-- **auth.ts** - Provides NextAuth configuration with Zitadel integration:
-
-  - `authOptions(zitadelSettings)` - Creates NextAuth configuration with Zitadel provider
-  - JWT and session callbacks for token management
-  - Role parsing from Zitadel profiles
-
-- **server-actions.ts** - Provides server actions for authentication:
-
-  - `handleSignIn` - Function to handle user sign-in
-  - `handleSignOut` - Function to handle user sign-out
-
-- **index.ts** - Main entry point exporting all components
-
-### Hooks
-
-- **useGrpcSetup** - A React hook that handles authentication for gRPC services:
-  - Sets up authentication metadata with access token
-  - Configures baseUrl and authentication headers
-  - Automatically updates when session or endpoint changes
-
-## Usage
-
-### NextAuth Configuration
-
-```typescript
-// app/auth.ts
-import { authOptions } from '@zondax/auth-web'
-
-const zitadelSettings = {
-  scope: 'openid profile email',
-  debug: process.env.NODE_ENV === 'development',
-  trustHost: true,
-  // other Zitadel settings
-}
-
-export const { handlers, auth, signIn, signOut } = NextAuth(authOptions(zitadelSettings))
+```bash
+pnpm add @zondax/auth-web
 ```
 
-### Server Actions
+## Quick Start
 
-The package provides server actions for authentication that can be used in Next.js applications:
+### 1. Setup Clerk Provider
 
-```typescript
-'use server'
+```tsx
+import { AuthProvider } from '@zondax/auth-web'
 
-// app/lib/auth-actions.ts
-import { handleSignIn, handleSignOut } from '@zondax/auth-web'
-
-import { signIn, signOut } from '@/app/auth' // your Next.js Auth.js setup
-
-export async function signInAction(params: FormData | { redirectTo?: string }) {
-  'use server'
-  return handleSignIn(params, signIn)
-}
-
-export async function signOutAction(params: FormData | { redirectTo?: string }) {
-  'use server'
-  return handleSignOut(params, signOut)
-}
-```
-
-Then use these actions in your components:
-
-```typescript
-// app/components/login-button.tsx
-'use client'
-import { signInAction } from '@/app/lib/auth-actions'
-
-export function LoginButton() {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <form action={signInAction}>
-      <button type="submit">Sign In</button>
-    </form>
+    <html>
+      <body>
+        <AuthProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY!}>
+          {children}
+        </AuthProvider>
+      </body>
+    </html>
   )
 }
 ```
 
-```typescript
-// app/components/logout-button.tsx
-'use client'
-import { signOutAction } from '@/app/lib/auth-actions'
+### 2. Configure Middleware
 
-export function LogoutButton() {
+```tsx
+// middleware.ts
+import { authMiddleware, createRouteMatcher } from '@zondax/auth-web/server'
+
+const isPublicRoute = createRouteMatcher(['/', '/sign-in(.*)', '/sign-up(.*)'])
+
+export default authMiddleware(async (auth, req) => {
+  if (isPublicRoute(req)) return
+  await auth.protect()
+})
+
+export const config = {
+  matcher: ['/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)']
+}
+```
+
+### 3. Use Authorization
+
+```tsx
+import { useAuthorization, ProGate, FeatureGate } from '@zondax/auth-web'
+
+export default function Dashboard() {
+  const { hasSubscription, hasPermission } = useAuthorization()
+
   return (
-    <form action={signOutAction}>
-      <button type="submit">Sign Out</button>
-    </form>
+    <div>
+      <h1>Dashboard</h1>
+      
+      <ProGate fallback={<div>Upgrade to Pro for advanced features</div>}>
+        <AdvancedFeatures />
+      </ProGate>
+
+      <FeatureGate 
+        feature="api" 
+        action="write" 
+        fallback={<div>API write access required</div>}
+      >
+        <APIControls />
+      </FeatureGate>
+    </div>
   )
 }
 ```
 
-### gRPC Authentication
+## Package Structure
 
-For services using gRPC, use the `useGrpcSetup` hook to automatically configure authentication:
+```
+src/
+├── client.ts              # Client-side hooks and components
+├── server.ts              # Server-side functions
+├── index.ts               # Main exports
+├── components/
+│   ├── ProtectedComponent.tsx  # Authorization components
+│   ├── clerk.ts               # Clerk re-exports
+│   └── index.ts               # Component exports
+├── hooks/
+│   ├── useAuthorization.ts    # Main authorization hook
+│   ├── useGrpcSetup.ts       # gRPC configuration
+│   └── index.ts              # Hook exports
+└── authjs/                   # Alternative AuthJS implementation (unused)
+```
 
-```typescript
-// In your component or store
-import { useGrpcSetup } from '@zondax/auth-web'
+## Import Paths
 
-// Inside a React component
-function MyComponent() {
-  useGrpcSetup(myStore.setParams, 'https://api.example.com')
+### Client Components
+```tsx
+import { useAuthorization, ProGate, SignInButton } from '@zondax/auth-web'
+```
 
-  // rest of your component
-}
+### Server Components
+```tsx
+import { auth } from '@zondax/auth-web/server'
+```
 
-// Or in a store initialization
-const myStore = create()(set => ({
-  // other store properties
+### Specific Hooks
+```tsx
+import { useGrpcSetup } from '@zondax/auth-web/hooks'
+```
 
-  init: () => {
-    // The hook will call this function with the right authentication metadata
-    const setParams = config => {
-      set({ config })
-    }
+## Authorization Components
 
-    // Use the hook somewhere in your React component tree
-    // useGrpcSetup(setParams, 'https://api.example.com')
+### Subscription Gates
+```tsx
+<SubscriptionGate tier="pro" fallback={<UpgradePrompt />}>
+  <ProFeatures />
+</SubscriptionGate>
+
+<ProGate fallback={<UpgradePrompt />}>
+  <ProFeatures />
+</ProGate>
+
+<EnterpriseGate fallback={<ContactSales />}>
+  <EnterpriseFeatures />
+</EnterpriseGate>
+```
+
+### Feature Gates
+```tsx
+<FeatureGate feature="chat" action="advanced" fallback={<UpgradePrompt />}>
+  <AdvancedChat />
+</FeatureGate>
+```
+
+### Usage Gates
+```tsx
+<UsageGate resource="api_calls" fallback={<LimitReached />}>
+  <APIInterface />
+</UsageGate>
+```
+
+### Feature Flags
+```tsx
+<BetaFeatureGate fallback={<ComingSoon />}>
+  <BetaFeature />
+</BetaFeatureGate>
+```
+
+## Claims Structure
+
+Configure user claims in Clerk's `publicMetadata`:
+
+```json
+{
+  "subscription": "pro",
+  "permissions": {
+    "chat": ["basic", "advanced"],
+    "api": ["read", "write"]
   },
-}))
+  "usage": {
+    "api_calls": { "used": 150, "limit": 1000 },
+    "chat_messages": { "used": 50, "limit": 500 }
+  },
+  "features": ["beta_features", "priority_support"],
+  "subscription_expires_at": 1735689600000
+}
 ```
+
+## License
+
+UNLICENSED

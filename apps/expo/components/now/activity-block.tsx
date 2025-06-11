@@ -1,13 +1,13 @@
-import { type ActivitySlot, type Event, type RouteMatrix, TransportMode, getMinutesFromTimestamp } from '@prio-state'
+import { type ActivitySlot, type Event, type RouteMatrix, TransportMode, getMinutesFromTimestamp } from '@mono-state'
 import {
   type EarliestReachableSlot,
   type SlotBorders,
   canSelectTimeSlot,
   formatTimeWithDayIndicator,
   isTimeReachable,
-} from '@prio-state/feature/activity'
-import { shouldDisableForTravelTime, showTransportIcon } from '@prio-state/feature/activity/transportUtils'
-import { eventHasLocation } from '@prio-state/feature/events/utils'
+} from '@mono-state/feature/activity'
+import { shouldDisableForTravelTime, showTransportIcon } from '@mono-state/feature/activity/transportUtils'
+import { eventHasLocation } from '@mono-state/feature/events/utils'
 import type React from 'react'
 import { useCallback, useState } from 'react'
 import { Pressable, Text, View } from 'react-native'

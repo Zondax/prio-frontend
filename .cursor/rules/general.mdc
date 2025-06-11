@@ -58,4 +58,4 @@ alwaysApply: true
 - Don't pass plain objects to setInput, as they won't match the expected protobuf message type
 - For date filtering in activity requests, use dateToTimestamp with startOfDay/endOfDay for precise date ranges
 - Request objects should be created using the specific creators from their respective API modules
-- Always import the right creator function, like: import { createActivityRequest } from '@prio-state/api/activity'
+- Always import the right creator function, like: import { createActivityRequest } from '@mono-state/api/activity'

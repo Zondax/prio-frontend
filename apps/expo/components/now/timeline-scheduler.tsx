@@ -1,4 +1,4 @@
-import { type Activity, type ActivitySlot, type Event, createActivityIndicesMap, createActivityMap, useActivityStore } from '@prio-state'
+import { type Activity, type ActivitySlot, type Event, createActivityIndicesMap, createActivityMap, useActivityStore } from '@mono-state'
 import {
   calculateTransportInfo,
   findExistingSlot,
@@ -14,9 +14,9 @@ import {
   useActivitySlots,
   useTimelineConfiguration,
   useTravelTimes,
-} from '@prio-state/feature/activity'
-import { useEndpointStore } from '@prio-state/stores'
-import { format24Hourtime, getMinutesFromTimestamp } from '@prio-state/utils'
+} from '@mono-state/feature/activity'
+import { useEndpointStore } from '@mono-state/stores'
+import { format24Hourtime, getMinutesFromTimestamp } from '@mono-state/utils'
 import { useGrpcSetup } from '@zondax/auth-expo/hooks'
 import { useFocusEffect } from 'expo-router'
 import React, { useEffect, useMemo, useRef, useState } from 'react'

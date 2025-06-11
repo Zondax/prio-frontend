@@ -1,6 +1,6 @@
 'use client'
 
-import { type Event, ViewType } from '@prio-state'
+import { type Event, ViewType } from '@mono-state'
 import React from 'react'
 import { Text, View, VirtualizedList } from 'react-native'
 

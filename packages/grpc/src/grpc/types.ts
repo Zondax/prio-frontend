@@ -6,6 +6,7 @@ export interface GrpcMetadata {
 export interface GrpcConfig {
   baseUrl: string
   metadata: GrpcMetadata
+  authInterceptor?: () => Promise<Record<string, string>>
 }
 
 export type GrpcErrorCode = 'INVALID_ARGUMENT' | 'NOT_FOUND' | 'PERMISSION_DENIED' | 'INTERNAL' | 'UNAVAILABLE'

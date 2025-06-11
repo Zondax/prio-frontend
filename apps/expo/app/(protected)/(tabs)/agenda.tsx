@@ -1,6 +1,6 @@
 'use client'
 
-import type { Event } from '@prio-state'
+import type { Event } from '@mono-state'
 import { addDays, format, subDays } from 'date-fns'
 import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-react-native'
 import React, { useCallback, useMemo, useState } from 'react'

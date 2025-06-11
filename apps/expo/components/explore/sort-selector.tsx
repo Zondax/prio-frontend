@@ -1,4 +1,4 @@
-import type { Option as SelectOption } from '@prio-state/api/event'
+import type { Option as SelectOption } from '@mono-state/api/event'
 import type { Option } from '@rn-primitives/select'
 import { ArrowUpDown } from 'lucide-react-native'
 import * as React from 'react'

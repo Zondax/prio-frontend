@@ -1,6 +1,6 @@
-import type { Activity } from '@prio-state'
-import { formatTimeWithDayIndicator, sortTransportsByDuration } from '@prio-state/feature/activity'
-import type { TransportInfo } from '@prio-state/feature/activity/transportUtils'
+import type { Activity } from '@mono-state'
+import { formatTimeWithDayIndicator, sortTransportsByDuration } from '@mono-state/feature/activity'
+import type { TransportInfo } from '@mono-state/feature/activity/transportUtils'
 import type React from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 

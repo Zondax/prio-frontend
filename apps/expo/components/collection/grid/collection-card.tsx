@@ -1,6 +1,6 @@
 'use client'
 
-import { type EventCollection, EventCollectionVisibilityType, type EventCollectionWithSummary } from '@prio-state'
+import { type EventCollection, EventCollectionVisibilityType, type EventCollectionWithSummary } from '@mono-state'
 import { Image } from 'expo-image'
 import { Edit, FileIcon, Lock, Share2, Trash2, User } from 'lucide-react-native'
 import React, { useCallback } from 'react'

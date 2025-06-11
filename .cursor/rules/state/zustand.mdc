@@ -12,7 +12,7 @@ alwaysApply: false
 - Create selectors to expose only necessary portions of state to components
 - Separate selectors for state and actions improve component reusability and testability
 - Keep UI-specific state (like sidebar visibility, input field values) in component state, not in global state stores
-- Use @prio-state alias to import from the state package in app components
+- Use @mono-state alias to import from the state package in app components
 - State packages should focus on data, business logic, and application state, not UI concerns
 - Use Pick<Type, 'property'> to create derived types from state package interfaces
 

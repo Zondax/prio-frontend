@@ -1,4 +1,4 @@
-import type { Coordinate } from '@prio-state'
+import type { Coordinate } from '@mono-state'
 import * as Location from 'expo-location'
 import { useCallback, useEffect, useState } from 'react'
 

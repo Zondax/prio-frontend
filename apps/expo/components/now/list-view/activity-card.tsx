@@ -1,9 +1,9 @@
 'use client'
 
-import { isActivityHappeningSoon } from '@prio-state/feature/activity'
-import type { Event } from '@prio-state/stores/event'
-import { getGoogleMapsLink } from '@prio-state/utils'
-import { formatTimeWithTimezone } from '@prio-state/utils/time'
+import { isActivityHappeningSoon } from '@mono-state/feature/activity'
+import type { Event } from '@mono-state/stores/event'
+import { getGoogleMapsLink } from '@mono-state/utils'
+import { formatTimeWithTimezone } from '@mono-state/utils/time'
 import { formatDistanceToNow } from 'date-fns'
 import { Image } from 'expo-image'
 import { Calendar, Clock, ExternalLink, MapPin } from 'lucide-react-native'

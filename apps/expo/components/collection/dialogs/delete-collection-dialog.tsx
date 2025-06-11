@@ -1,4 +1,4 @@
-import { useDeleteCollection } from '@prio-state/feature/collections/hooks/useCollectionActions'
+import { useDeleteCollection } from '@mono-state/feature/collections/hooks/useCollectionActions'
 import { Trash2 } from 'lucide-react-native'
 import React from 'react'
 import { ActivityIndicator, Modal, Text, TouchableOpacity, View } from 'react-native'

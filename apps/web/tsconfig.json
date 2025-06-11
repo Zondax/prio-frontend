@@ -28,8 +28,8 @@
       "@zondax/auth-web/*": ["../../packages/auth-web/src/*"],
       "@prio-grpc": ["../../packages/grpc/src"],
       "@prio-grpc/*": ["../../packages/grpc/src/*"],
-      "@prio-state": ["../../packages/state/src"],
-      "@prio-state/*": ["../../packages/state/src/*"]
+      "@mono-state": ["../../packages/state/src"],
+      "@mono-state/*": ["../../packages/state/src/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

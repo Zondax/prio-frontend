@@ -1,8 +1,8 @@
 'use client'
 
-import Link from 'next/link'
-import { ChevronDownIcon } from 'lucide-react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { ChevronDownIcon } from 'lucide-react'
+import Link from 'next/link'
 
 // Define new types for grouped links
 export type MockLink = {

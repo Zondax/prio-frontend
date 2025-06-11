@@ -1,4 +1,4 @@
-import type { MapMarker, MarkerEvent } from '@prio-state'
+import type { MapMarker, MarkerEvent } from '@mono-state'
 import React, { useCallback, useMemo } from 'react'
 import { FlatList, type ListRenderItemInfo, Modal, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native'
 import { Avatar, AvatarImage } from '~/components/ui/avatar'

@@ -1,6 +1,6 @@
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import { SessionProvider } from '@zondax/auth-web'
+import { AuthProvider } from '@zondax/auth-web'
 import type { Metadata } from 'next'
 import { Figtree, Inter as FontSans, Parkinsans } from 'next/font/google'
 
@@ -53,22 +53,22 @@ export const viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning className="overflow-x-hidden">
-      <body className={cn('bg-background font-body antialiased', fontSans.variable, fontBody.variable, fontHeading.variable)}>
-        <div className="flex flex-col min-h-screen w-full mx-auto">
-          <DebugLayout index={0} className="flex-1">
-            <FloatingSettingsProvider>
-              <SessionProvider>
+    <AuthProvider>
+      <html lang="en" suppressHydrationWarning className="overflow-x-hidden">
+        <body className={cn('bg-background font-body antialiased', fontSans.variable, fontBody.variable, fontHeading.variable)}>
+          <div className="flex flex-col min-h-screen w-full mx-auto">
+            <DebugLayout index={0} className="flex-1">
+              <FloatingSettingsProvider>
                 <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
                   <StickyTopProvider>{children}</StickyTopProvider>
                 </ThemeProvider>
-              </SessionProvider>
-              <Analytics />
-              <SpeedInsights />
-            </FloatingSettingsProvider>
-          </DebugLayout>
-        </div>
-      </body>
-    </html>
+                <Analytics />
+                <SpeedInsights />
+              </FloatingSettingsProvider>
+            </DebugLayout>
+          </div>
+        </body>
+      </html>
+    </AuthProvider>
   )
 }

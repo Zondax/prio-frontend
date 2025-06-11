@@ -1,4 +1,4 @@
-import { type CollectionFormData, useNewCollection } from '@prio-state'
+import { type CollectionFormData, useNewCollection } from '@mono-state'
 import { FolderPlus, Lock } from 'lucide-react-native'
 import React from 'react'
 import { ActivityIndicator, KeyboardAvoidingView, Modal, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native'
