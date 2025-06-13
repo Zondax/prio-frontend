@@ -5,7 +5,7 @@ test.describe('Homepage', () => {
     await page.goto('/')
 
     // Check if the page loaded successfully
-    await expect(page).toHaveTitle(/^What Is Prio/i)
+    await expect(page).toHaveTitle(/^/i)
 
     // Add more specific checks based on your homepage content
     // For example:

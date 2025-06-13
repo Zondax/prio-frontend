@@ -1,1 +1,0 @@
-# @zondax/stores

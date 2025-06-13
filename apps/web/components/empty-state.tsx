@@ -31,7 +31,7 @@ export function EmptyState({ icon: Icon, title, subtitle, button, className = ''
   return (
     <div className={cn('flex flex-col items-center justify-center bg-background space-y-6 p-6', className)}>
       <div className="text-center space-y-2 max-w-md">
-        <Icon className="mx-auto h-12 w-12 md:h-20 md:w-20 text-foreground/10" />
+        <Icon className="mx-auto h-12 w-12 md:h-20 md:w-20 text-foreground/10" role="img" aria-hidden="true" />
         <h4 className="text-xl font-semibold mt-4">{title}</h4>
         <p className="text-muted-foreground">{subtitle}</p>
       </div>

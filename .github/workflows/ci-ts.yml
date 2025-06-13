@@ -18,35 +18,29 @@ concurrency:
 
 jobs:
   ts-checks:
-    uses: zondax/_workflows/.github/workflows/_checks-ts.yaml@v0.1.0
+    uses: zondax/_workflows/.github/workflows/_checks-ts.yaml@v2.1.1
     with:
       package_manager: pnpm
+      github_app_auth: true
+      github_app_repos: kickstarter-frontend,web-golem
+    secrets:
+      app_id: ${{ secrets.PULUMI_GOLEM_APP_ID }}
+      app_pem: ${{ secrets.PULUMI_GOLEM_APP_PEM }}
 
   playwright-tests:
     needs: ts-checks
     uses: zondax/_workflows/.github/workflows/_checks-playwright.yaml@v0.1.0
     with:
       working_directory: "apps/web"
+      github_app_auth: true
+      github_app_repos: kickstarter-frontend,web-golem
     secrets:
+      app_id: ${{ secrets.PULUMI_GOLEM_APP_ID }}
+      app_pem: ${{ secrets.PULUMI_GOLEM_APP_PEM }}
       env_local: |
         # Project-specific variables
-        PROJECT="prio-frontend"
-        NAMESPACE="prio-frontend"
-
-        # CI testing related settings
-        AUTH_CI_USERNAME="${{ secrets.AUTH_CI_USERNAME }}"
-        AUTH_CI_PASSWORD="${{ secrets.AUTH_CI_PASSWORD }}"
-        AUTH_TRUST_HOST="true"
-
-        # Auth.js variables (set via auth environment)
-        AUTH_URL="${{ secrets.PULUMI_AUTH_URI }}"
-        AUTH_SECRET="${{ secrets.PULUMI_AUTH_CLIENT_SECRET }}"
-
-        # Zitadel configuration (set via zitadel setting / code)
-        AUTH_ZITADEL_ID="${{ secrets.PULUMI_AUTH_CLIENT_ID }}"         
-        AUTH_ZITADEL_SECRET="${{ secrets.PULUMI_AUTH_CLIENT_SECRET }}"
-        AUTH_ZITADEL_ISSUER="${{ secrets.PULUMI_AUTH_ISSUER }}"
-        AUTH_DEBUG="${{ secrets.PULUMI_AUTH_DEBUG }}"
+        PROJECT="kickstarter-frontend"
+        NAMESPACE="kickstarter-frontend"
 
         # API keys
         NEXT_PUBLIC_LOCATIONIQ_TOKEN="${{ secrets.NEXT_PUBLIC_LOCATIONIQ_TOKEN }}"

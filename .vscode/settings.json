@@ -34,6 +34,7 @@
     "Hourtime",
     "ianvs",
     "jspb",
+    "kickstarter",
     "lefthook",
     "LOCATIONIQ",
     "maplibre",
@@ -71,5 +72,6 @@
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
   "javascript.updateImportsOnFileMove.enabled": "always",
-  "typescript.updateImportsOnFileMove.enabled": "always"
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "vitest.disableWorkspaceWarning": true
 }

@@ -10,12 +10,12 @@
       "@/auth": ["./auth"],
       "@prio-grpc": ["../../packages/grpc/src"],
       "@prio-grpc/*": ["../../packages/grpc/src/*"],
-      "@zondax/auth-core": ["../../packages/auth-core/src"],
-      "@zondax/auth-core/*": ["../../packages/auth-core/src/*"],
-      "@zondax/auth-expo": ["../../packages/auth-expo/src"],
-      "@zondax/auth-expo/*": ["../../packages/auth-expo/src/*"],
       "@mono-state": ["../../packages/state/src"],
-      "@mono-state/*": ["../../packages/state/src/*"]
+      "@mono-state/*": ["../../packages/state/src/*"],
+      "@zondax/auth-core": ["../../libs/auth-core/src"],
+      "@zondax/auth-core/*": ["../../libs/auth-core/src/*"],
+      "@zondax/auth-expo": ["../../libs/auth-expo/src"],
+      "@zondax/auth-expo/*": ["../../libs/auth-expo/src/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "nativewind-env.d.ts"],

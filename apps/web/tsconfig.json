@@ -22,16 +22,16 @@
       "@/*": ["./*"],
       "@/site/*": ["./site/*"],
       "@/app/*": ["./app/*"],
-      "@zondax/auth-core": ["../../packages/auth-core/src"],
-      "@zondax/auth-core/*": ["../../packages/auth-core/src/*"],
-      "@zondax/auth-web": ["../../packages/auth-web/src"],
-      "@zondax/auth-web/*": ["../../packages/auth-web/src/*"],
       "@prio-grpc": ["../../packages/grpc/src"],
       "@prio-grpc/*": ["../../packages/grpc/src/*"],
       "@mono-state": ["../../packages/state/src"],
-      "@mono-state/*": ["../../packages/state/src/*"]
+      "@mono-state/*": ["../../packages/state/src/*"],
+      "@zondax/auth-core": ["../../libs/auth-core/src"],
+      "@zondax/auth-core/*": ["../../libs/auth-core/src/*"],
+      "@zondax/auth-web": ["../../libs/auth-web/src"],
+      "@zondax/auth-web/*": ["../../libs/auth-web/src/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist"]
 }

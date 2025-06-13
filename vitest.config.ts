@@ -1,14 +1,56 @@
 import { defineConfig } from 'vitest/config'
+import { resolve } from 'node:path'
+
+// Workspace folders we want to test against
+const workspaceDirs = ['apps', 'libs', 'packages'] as const
+
+// Globs
+const testFileGlob = '**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'
+const coverageFileGlob = '**/*.{js,ts,jsx,tsx}'
+const excludeGlobs = ['**/node_modules/**', '**/dist/**', '**/build/**', '**/e2e/**', '**/.next/**']
+
+// Map of package aliases ➜ relative source paths (from repo root)
+const aliasRoots: Record<string, string> = {
+  '@prio-grpc': 'packages/grpc/src',
+  '@zondax/auth-core': 'libs/auth-core/src',
+  '@zondax/auth-web': 'libs/auth-web/src',
+  '@mono-state': 'packages/state/src',
+}
+
+// Build alias array for Vite/Vitest
+const alias = [
+  // Next.js @/* alias used inside apps/web
+  { find: /^@\/(.*)$/, replacement: resolve(__dirname, 'apps/web/$1') },
+  // Workspace package aliases – keeps vitest from trying to resolve via node_modules
+  ...Object.entries(aliasRoots).flatMap(([key, target]) => [
+    { find: new RegExp(`^${key}/(.*)$`), replacement: resolve(__dirname, `${target}/$1`) },
+    { find: key, replacement: resolve(__dirname, target) },
+  ]),
+  // Lightweight stubs for React Native / Expo behaviour in Node
+  { find: 'react-native', replacement: resolve(__dirname, 'vitest-react-native-stub.ts') },
+  { find: 'expo-constants', replacement: resolve(__dirname, 'vitest-expo-constants-stub.ts') },
+]
 
 export default defineConfig({
+  resolve: { alias },
+  esbuild: {
+    jsx: 'automatic',
+    jsxImportSource: 'react',
+  },
   test: {
-    // Run tests in all workspace packages
-    include: ['./apps/**/*.{test}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}', './packages/**/*.{test}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    // Add default coverage settings
+    setupFiles: ['./vitest.setup.ts'],
+    include: workspaceDirs.map((dir) => `${dir}/${testFileGlob}`),
+    exclude: excludeGlobs,
+    globals: true,
+    environment: 'jsdom',
+    // Set test timeout to 10 seconds
+    testTimeout: 10_000,
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'json-summary', 'html'],
       reportsDirectory: './coverage',
+      include: workspaceDirs.map((dir) => `${dir}/${coverageFileGlob}`),
+      exclude: [...excludeGlobs, '**/*.config.*', '**/*.test.*', '**/*.spec.*'],
       thresholds: {
         lines: 0,
         statements: 0,
@@ -16,7 +58,5 @@ export default defineConfig({
         branches: 0,
       },
     },
-    // Set test timeout to 10 seconds
-    testTimeout: 10000,
   },
 })
