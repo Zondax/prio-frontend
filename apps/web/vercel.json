@@ -1,6 +1,6 @@
 {
   "framework": "nextjs",
-  "buildCommand": "pnpm --filter prio-web build",
+  "buildCommand": "../../scripts/update-submodules.sh && pnpm --filter mono-web build",
   "installCommand": "pnpm install",
   "outputDirectory": ".next"
 }
