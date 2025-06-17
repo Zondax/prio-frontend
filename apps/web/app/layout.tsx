@@ -6,6 +6,7 @@ import { Figtree, Inter as FontSans, Parkinsans } from 'next/font/google'
 
 import { ThemeProvider } from '@/components/theming/theme-provider'
 import { cn } from '@/lib/utils'
+import OtelProvider from '@/app/telemetry/OtelProvider'
 
 import './globals.css'
 import DebugLayout from '@/components/debug/debug-layout'
@@ -54,21 +55,23 @@ export const viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <AuthProvider>
-      <html lang="en" suppressHydrationWarning className="overflow-x-hidden">
-        <body className={cn('bg-background font-body antialiased', fontSans.variable, fontBody.variable, fontHeading.variable)}>
-          <div className="flex flex-col min-h-screen w-full mx-auto">
-            <DebugLayout index={0} className="flex-1">
-              <FloatingSettingsProvider>
-                <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
-                  <StickyTopProvider>{children}</StickyTopProvider>
-                </ThemeProvider>
-                <Analytics />
-                <SpeedInsights />
-              </FloatingSettingsProvider>
-            </DebugLayout>
-          </div>
-        </body>
-      </html>
+      <OtelProvider>
+        <html lang="en" suppressHydrationWarning className="overflow-x-hidden">
+          <body className={cn('bg-background font-body antialiased', fontSans.variable, fontBody.variable, fontHeading.variable)}>
+            <div className="flex flex-col min-h-screen w-full mx-auto">
+              <DebugLayout index={0} className="flex-1">
+                <FloatingSettingsProvider>
+                  <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
+                    <StickyTopProvider>{children}</StickyTopProvider>
+                  </ThemeProvider>
+                  <Analytics />
+                  <SpeedInsights />
+                </FloatingSettingsProvider>
+              </DebugLayout>
+            </div>
+          </body>
+        </html>
+      </OtelProvider>
     </AuthProvider>
   )
 }

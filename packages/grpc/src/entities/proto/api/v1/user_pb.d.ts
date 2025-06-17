@@ -122,6 +122,92 @@ export namespace UserPreferences {
   }
 }
 
+export class UserPublicMetadata extends jspb.Message {
+  getSubscriptionsMap(): jspb.Map<string, UserSubscription>;
+  clearSubscriptionsMap(): UserPublicMetadata;
+
+  getPermissionsMap(): jspb.Map<string, ProductPermissionList>;
+  clearPermissionsMap(): UserPublicMetadata;
+
+  getPermissionsUpdatedAt(): number;
+  setPermissionsUpdatedAt(value: number): UserPublicMetadata;
+  hasPermissionsUpdatedAt(): boolean;
+  clearPermissionsUpdatedAt(): UserPublicMetadata;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): UserPublicMetadata.AsObject;
+  static toObject(includeInstance: boolean, msg: UserPublicMetadata): UserPublicMetadata.AsObject;
+  static serializeBinaryToWriter(message: UserPublicMetadata, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): UserPublicMetadata;
+  static deserializeBinaryFromReader(message: UserPublicMetadata, reader: jspb.BinaryReader): UserPublicMetadata;
+}
+
+export namespace UserPublicMetadata {
+  export type AsObject = {
+    subscriptionsMap: Array<[string, UserSubscription.AsObject]>,
+    permissionsMap: Array<[string, ProductPermissionList.AsObject]>,
+    permissionsUpdatedAt?: number,
+  }
+
+  export enum PermissionsUpdatedAtCase { 
+    _PERMISSIONS_UPDATED_AT_NOT_SET = 0,
+    PERMISSIONS_UPDATED_AT = 3,
+  }
+}
+
+export class UserSubscription extends jspb.Message {
+  getPlan(): SubscriptionPlan;
+  setPlan(value: SubscriptionPlan): UserSubscription;
+
+  getStatus(): SubscriptionStatus;
+  setStatus(value: SubscriptionStatus): UserSubscription;
+
+  getExpiresAt(): number;
+  setExpiresAt(value: number): UserSubscription;
+  hasExpiresAt(): boolean;
+  clearExpiresAt(): UserSubscription;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): UserSubscription.AsObject;
+  static toObject(includeInstance: boolean, msg: UserSubscription): UserSubscription.AsObject;
+  static serializeBinaryToWriter(message: UserSubscription, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): UserSubscription;
+  static deserializeBinaryFromReader(message: UserSubscription, reader: jspb.BinaryReader): UserSubscription;
+}
+
+export namespace UserSubscription {
+  export type AsObject = {
+    plan: SubscriptionPlan,
+    status: SubscriptionStatus,
+    expiresAt?: number,
+  }
+
+  export enum ExpiresAtCase { 
+    _EXPIRES_AT_NOT_SET = 0,
+    EXPIRES_AT = 3,
+  }
+}
+
+export class ProductPermissionList extends jspb.Message {
+  getItemsList(): Array<string>;
+  setItemsList(value: Array<string>): ProductPermissionList;
+  clearItemsList(): ProductPermissionList;
+  addItems(value: string, index?: number): ProductPermissionList;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): ProductPermissionList.AsObject;
+  static toObject(includeInstance: boolean, msg: ProductPermissionList): ProductPermissionList.AsObject;
+  static serializeBinaryToWriter(message: ProductPermissionList, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): ProductPermissionList;
+  static deserializeBinaryFromReader(message: ProductPermissionList, reader: jspb.BinaryReader): ProductPermissionList;
+}
+
+export namespace ProductPermissionList {
+  export type AsObject = {
+    itemsList: Array<string>,
+  }
+}
+
 export class GetUserPreferencesRequest extends jspb.Message {
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetUserPreferencesRequest.AsObject;
@@ -213,4 +299,19 @@ export enum ThemeMode {
   THEME_MODE_LIGHT = 1,
   THEME_MODE_DARK = 2,
   THEME_MODE_SYSTEM = 3,
+}
+export enum SubscriptionPlan { 
+  SUBSCRIPTION_PLAN_UNSPECIFIED = 0,
+  SUBSCRIPTION_PLAN_BASIC = 1,
+  SUBSCRIPTION_PLAN_PRO = 2,
+  SUBSCRIPTION_PLAN_ENTERPRISE = 3,
+}
+export enum SubscriptionStatus { 
+  SUBSCRIPTION_STATUS_UNSPECIFIED = 0,
+  SUBSCRIPTION_STATUS_ACTIVE = 1,
+  SUBSCRIPTION_STATUS_TRIAL = 2,
+  SUBSCRIPTION_STATUS_EXPIRED = 3,
+  SUBSCRIPTION_STATUS_CANCELLED = 4,
+  SUBSCRIPTION_STATUS_PAUSED = 5,
+  SUBSCRIPTION_STATUS_PENDING = 6,
 }

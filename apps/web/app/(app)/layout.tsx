@@ -9,7 +9,6 @@ import { FloatingSettingsPanel } from '@/components/debug/floating-settings-pane
 import { Sticky } from '@/components/sticky/sticky'
 import { StickyRenderer } from '@/components/sticky/sticky-renderer'
 import { TopBar } from '@/components/topbar'
-import { topBarItems } from './config'
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const { user, isLoaded } = useUser()
@@ -39,12 +38,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     )
   }
 
-  // If user is authenticated, show content with TopBar
+  // If user is authenticated, show content with TopBar but no menu items
   return (
     <div className="max-w-7xl mx-auto">
       <StickyRenderer>
         <DebugLayout index={1}>
-          <TopBar menuItems={topBarItems} />
+          <TopBar menuItems={[]} />
           <div className="flex-1">{children}</div>
         </DebugLayout>
       </StickyRenderer>

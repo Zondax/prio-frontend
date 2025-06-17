@@ -1,4 +1,4 @@
-import type { GrpcConfig, User, UserService } from '@prio-grpc'
+import type { GrpcConfig, User, UserService } from '@mono-grpc'
 import { createGrpcOptimisticStore } from '@zondax/stores'
 
 import { createUserPreferencesClient, readPreferences, writePreferences } from '../api/user'

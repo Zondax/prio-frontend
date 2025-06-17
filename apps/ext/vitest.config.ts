@@ -18,7 +18,7 @@ export default defineConfig({
       '@mono-state': path.resolve(__dirname, '../../packages/state/src'),
       '@zondax/auth-web': path.resolve(__dirname, '../../packages/auth-web/src'),
       '@zondax/auth-core': path.resolve(__dirname, '../../packages/auth-core/src'),
-      '@prio-grpc': path.resolve(__dirname, '../../packages/grpc/src'),
+      '@mono-grpc': path.resolve(__dirname, '../../packages/grpc/src'),
     },
   },
 })

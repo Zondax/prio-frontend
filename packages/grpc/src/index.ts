@@ -3,6 +3,7 @@ import * as CalendarServiceClientPb from './entities/proto/api/v1/CalendarServic
 import * as EventServiceClientPb from './entities/proto/api/v1/EventServiceClientPb'
 import * as EventscollectionsServiceClientPb from './entities/proto/api/v1/EventscollectionsServiceClientPb'
 import * as MobileIntegrityServiceClientPb from './entities/proto/api/v1/Mobile_integrityServiceClientPb'
+import * as PaymentGatewayServiceClientPb from './entities/proto/api/v1/Payment-gatewayServiceClientPb'
 import * as UserPreferencesPb from './entities/proto/api/v1/UserServiceClientPb'
 import * as WaitingListServiceClientPb from './entities/proto/api/v1/Waiting_listServiceClientPb'
 import * as ActivityPb from './entities/proto/api/v1/activity_pb'
@@ -11,6 +12,7 @@ import * as CommonPb from './entities/proto/api/v1/common_pb'
 import * as EventPb from './entities/proto/api/v1/event_pb'
 import * as EventscollectionsPb from './entities/proto/api/v1/eventscollections_pb'
 import * as MobileIntegrityPb from './entities/proto/api/v1/mobile_integrity_pb'
+import * as PaymentGatewayPb from './entities/proto/api/v1/payment-gateway_pb'
 import * as UserServiceClientPb from './entities/proto/api/v1/user_pb'
 import * as WaitingListPb from './entities/proto/api/v1/waiting_list_pb'
 
@@ -34,6 +36,8 @@ export {
   MobileIntegrityServiceClientPb as MobileIntegrityService,
   EventscollectionsPb as EventsCollections,
   EventscollectionsServiceClientPb as EventsCollectionsService,
+  PaymentGatewayPb as PaymentGateway,
+  PaymentGatewayServiceClientPb as PaymentGatewayService,
 }
 
 export const GRPC_URLS = {

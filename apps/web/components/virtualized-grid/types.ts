@@ -101,4 +101,10 @@ export interface VirtualizedGridProps<T extends GridRenderItem> {
    * Component to display when there are no items and not loading
    */
   emptyComponent?: ReactNode
+
+  /**
+   * Indicates whether data has been loaded at least once
+   * Used to prevent showing empty state during initial load
+   */
+  hasEverLoaded?: boolean
 }

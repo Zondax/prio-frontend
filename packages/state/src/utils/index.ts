@@ -1,5 +1,5 @@
-export { toGrpcMetadata } from '@prio-grpc'
-export { convertToStruct } from '@prio-grpc/utils'
+export { toGrpcMetadata } from '@mono-grpc'
+export { convertToStruct } from '@mono-grpc/utils'
 export * from './location'
 export * from './params'
 export * from './text'

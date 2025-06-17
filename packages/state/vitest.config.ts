@@ -15,7 +15,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@prio-grpc': path.resolve(__dirname, '../grpc/src'),
+      '@mono-grpc': path.resolve(__dirname, '../grpc/src'),
       '@zondax/stores': path.resolve(__dirname, '../stores/src'),
       '@mono-state/vitest': path.resolve(__dirname, './vitest'),
     },

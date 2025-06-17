@@ -45,6 +45,7 @@ export default function VirtualizedGrid<T extends GridRenderItem>({
   overscanRows = 5,
   layoutConfig: layoutConfigProp,
   debugConfig: debugConfigProp,
+  hasEverLoaded = false,
 }: VirtualizedGridProps<T>) {
   // Merge with defaults
   const layoutConfig = { ...DEFAULT_LAYOUT_CONFIG, ...layoutConfigProp }
@@ -121,7 +122,9 @@ export default function VirtualizedGrid<T extends GridRenderItem>({
   // Pre-memoize skeletons to avoid recreating during scrolling
   const renderedSkeletons = useMemo(() => {
     if (!renderSkeleton) return []
-    return Array.from({ length: numColumns }).map((_, i) => renderSkeleton(i))
+    const skeletonId = `skeleton-${Date.now()}`
+    // biome-ignore lint/suspicious/noArrayIndexKey: skeleton position is stable and appropriate for keys
+    return Array.from({ length: numColumns }).map((_, i) => <div key={`${skeletonId}-col-${i}`}>{renderSkeleton(i)}</div>)
   }, [numColumns, renderSkeleton])
 
   // Setup virtualizer for rows
@@ -166,7 +169,7 @@ export default function VirtualizedGrid<T extends GridRenderItem>({
   // Helper function to determine row content (items or skeletons)
   const _renderRowContent = (isLoaderRowParam: boolean, rowIndexParam: number): React.ReactNode | null => {
     if (!isLoaderRowParam) {
-      console.log('render row', rowIndexParam, renderedItems[rowIndexParam])
+      // console.log('render row', rowIndexParam, renderedItems[rowIndexParam])
       return renderedItems[rowIndexParam] ?? null
     }
     // isLoaderRow is true, check if we have a renderSkeleton function
@@ -195,7 +198,7 @@ export default function VirtualizedGrid<T extends GridRenderItem>({
     return renderGridVisualization(columnPositions, numColumns, rowCount, gapPercent, rowHeight, verticalSpacing, 0)
   }, [showGrid, numColumns, horizontalSpacing, verticalSpacing, rowHeight, containerWidth, containerHeight])
 
-  const showEmptyState = items.length === 0 && !isLoading && emptyComponent
+  const showEmptyState = items.length === 0 && !isLoading && emptyComponent && hasEverLoaded
 
   return (
     <div

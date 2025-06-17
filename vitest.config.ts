@@ -11,7 +11,7 @@ const excludeGlobs = ['**/node_modules/**', '**/dist/**', '**/build/**', '**/e2e
 
 // Map of package aliases ➜ relative source paths (from repo root)
 const aliasRoots: Record<string, string> = {
-  '@prio-grpc': 'packages/grpc/src',
+  '@mono-grpc': 'packages/grpc/src',
   '@zondax/auth-core': 'libs/auth-core/src',
   '@zondax/auth-web': 'libs/auth-web/src',
   '@mono-state': 'packages/state/src',

@@ -1,7 +1,7 @@
 'use client'
 
 import { useUser } from '@zondax/auth-web'
-import { ArrowRight, Code, Database, Palette, Shield, UserCog } from 'lucide-react'
+import { ArrowRight, Database, Shield, CreditCard } from 'lucide-react'
 import Link from 'next/link'
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
@@ -73,95 +73,31 @@ export default function DevPage() {
         <Card className="flex flex-col h-full hover:shadow-lg transition-shadow duration-200">
           <CardHeader className="pb-4">
             <CardTitle className="flex items-center gap-3 text-lg">
-              <Shield className="h-6 w-6 text-orange-500" />
-              Authorization
+              <CreditCard className="h-6 w-6 text-purple-500" />
+              Stripe
             </CardTitle>
-            <CardDescription className="text-sm">Test SaaS authorization system</CardDescription>
+            <CardDescription className="text-sm">Test payment integration and authorization</CardDescription>
           </CardHeader>
           <CardContent className="flex-grow pb-4">
             <p className="text-sm text-muted-foreground leading-relaxed">
-              {isAuthenticated ? 'Demo subscription-based and usage-based authorization' : 'Sign in to test authorization features'}
+              {isAuthenticated
+                ? 'Demo payment flows, product purchases, and authorization system'
+                : 'Sign in to test Stripe payment features'}
             </p>
           </CardContent>
           <CardFooter className="pt-0">
-            <Link href="/dev/authorization" className="w-full">
+            <Link href="/dev/stripe" className="w-full">
               <button
                 type="button"
                 className="flex items-center justify-between w-full p-3 text-sm font-medium bg-muted rounded-lg hover:bg-muted/80 transition-colors"
               >
-                {isAuthenticated ? 'Test authorization' : 'Sign in required'}
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </Link>
-          </CardFooter>
-        </Card>
-
-        <Card className="flex flex-col h-full hover:shadow-lg transition-shadow duration-200">
-          <CardHeader className="pb-4">
-            <CardTitle className="flex items-center gap-3 text-lg">
-              <UserCog className="h-6 w-6 text-purple-500" />
-              Waiting List
-            </CardTitle>
-            <CardDescription className="text-sm">Manage waiting list users</CardDescription>
-          </CardHeader>
-          <CardContent className="flex-grow pb-4">
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              {isAuthenticated ? 'View and manage users on the waiting list' : 'Sign in to access waiting list management'}
-            </p>
-          </CardContent>
-          <CardFooter className="pt-0">
-            <Link href="/dev/waiting" className="w-full">
-              <button
-                type="button"
-                className="flex items-center justify-between w-full p-3 text-sm font-medium bg-muted rounded-lg hover:bg-muted/80 transition-colors"
-              >
-                {isAuthenticated ? 'View waiting list' : 'Sign in required'}
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </Link>
-          </CardFooter>
-        </Card>
-
-        <Card className="flex flex-col h-full hover:shadow-lg transition-shadow duration-200">
-          <CardHeader className="pb-4">
-            <CardTitle className="flex items-center gap-3 text-lg">
-              <Palette className="h-6 w-6 text-pink-500" />
-              UI Components
-            </CardTitle>
-            <CardDescription className="text-sm">Browse and test UI components</CardDescription>
-          </CardHeader>
-          <CardContent className="flex-grow pb-4">
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              Explore the component library with interactive examples and documentation
-            </p>
-          </CardContent>
-          <CardFooter className="pt-0">
-            <Link href="/dev/ui" className="w-full">
-              <button
-                type="button"
-                className="flex items-center justify-between w-full p-3 text-sm font-medium bg-muted rounded-lg hover:bg-muted/80 transition-colors"
-              >
-                Browse components
+                {isAuthenticated ? 'Test payments' : 'Sign in required'}
                 <ArrowRight className="h-4 w-4" />
               </button>
             </Link>
           </CardFooter>
         </Card>
       </div>
-
-      {!isAuthenticated && (
-        <div className="max-w-2xl mx-auto mt-12 p-6 bg-muted rounded-lg">
-          <div className="flex items-start gap-4">
-            <Code className="h-6 w-6 text-amber-500 mt-0.5 flex-shrink-0" />
-            <div>
-              <h3 className="font-semibold mb-2">Authentication Required</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                You need to sign in to access most of the developer tools. Click the &quot;Sign In&quot; button in the top-right corner.
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }

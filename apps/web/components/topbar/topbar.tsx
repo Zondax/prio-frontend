@@ -20,7 +20,7 @@ export function TopBar({ menuItems, children }: TopBarProps) {
     <header className="bg-background">
       <div className="flex items-center justify-between" style={{ height: 'var(--topbar-height)' }}>
         <div className="flex items-center flex-shrink-0">
-          <NavMobile menuItems={menuItems} isVisible={!showDesktop} forceShowTrigger />
+          <NavMobile menuItems={menuItems} isVisible={!showDesktop} forceShowTrigger={menuItems.length > 0} />
           <div className="ml-2">
             <Logo />
           </div>

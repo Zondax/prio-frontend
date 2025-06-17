@@ -1,4 +1,4 @@
-import { type GrpcConfig, type GrpcMetadata, User, UserService, createMetadataAwareMethod, withAuthMetadata } from '@prio-grpc'
+import { type GrpcConfig, type GrpcMetadata, User, UserService, createMetadataAwareMethod, withAuthMetadata } from '@mono-grpc'
 
 export const createUserPreferencesClient = (cp: GrpcConfig) => {
   return new User.UserServiceClient(cp.baseUrl, cp.metadata as any)

@@ -2,6 +2,8 @@
 
 import { Button } from '@/components/ui/button'
 import { SignInButton, useUser } from '@zondax/auth-web'
+import Link from 'next/link'
+import { ArrowRight, Code2 } from 'lucide-react'
 
 export default function HomePage() {
   const { user, isLoaded } = useUser()
@@ -37,10 +39,23 @@ export default function HomePage() {
         height: 'calc(100vh - var(--topbar-height) - (var(--body-base-padding) * 2))',
       }}
     >
-      <div className="text-center space-y-4">
-        <h1 className="text-4xl font-bold tracking-tight">Welcome to Kickstarter</h1>
-        <p className="text-lg text-muted-foreground">A clean Next.js template for building products</p>
-        <p className="text-sm text-muted-foreground">Hello, {user.firstName || user.emailAddresses[0]?.emailAddress}!</p>
+      <div className="text-center space-y-8">
+        <div className="space-y-4">
+          <h1 className="text-4xl font-bold tracking-tight">Welcome to Kickstarter</h1>
+          <p className="text-lg text-muted-foreground">A clean Next.js template for building products</p>
+          <p className="text-sm text-muted-foreground">Hello, {user.firstName || user.emailAddresses[0]?.emailAddress}!</p>
+        </div>
+
+        <div className="pt-6">
+          <Link href="/dev">
+            <Button size="lg" className="group">
+              <Code2 className="mr-2 h-5 w-5" />
+              Test Features & Components
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
+          <p className="text-xs text-muted-foreground mt-3">Explore development tools and test new features</p>
+        </div>
       </div>
     </div>
   )

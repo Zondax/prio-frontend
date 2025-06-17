@@ -204,7 +204,7 @@ We separate the code into different packages by responsibilities:
 
 #### Why don't we import gRPC directly in web/expo?
 
-- **NEVER** import `@prio-grpc` or any gRPC-related objects directly in app components
+- **NEVER** import `@mono-grpc` or any gRPC-related objects directly in app components
 - Always use the abstracted state layer through `@mono-state` hooks
 
 For several important reasons:

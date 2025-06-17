@@ -10,7 +10,7 @@ import type { GrpcConfig, GrpcMetadata } from './types'
  *
  * @example Basic Usage
  * ```typescript
- * import { getMetadata, withAuthMetadata, createMetadataAwareMethod } from '@prio-grpc'
+ * import { getMetadata, withAuthMetadata, createMetadataAwareMethod } from '@mono-grpc'
  *
  * // Option 1: Direct metadata access
  * const metadata = await getMetadata(clientParams)

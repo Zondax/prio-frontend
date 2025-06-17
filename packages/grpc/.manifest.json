@@ -1,7 +1,7 @@
 {
   "schema": "1.0",
-  "name": "prio-grpc",
-  "description": "prio grpc",
+  "name": "mono-grpc",
+  "description": "mono grpc",
   "sourceDir": "packages/grpc",
   "targetDir": "packages/grpc",
   "author": "Zondax AG",

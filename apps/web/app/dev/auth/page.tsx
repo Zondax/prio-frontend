@@ -2,182 +2,229 @@
 
 import { useAuth, useUser } from '@zondax/auth-web'
 import { format } from 'date-fns'
-import { Clock, KeyRound, Shield, User } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { Clock, KeyRound, Shield, User, UserCheck } from 'lucide-react'
+import { useCallback, useEffect, useState } from 'react'
 
+import { EmptyState } from '@/components/empty-state'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { CopyButton } from '@/components/ui/copy-button'
 import { Label } from '@/components/ui/label'
-
-import { CopyButton } from './copy-button'
+import { Separator } from '@/components/ui/separator'
+import { Skeleton } from '@/components/ui/skeleton'
+import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 
 interface TokenInfo {
   token: string
   expiresAt: Date | null
 }
 
-export default function WhoAmIPage() {
+interface DataRowProps {
+  label: string
+  value: string | null
+  copyable?: boolean
+}
+
+function DataRow({ label, value, copyable = false }: DataRowProps) {
+  return (
+    <TableRow>
+      <TableCell className="font-medium text-muted-foreground w-32">{label}</TableCell>
+      <TableCell className="font-mono text-sm">
+        <div className="flex items-center justify-between">
+          <span className="truncate">{value || 'Not set'}</span>
+          {copyable && value && <CopyButton text={value} className="ml-2 flex-shrink-0" />}
+        </div>
+      </TableCell>
+    </TableRow>
+  )
+}
+
+function LoadingSkeleton() {
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center gap-2">
+        <Skeleton className="h-5 w-5" />
+        <Skeleton className="h-6 w-48" />
+      </div>
+      <div className="grid gap-6 md:grid-cols-2">
+        {[1, 2].map((cardId) => (
+          <Card key={`auth-skeleton-card-${cardId}`}>
+            <CardHeader>
+              <Skeleton className="h-5 w-32" />
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {[1, 2, 3].map((rowId) => (
+                  <div key={`skeleton-row-${cardId}-${rowId}`} className="flex justify-between">
+                    <Skeleton className="h-4 w-20" />
+                    <Skeleton className="h-4 w-40" />
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default function AuthPage() {
   const { user, isLoaded } = useUser()
   const { getToken } = useAuth()
   const [tokenInfo, setTokenInfo] = useState<TokenInfo | null>(null)
   const [isLoadingToken, setIsLoadingToken] = useState(false)
 
-  useEffect(() => {
-    const fetchToken = async () => {
-      if (!user) return
+  const fetchToken = useCallback(async () => {
+    if (!user) return
 
-      setIsLoadingToken(true)
-      try {
-        const token = await getToken()
-        if (token) {
-          // Decode JWT to get expiration
-          const payload = JSON.parse(atob(token.split('.')[1]))
-          const expiresAt = payload.exp ? new Date(payload.exp * 1000) : null
-
-          setTokenInfo({ token, expiresAt })
-        }
-      } catch (error) {
-        console.error('Failed to get token:', error)
-      } finally {
-        setIsLoadingToken(false)
+    setIsLoadingToken(true)
+    try {
+      const token = await getToken()
+      if (token) {
+        const payload = JSON.parse(atob(token.split('.')[1]))
+        const expiresAt = payload.exp ? new Date(payload.exp * 1000) : null
+        setTokenInfo({ token, expiresAt })
       }
-    }
-
-    if (user) {
-      fetchToken()
+    } catch (error) {
+      console.error('Failed to get token:', error)
+    } finally {
+      setIsLoadingToken(false)
     }
   }, [user, getToken])
 
+  useEffect(() => {
+    if (user) {
+      fetchToken()
+    }
+  }, [user, fetchToken])
+
   if (!isLoaded) {
-    return (
-      <Card className="mt-4">
-        <CardContent className="p-6">
-          <div className="flex items-center justify-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
-            <span className="ml-2 text-muted-foreground">Loading...</span>
-          </div>
-        </CardContent>
-      </Card>
-    )
+    return <LoadingSkeleton />
   }
 
   if (!user) {
     return (
-      <Card className="mt-4">
-        <CardContent className="p-6">
-          <p className="text-center text-muted-foreground">Please sign in to view your authentication information.</p>
-        </CardContent>
-      </Card>
+      <EmptyState
+        icon={UserCheck}
+        title="Authentication Required"
+        subtitle="Please sign in to view your authentication information and manage your account details."
+        button={{
+          label: 'Sign In',
+          href: '/sign-in',
+        }}
+      />
     )
   }
 
+  const isEmailVerified = user.primaryEmailAddress?.verification?.status === 'verified'
+
   return (
-    <Card className="mt-4">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <User className="h-4 w-4 sm:h-5 sm:w-5" />
-          Who Am I
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-6">
-          {/* User Information */}
-          <section className="space-y-4">
-            <div>
-              <Label>User ID:</Label>
-              <div className="flex items-center gap-2">
-                <pre className="bg-muted p-2 rounded-lg text-xs sm:text-sm overflow-x-auto flex-1">{user.id}</pre>
-                <CopyButton text={user.id} />
-              </div>
-            </div>
-
-            <div>
-              <Label>Email:</Label>
-              <pre className="bg-muted p-2 rounded-lg text-xs sm:text-sm overflow-x-auto">
-                {user.primaryEmailAddress?.emailAddress || 'No email set'}
-              </pre>
-            </div>
-
-            <div>
-              <Label>Full Name:</Label>
-              <pre className="bg-muted p-2 rounded-lg text-xs sm:text-sm overflow-x-auto">{user.fullName || 'No name set'}</pre>
-            </div>
-
-            <div>
-              <Label>Username:</Label>
-              <pre className="bg-muted p-2 rounded-lg text-xs sm:text-sm overflow-x-auto">{user.username || 'No username set'}</pre>
-            </div>
-          </section>
-
-          {/* Account Information */}
-          <section className="space-y-4">
-            <Label className="flex items-center gap-2">
-              <Clock className="h-4 w-4" />
-              Account Information:
-            </Label>
-
-            <div>
-              <Label>Account Created:</Label>
-              <pre className="bg-muted p-2 rounded-lg text-xs sm:text-sm overflow-x-auto">
-                {user.createdAt ? format(user.createdAt, 'yyyy-MM-dd HH:mm:ss') : 'N/A'}
-              </pre>
-            </div>
-
-            <div>
-              <Label>Last Sign In:</Label>
-              <pre className="bg-muted p-2 rounded-lg text-xs sm:text-sm overflow-x-auto">
-                {user.lastSignInAt ? format(user.lastSignInAt, 'yyyy-MM-dd HH:mm:ss') : 'N/A'}
-              </pre>
-            </div>
-
-            <div>
-              <Label>Email Verified:</Label>
-              <div className="bg-muted p-2 rounded-lg">
-                <Badge variant={user.primaryEmailAddress?.verification?.status === 'verified' ? 'default' : 'secondary'}>
-                  {user.primaryEmailAddress?.verification?.status || 'unverified'}
-                </Badge>
-              </div>
-            </div>
-          </section>
-
-          {/* Token Information */}
-          <section className="space-y-4">
-            <div className="flex items-center justify-between">
-              <Label className="flex items-center gap-2">
-                <KeyRound className="h-4 w-4" />
-                Session Token:
-              </Label>
-            </div>
-
-            {tokenInfo ? (
-              <>
-                <div>
-                  <div className="flex justify-between items-center mb-2">
-                    <Label>JWT Token:</Label>
-                    <CopyButton text={tokenInfo.token} />
-                  </div>
-                  <pre className="bg-muted p-2 rounded-lg overflow-x-auto">
-                    <code className="text-xs sm:text-sm text-foreground break-all">{tokenInfo.token}</code>
-                  </pre>
-                </div>
-
-                {tokenInfo.expiresAt && (
-                  <div>
-                    <Label>Token Expires At:</Label>
-                    <pre className="bg-muted p-2 rounded-lg text-xs sm:text-sm overflow-x-auto">
-                      {format(tokenInfo.expiresAt, 'yyyy-MM-dd HH:mm:ss')}
-                    </pre>
-                  </div>
-                )}
-              </>
-            ) : (
-              <div className="bg-muted p-4 rounded-lg">
-                <p className="text-sm text-muted-foreground">Click "Refresh Token" to load session token information.</p>
-              </div>
-            )}
-          </section>
+    <div className="pt-6 space-y-6">
+      {/* Page Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold">Authentication Details</h1>
+          <p className="text-muted-foreground">View your account information and session details</p>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+
+      {/* Main Content Grid */}
+      <div className="grid gap-6 md:grid-cols-2">
+        {/* User Information */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <User className="h-4 w-4" />
+              User Information
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableBody>
+                <DataRow label="User ID" value={user.id} copyable />
+                <DataRow label="Email" value={user.primaryEmailAddress?.emailAddress || null} />
+                <DataRow label="Full Name" value={user.fullName} />
+                <DataRow label="Username" value={user.username} />
+                <TableRow>
+                  <TableCell className="font-medium text-muted-foreground">Email Status</TableCell>
+                  <TableCell>
+                    <Badge variant={isEmailVerified ? 'default' : 'secondary'} className="text-xs">
+                      <Shield className="h-3 w-3 mr-1" />
+                      {isEmailVerified ? 'Verified' : 'Unverified'}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+
+        {/* Account Information */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Clock className="h-4 w-4" />
+              Account Information
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableBody>
+                <DataRow label="Created" value={user.createdAt ? format(user.createdAt, 'MMM d, yyyy') : null} />
+                <DataRow label="Last Sign In" value={user.lastSignInAt ? format(user.lastSignInAt, 'MMM d, yyyy') : null} />
+                <DataRow label="Created Time" value={user.createdAt ? format(user.createdAt, 'h:mm a') : null} />
+                <DataRow label="Last Sign In Time" value={user.lastSignInAt ? format(user.lastSignInAt, 'h:mm a') : null} />
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Token Information - Full Width */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-2">
+              <KeyRound className="h-4 w-4" />
+              Session Token
+            </CardTitle>
+            {tokenInfo && <CopyButton text={tokenInfo.token} variant="outline" />}
+          </div>
+        </CardHeader>
+        <CardContent>
+          {tokenInfo ? (
+            <div className="space-y-4">
+              <div>
+                <Label className="text-sm font-medium">JWT Token</Label>
+                <div className="mt-1">
+                  <div className="bg-muted/50 p-3 rounded-md">
+                    <code className="text-xs text-foreground break-all font-mono leading-relaxed">{tokenInfo.token}</code>
+                  </div>
+                </div>
+              </div>
+
+              {tokenInfo.expiresAt && (
+                <>
+                  <Separator />
+                  <div className="flex justify-between items-center">
+                    <Label className="text-sm font-medium">Token Expires</Label>
+                    <span className="text-sm font-mono">{format(tokenInfo.expiresAt, 'MMM d, yyyy h:mm a')}</span>
+                  </div>
+                </>
+              )}
+            </div>
+          ) : (
+            <EmptyState
+              icon={KeyRound}
+              title="No Token Loaded"
+              subtitle="Refresh the page to load your current session token information."
+              className="py-8"
+            />
+          )}
+        </CardContent>
+      </Card>
+    </div>
   )
 }

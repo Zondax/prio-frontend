@@ -6,8 +6,8 @@
     "plugins": [],
     "paths": {
       "@/*": ["src/*"],
-      "@prio-grpc": ["../grpc/src/"],
-      "@prio-grpc/*": ["../grpc/src/*"],
+      "@mono-grpc": ["../grpc/src/"],
+      "@mono-grpc/*": ["../grpc/src/*"],
       "@/entities/*": ["src/entities/*"],
       "@zondax/stores": ["../stores/src"]
     }

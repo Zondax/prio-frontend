@@ -1,9 +1,9 @@
 {
-  "name": "prio-grpc",
+  "name": "mono-grpc",
   "version": "0.1.0",
   "private": true,
-  "description": "prio grpc",
-  "keywords": ["zondax", "prio-grpc"],
+  "description": "mono grpc",
+  "keywords": ["zondax", "mono-grpc"],
   "license": "UNLICENSED",
   "author": "Zondax AG <hello@zondax.ch>",
   "scripts": {

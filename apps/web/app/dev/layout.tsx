@@ -5,7 +5,7 @@ import EndpointSelector from '@/components/debug/endpoint-selector'
 import { FloatingSettingsPanel } from '@/components/debug/floating-settings-panel'
 import { TopBar } from '@/components/topbar'
 import { useUser } from '@zondax/auth-web'
-import { topBarItems } from './config'
+import Link from 'next/link'
 
 function CustomNavigation() {
   const { user, isLoaded } = useUser()
@@ -21,7 +21,12 @@ export default function DevLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col h-full max-w-7xl mx-auto">
       <DebugLayout index={1}>
-        <TopBar menuItems={topBarItems}>
+        <TopBar menuItems={[]}>
+          <Link href="/dev">
+            <div className="bg-primary text-primary-foreground px-3 py-1 rounded-md text-sm font-medium cursor-pointer hover:bg-primary/90 transition-colors">
+              Dev
+            </div>
+          </Link>
           <CustomNavigation />
         </TopBar>
 
