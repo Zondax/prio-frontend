@@ -61,7 +61,7 @@ export default function VirtualizedGrid<T extends GridRenderItem>({
   const logger = useMemo(() => createLogger(debug, gridIdRef.current), [debug])
 
   // State for debug controls (overscanRows might still be dynamic if needed later)
-  const [overscanRowsValue, setOverscanRowsValue] = useState<number>(overscanRows)
+  const [overscanRowsValue, _setOverscanRowsValue] = useState<number>(overscanRows)
 
   const parentRef = useRef<HTMLDivElement>(null)
   // loadMoreRef is now conditionally rendered, so it might not always exist.
@@ -141,7 +141,7 @@ export default function VirtualizedGrid<T extends GridRenderItem>({
   const gridColumnClasses = useMemo(() => getGridColumnClasses(numColumns), [numColumns])
 
   // Use the loadMore hook to handle infinite scrolling
-  const { tryLoadMore } = useLoadMore(
+  useLoadMore(
     loadMore,
     isLoading,
     parentRef,

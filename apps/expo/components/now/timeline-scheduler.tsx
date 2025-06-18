@@ -1,4 +1,4 @@
-import { type Activity, type ActivitySlot, type Event, createActivityIndicesMap, createActivityMap, useActivityStore } from '@mono-state'
+import { type Activity, type ActivitySlot, createActivityIndicesMap, createActivityMap, type Event, useActivityStore } from '@mono-state'
 import {
   calculateTransportInfo,
   findExistingSlot,

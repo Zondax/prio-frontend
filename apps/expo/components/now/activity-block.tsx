@@ -1,10 +1,10 @@
-import { type ActivitySlot, type Event, type RouteMatrix, TransportMode, getMinutesFromTimestamp } from '@mono-state'
+import { type ActivitySlot, type Event, getMinutesFromTimestamp, type RouteMatrix, TransportMode } from '@mono-state'
 import {
-  type EarliestReachableSlot,
-  type SlotBorders,
   canSelectTimeSlot,
+  type EarliestReachableSlot,
   formatTimeWithDayIndicator,
   isTimeReachable,
+  type SlotBorders,
 } from '@mono-state/feature/activity'
 import { shouldDisableForTravelTime, showTransportIcon } from '@mono-state/feature/activity/transportUtils'
 import { eventHasLocation } from '@mono-state/feature/events/utils'

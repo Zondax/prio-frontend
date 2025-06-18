@@ -25,7 +25,7 @@ export const parseDateParam = (dateParam?: string): Date | undefined => {
     if (!Number.isNaN(fallbackDate.getTime())) {
       return fallbackDate
     }
-  } catch (e) {
+  } catch (_e) {
     // Silently fail and return undefined for invalid dates
   }
 

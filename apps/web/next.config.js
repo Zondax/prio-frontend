@@ -65,14 +65,14 @@ const productionHeaders = [
   },
 ]
 
-const fallbackHeaders = [
+const _fallbackHeaders = [
   {
     source: '/(.*)',
     headers: [{ key: 'X-Frame-Options', value: 'DENY' }],
   },
 ]
 
-const noHeaders = []
+const _noHeaders = []
 
 const nextConfig = {
   output: 'standalone',

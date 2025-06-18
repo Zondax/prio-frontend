@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "description": "prio state",
-  "keywords": ["zondax", "mono-state"],
+  "keywords": [
+    "zondax",
+    "mono-state"
+  ],
   "license": "UNLICENSED",
   "author": "Zondax AG <hello@zondax.ch>",
   "main": "./src/index.ts",

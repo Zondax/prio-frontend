@@ -1,15 +1,15 @@
-import { type GrpcConfig, type GrpcMetadata, createMetadataAwareMethod } from '@mono-grpc'
+import { createMetadataAwareMethod, type GrpcConfig } from '@mono-grpc'
 import { PaymentGatewayClient } from '../../../grpc/src/entities/proto/api/v1/Payment-gatewayServiceClientPb'
 import {
   type CreateCheckoutSessionRequest,
-  type CreateCheckoutSessionResponse,
-  type GetCheckoutSessionStatusRequest,
-  type GetCheckoutSessionStatusResponse,
-  type CreatePortalSessionRequest,
-  type CreatePortalSessionResponse,
   CreateCheckoutSessionRequest as CreateCheckoutSessionRequestClass,
-  GetCheckoutSessionStatusRequest as GetCheckoutSessionStatusRequestClass,
+  type CreateCheckoutSessionResponse,
+  type CreatePortalSessionRequest,
   CreatePortalSessionRequest as CreatePortalSessionRequestClass,
+  type CreatePortalSessionResponse,
+  type GetCheckoutSessionStatusRequest,
+  GetCheckoutSessionStatusRequest as GetCheckoutSessionStatusRequestClass,
+  type GetCheckoutSessionStatusResponse,
 } from '../../../grpc/src/entities/proto/api/v1/payment-gateway_pb'
 
 // Client factory
@@ -39,10 +39,7 @@ const createPortalSessionWithAuth = createMetadataAwareMethod<
 // Helper functions to create request objects
 // SECURITY: Frontend should ONLY send product_id and quantity
 // Backend handles all Stripe configuration and price lookup
-export const createCheckoutSessionRequest = (params: {
-  productId: string
-  quantity?: number
-}): CreateCheckoutSessionRequest => {
+export const createCheckoutSessionRequest = (params: { productId: string; quantity?: number }): CreateCheckoutSessionRequest => {
   const request = new CreateCheckoutSessionRequestClass()
 
   // Set internal product ID and quantity (what user wants to buy)

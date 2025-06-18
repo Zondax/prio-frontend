@@ -6,14 +6,13 @@ import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-reac
 import React, { useCallback, useMemo, useState } from 'react'
 import { Modal, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { EVENT_WIDTH, SHOW_SLOT_TIME, SLOT_DURATION_MINUTES, SLOT_HEIGHT } from '@/lib/now'
 import Calendar from '~/components/calendar'
 import { EventCard } from '~/components/explore/event-card'
 import { EventDetails } from '~/components/explore/event-details'
 import TimelineScheduler from '~/components/now/timeline-scheduler'
 import { Button } from '~/components/ui/button'
 import { Card } from '~/components/ui/card'
-
-import { EVENT_WIDTH, SHOW_SLOT_TIME, SLOT_DURATION_MINUTES, SLOT_HEIGHT } from '@/lib/now'
 
 interface DateSelectorProps {
   selectedDate: Date

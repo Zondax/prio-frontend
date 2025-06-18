@@ -1,15 +1,14 @@
-import { useMemo } from 'react'
-import { useAuthorization } from '@zondax/auth-web'
 import {
-  hasSubscription,
-  isSubscriptionActive,
   getSubscriptionPlan,
   getSubscriptionStatus,
   hasPermission,
+  hasSubscription,
+  isSubscriptionActive,
 } from '@mono-state/authorization/methods'
-import type { SubscriptionStatus, SubscriptionPlan } from '@mono-state/authorization/types'
-import type { UserPublicMetadata } from '@mono-state/authorization/types'
-import { convertClerkToProtobuf, type ClerkUserMetadata } from './converter'
+import type { SubscriptionPlan, SubscriptionStatus, UserPublicMetadata } from '@mono-state/authorization/types'
+import { useAuthorization } from '@zondax/auth-web'
+import { useMemo } from 'react'
+import { type ClerkUserMetadata, convertClerkToProtobuf } from './converter'
 
 export interface UseAppAuthorizationReturn {
   // Basic authentication state from base hook

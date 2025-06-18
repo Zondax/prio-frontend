@@ -1,5 +1,4 @@
 import Panel from '@pages/panel/Panel'
-import React from 'react'
 import { createRoot } from 'react-dom/client'
 
 import '@pages/panel/index.css'

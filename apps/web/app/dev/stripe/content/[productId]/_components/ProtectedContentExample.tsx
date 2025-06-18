@@ -1,10 +1,10 @@
 'use client'
 
 import { ProtectedComponent } from '@zondax/auth-web'
-import { useAppAuthorization } from '@/lib/authorization/useAppAuthorization'
-import { Shield, Code, CheckCircle, XCircle } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
+import { CheckCircle, Code, Shield, XCircle } from 'lucide-react'
 import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Badge } from '@/components/ui/badge'
+import { useAppAuthorization } from '@/lib/authorization/useAppAuthorization'
 
 interface Props {
   productId: string

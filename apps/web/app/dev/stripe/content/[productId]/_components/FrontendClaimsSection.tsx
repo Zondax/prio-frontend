@@ -1,11 +1,11 @@
 'use client'
 
-import { useAppAuthorization } from '@/lib/authorization/useAppAuthorization'
-import { User, Clock, RefreshCw, CheckCircle, XCircle } from 'lucide-react'
+import { CheckCircle, Clock, RefreshCw, User, XCircle } from 'lucide-react'
+import { useState } from 'react'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { useState } from 'react'
+import { useAppAuthorization } from '@/lib/authorization/useAppAuthorization'
 
 interface FrontendClaimsSectionProps {
   productId: string

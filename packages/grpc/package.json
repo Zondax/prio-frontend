@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "description": "mono grpc",
-  "keywords": ["zondax", "mono-grpc"],
+  "keywords": [
+    "zondax",
+    "mono-grpc"
+  ],
   "license": "UNLICENSED",
   "author": "Zondax AG <hello@zondax.ch>",
   "scripts": {

@@ -1,9 +1,9 @@
 'use client'
 
-import { Suspense } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
-import { EmptyState } from '@/components/empty-state'
 import { CheckCircle, ShoppingCart } from 'lucide-react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
+import { EmptyState } from '@/components/empty-state'
 
 function SuccessPageContent() {
   const searchParams = useSearchParams()

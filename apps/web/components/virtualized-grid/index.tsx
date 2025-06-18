@@ -1,2 +1,2 @@
-export { default } from './virtualized-grid'
 export type { VirtualizedGridProps } from './types'
+export { default } from './virtualized-grid'

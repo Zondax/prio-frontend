@@ -1,7 +1,7 @@
 'use client'
 
-import { cn } from '@/lib/utils'
 import type React from 'react'
+import { cn } from '@/lib/utils'
 
 interface WidthVariant {
   name: string
@@ -33,9 +33,10 @@ interface DebugWrapperProps {
 export function DebugScenarioWrapper({ children, title, variants = widthVariants, showVariantDetails = true }: DebugWrapperProps) {
   return (
     <div className="space-y-6">
+      {title && <h2 className="mb-2 font-semibold">{title}</h2>}
       {variants.map((variant) => {
         // Create a clean data-testid from the variant name
-        const testIdName = variant.name.replace(/[^a-zA-Z0-9_\\-]/g, '-').replace(/--+/g, '-')
+        const testIdName = variant.name.replace(/[^a-zA-Z0-9_-]/g, '-').replace(/--+/g, '-')
         return (
           <div key={variant.name} data-testid={`variant-container-${testIdName}`}>
             {showVariantDetails && <p className="mb-1 text-sm text-gray-500 dark:text-gray-400">Variant: {variant.name}</p>}

@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/vitest'
-import { afterEach } from 'vitest'
-import { cleanup } from '@testing-library/react'
 import { EventEmitter as NodeEventEmitter } from 'node:events'
+import { cleanup } from '@testing-library/react'
+import { afterEach } from 'vitest'
 
 // Ensure DOM is cleaned after each test when using the monorepo-level runner
 // Provide a minimal global expo object for expo-modules-core expectations

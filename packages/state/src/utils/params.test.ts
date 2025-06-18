@@ -4,8 +4,8 @@ import { parseDateParam } from './params'
 
 // Helper: get ISO string for a known date
 const isoDate = '2025-05-15T14:30:00Z'
-const incompleteDate = '2025-05-15'
-const nonIsoDate = 'May 15, 2025 14:30:00'
+const _incompleteDate = '2025-05-15'
+const _nonIsoDate = 'May 15, 2025 14:30:00'
 const invalidDate = 'not-a-date'
 
 describe('parseDateParam', () => {

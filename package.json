@@ -40,15 +40,15 @@
     "react-dom": "18.3.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
+    "@biomejs/biome": "^2.0.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@types/async": "^3.2.24",
-    "@vitest/coverage-v8": "^3.2.3",
+    "@vitest/coverage-v8": "^3.2.4",
     "globals": "^16.2.0",
-    "lefthook": "1.11.13",
+    "lefthook": "1.11.14",
     "vite": "6.3.5",
-    "vitest": "^3.2.3"
+    "vitest": "^3.2.4"
   },
   "engines": {
     "node": ">=20"
@@ -62,6 +62,7 @@
       "core-js",
       "esbuild",
       "lefthook",
+      "protobufjs",
       "sharp",
       "unrs-resolver"
     ]

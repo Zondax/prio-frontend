@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "description": "mono-web",
-  "keywords": ["zondax", "mono-web"],
+  "keywords": [
+    "zondax",
+    "mono-web"
+  ],
   "license": "UNLICENSED",
   "author": "Zondax AG <hello@zondax.ch>",
   "scripts": {
@@ -68,6 +71,7 @@
     "@zondax/auth-core": "workspace:*",
     "@zondax/auth-web": "workspace:*",
     "@zondax/otel-web": "workspace:*",
+    "@zondax/ui-common": "workspace:*",
     "autoprefixer": "10.4.21",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",

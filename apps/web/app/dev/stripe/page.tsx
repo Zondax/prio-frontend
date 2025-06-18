@@ -1,29 +1,29 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useGrpcSetup } from '@zondax/auth-web/hooks'
+import { CreditCard, Crown, Loader2, Package, RefreshCw, ShoppingCart } from 'lucide-react'
+import {
+  createCheckoutSessionRequest,
+  createGetPlansRequest,
+  createGetProductsRequest,
+  type Product,
+  useCreateCheckoutSessionStore,
+  useEndpointStore,
+  useGetPlansStore,
+  useGetProductsStore,
+} from 'mono-state'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useGrpcSetup } from '@zondax/auth-web/hooks'
-import {
-  useGetProductsStore,
-  useGetPlansStore,
-  useCreateCheckoutSessionStore,
-  createGetProductsRequest,
-  createGetPlansRequest,
-  createCheckoutSessionRequest,
-  type Product,
-  useEndpointStore,
-} from 'mono-state'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Skeleton } from '@/components/ui/skeleton'
-import VirtualizedGrid from '@/components/virtualized-grid'
-import type { GridRenderItem } from '@/components/virtualized-grid/types'
+import { useCallback, useEffect, useState } from 'react'
 import { EmptyState } from '@/components/empty-state'
 import { ManageBillingButton } from '@/components/manage-billing-button'
-import { ShoppingCart, CreditCard, Package, Crown, RefreshCw, Loader2 } from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Skeleton } from '@/components/ui/skeleton'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import VirtualizedGrid from '@/components/virtualized-grid'
+import type { GridRenderItem } from '@/components/virtualized-grid/types'
 
 // Configuration
 const LOAD_LIMITS = {

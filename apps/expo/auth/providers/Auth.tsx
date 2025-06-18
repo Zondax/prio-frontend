@@ -1,19 +1,19 @@
 import {
   AUTH_TIMEOUT,
   AuthContext,
+  AuthenticationError,
   type AuthResponse,
   type AuthState,
-  AuthenticationError,
-  type OAuth2Token,
-  TokenRefreshError,
-  TokenStorageError,
-  type ZitadelSettings,
   getUserFromToken,
   handleTokenRefreshCycle,
   isAuthError,
   isTokenExpired,
+  type OAuth2Token,
+  TokenRefreshError,
+  TokenStorageError,
+  type ZitadelSettings,
 } from '@zondax/auth-expo'
-import { Prompt, ResponseType, exchangeCodeAsync, makeRedirectUri, useAuthRequest, useAutoDiscovery } from 'expo-auth-session'
+import { exchangeCodeAsync, makeRedirectUri, Prompt, ResponseType, useAuthRequest, useAutoDiscovery } from 'expo-auth-session'
 import { useRouter, useSegments } from 'expo-router'
 import * as WebBrowser from 'expo-web-browser'
 import { type ReactNode, useCallback, useEffect, useState } from 'react'

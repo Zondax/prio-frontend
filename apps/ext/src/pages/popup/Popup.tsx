@@ -1,5 +1,4 @@
 import logo from '@assets/img/logo.svg'
-import React from 'react'
 
 export default function Popup() {
   return (

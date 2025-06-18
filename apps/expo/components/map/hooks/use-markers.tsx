@@ -1,5 +1,5 @@
 import { MarkerView } from '@maplibre/maplibre-react-native'
-import { type MapMarker, MapMarkerKind, type MarkerEvent, createSingleEventMarker } from '@mono-state'
+import { createSingleEventMarker, type MapMarker, MapMarkerKind, type MarkerEvent } from '@mono-state'
 import type React from 'react'
 import { useCallback, useState } from 'react'
 

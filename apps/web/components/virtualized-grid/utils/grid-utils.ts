@@ -1,5 +1,3 @@
-import { cn } from '@/lib/utils'
-
 import type { SpacingValues } from '../types'
 
 /**

@@ -7,7 +7,6 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { EmptyState } from '@/components/empty-state'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { CopyButton } from '@/components/ui/copy-button'
 import { Label } from '@/components/ui/label'
@@ -74,7 +73,7 @@ export default function AuthPage() {
   const { user, isLoaded } = useUser()
   const { getToken } = useAuth()
   const [tokenInfo, setTokenInfo] = useState<TokenInfo | null>(null)
-  const [isLoadingToken, setIsLoadingToken] = useState(false)
+  const [_isLoadingToken, setIsLoadingToken] = useState(false)
 
   const fetchToken = useCallback(async () => {
     if (!user) return

@@ -1,7 +1,7 @@
 'use client'
 
-import { useDeleteCollectionDialog, useEditCollectionDialog, useShareCollectionDialog } from '@mono-state/feature/collections/hooks'
 import type { EventCollectionWithSummary } from '@mono-grpc/entities/proto/api/v1/eventscollections_pb'
+import { useDeleteCollectionDialog, useEditCollectionDialog, useShareCollectionDialog } from '@mono-state/feature/collections/hooks'
 import React from 'react'
 import { View } from 'react-native'
 

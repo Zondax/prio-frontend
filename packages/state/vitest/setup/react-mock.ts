@@ -37,7 +37,7 @@ vi.mock('zustand', async () => {
 
       // Now handle the result based on its type
       initialState = typeof storeInitializer === 'function' ? storeInitializer(set, get, api) : storeInitializer
-    } catch (e) {
+    } catch (_e) {
       // If there's an error, default to empty state
       initialState = {}
     }

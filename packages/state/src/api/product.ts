@@ -1,14 +1,14 @@
-import { type GrpcConfig, type GrpcMetadata, createMetadataAwareMethod } from '@mono-grpc'
+import { createMetadataAwareMethod, type GrpcConfig } from '@mono-grpc'
 import { ProductServiceClient } from '../../../grpc/src/entities/proto/api/v1/ProductServiceClientPb'
 import type {
-  GetProductsRequest,
-  GetProductsResponse,
   GetPlansRequest,
   GetPlansResponse,
   GetProductByIDRequest,
   GetProductByIDResponse,
   GetProductContentRequest,
   GetProductContentResponse,
+  GetProductsRequest,
+  GetProductsResponse,
 } from '../../../grpc/src/entities/proto/api/v1/product_pb'
 
 // Client factory
@@ -34,10 +34,7 @@ const getProductContentWithAuth = createMetadataAwareMethod<ProductServiceClient
 )
 
 // Helper functions to create request objects
-export const createGetProductsRequest = (params?: {
-  limit?: number
-  activeOnly?: boolean
-}): GetProductsRequest => {
+export const createGetProductsRequest = (params?: { limit?: number; activeOnly?: boolean }): GetProductsRequest => {
   const { GetProductsRequest } = require('../../../grpc/src/entities/proto/api/v1/product_pb')
 
   const request = new GetProductsRequest()
@@ -47,10 +44,7 @@ export const createGetProductsRequest = (params?: {
   return request
 }
 
-export const createGetPlansRequest = (params?: {
-  limit?: number
-  activeOnly?: boolean
-}): GetPlansRequest => {
+export const createGetPlansRequest = (params?: { limit?: number; activeOnly?: boolean }): GetPlansRequest => {
   const { GetPlansRequest } = require('../../../grpc/src/entities/proto/api/v1/product_pb')
 
   const request = new GetPlansRequest()

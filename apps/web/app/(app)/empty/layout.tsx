@@ -1,5 +1,5 @@
-import DebugLayout from '@/components/debug/debug-layout'
 import type { Metadata } from 'next'
+import DebugLayout from '@/components/debug/debug-layout'
 
 export const metadata: Metadata = {
   title: 'Prio | Empty',

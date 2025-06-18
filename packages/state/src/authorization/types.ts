@@ -1,7 +1,7 @@
 export {
+  ProductPermissionList,
+  SubscriptionPlan,
+  SubscriptionStatus,
   UserPublicMetadata,
   UserSubscription,
-  ProductPermissionList,
-  SubscriptionStatus,
-  SubscriptionPlan,
 } from 'mono-grpc/src/entities/proto/api/v1/user_pb'

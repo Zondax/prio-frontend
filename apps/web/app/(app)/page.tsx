@@ -1,9 +1,9 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
 import { SignInButton, useUser } from '@zondax/auth-web'
-import Link from 'next/link'
 import { ArrowRight, Code2 } from 'lucide-react'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 export default function HomePage() {
   const { user, isLoaded } = useUser()

@@ -1,12 +1,11 @@
 'use client'
 
-import DebugLayout from '@/components/debug/debug-layout'
 import { useUser } from '@zondax/auth-web'
+import DebugLayout from '@/components/debug/debug-layout'
 
 import '@/app/globals.css'
 
 import { FloatingSettingsPanel } from '@/components/debug/floating-settings-panel'
-import { Sticky } from '@/components/sticky/sticky'
 import { StickyRenderer } from '@/components/sticky/sticky-renderer'
 import { TopBar } from '@/components/topbar'
 

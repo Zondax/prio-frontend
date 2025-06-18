@@ -1,5 +1,4 @@
 import Newtab from '@pages/newtab/Newtab'
-import React from 'react'
 import { createRoot } from 'react-dom/client'
 
 import '@pages/newtab/index.css'

@@ -38,7 +38,7 @@ vi.mock('./hooks/use-columns', () => ({
 }))
 
 vi.mock('./hooks/use-item-chunks', () => ({
-  useItemChunks: vi.fn().mockImplementation((items: GridRenderItem[], numColumns: number) => {
+  useItemChunks: vi.fn().mockImplementation((items: GridRenderItem[], _numColumns: number) => {
     // Simple chunking for tests - just put each item in its own row
     return items.map((item) => [item])
   }),
@@ -88,7 +88,7 @@ describe('VirtualizedGrid', () => {
     { id: 4, title: 'Item 4', colSpan: 3 },
   ]
 
-  const renderItem = (item: TestItem, index: number) => (
+  const renderItem = (item: TestItem, _index: number) => (
     <div data-testid={`item-${item.id}`}>
       {item.title} {item.colSpan ? `(${item.colSpan} cols)` : ''}
     </div>
@@ -205,7 +205,7 @@ describe('VirtualizedGrid', () => {
         console.log(`Inspecting cellDiv for item ${item.id}:`, cellDiv.outerHTML)
 
         const expectedColSpan = item.colSpan || 1
-        const actualExpectedColSpanValue = Math.min(expectedColSpan, 4) // numColumns is 4 (from useColumns mock for 'lg')
+        const _actualExpectedColSpanValue = Math.min(expectedColSpan, 4) // numColumns is 4 (from useColumns mock for 'lg')
         // expect(cellDiv).toHaveClass(`col-span-${actualExpectedColSpanValue}`);
         // expect(cellDiv).toHaveClass('flex');
         // expect(cellDiv).toHaveClass('flex-col');

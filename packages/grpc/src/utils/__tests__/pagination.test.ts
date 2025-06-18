@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { PageRequest, SortingOption } from '../../entities/proto/api/v1/common_pb'
-import { type PaginationInput, createPageRequest, createSortingOption } from '../pagination'
+import { createPageRequest, createSortingOption, type PaginationInput } from '../pagination'
 
 describe('pagination utils', () => {
   describe('createSortingOption', () => {

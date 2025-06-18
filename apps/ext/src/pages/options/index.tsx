@@ -1,5 +1,4 @@
 import Options from '@pages/options/Options'
-import React from 'react'
 import { createRoot } from 'react-dom/client'
 
 import '@pages/options/index.css'

@@ -36,7 +36,7 @@ const mockRender = (item: GridRenderItem, index: number): ReactNode => {
 
 // Updated createItems to use string IDs and ensure MockGridItem structure
 const createItems = (configs: Array<{ id: string; colSpan?: number }>): MockGridItem[] => {
-  return configs.map((config, i) => ({
+  return configs.map((config, _i) => ({
     ...config, // Spread id and colSpan
     gridRender: mockRender, // Assign the compatible mock render function
     // Add any other properties from TestItemBase or GridRenderItem if necessary

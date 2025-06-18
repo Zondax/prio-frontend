@@ -4,6 +4,7 @@ import { usePreferencesStore } from '@mono-state'
 import { useEndpointStore } from '@mono-state/stores'
 import { useGrpcSetup } from '@zondax/auth-web/hooks'
 import { RefreshCcw } from 'lucide-react'
+import { useId } from 'react'
 
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -14,6 +15,8 @@ export default function UserPreferencesPage() {
 
   const { selectedEndpoint } = useEndpointStore()
   useGrpcSetup(setParams, selectedEndpoint)
+
+  const displayNameInputId = useId()
 
   const handleDisplayNameChange = (newDisplayName: string) => {
     if (!write) return
@@ -88,9 +91,9 @@ export default function UserPreferencesPage() {
                   </div>
                 </div>
                 <div className="mt-4 space-y-2">
-                  <Label htmlFor="displayName">Display Name</Label>
+                  <Label htmlFor={displayNameInputId}>Display Name</Label>
                   <Input
-                    id="displayName"
+                    id={displayNameInputId}
                     value={data.toObject().displayName}
                     onChange={(e) => handleDisplayNameChange(e.target.value)}
                     className="w-full max-w-[400px]"

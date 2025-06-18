@@ -1,11 +1,9 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
-  "organizeImports": {
-    "enabled": true
-  },
+  "$schema": "https://biomejs.dev/schemas/2.0.0/schema.json",
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
     "enabled": true,
-    "ignore": ["**/apps/*/components/ui/**", "**/apps/expo/**"],
+    "includes": ["**", "!**/apps/**/*/components/ui/**", "!**/apps/expo/**"],
     "rules": {
       "recommended": true,
       "correctness": {
@@ -31,9 +29,17 @@
         "noDangerouslySetInnerHtml": "warn"
       },
       "style": {
-        "noNonNullAssertion": "warn"
-      },
-      "nursery": {
+        "noNonNullAssertion": "warn",
+        "noParameterAssign": "error",
+        "useAsConstAssertion": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useSelfClosingElements": "error",
+        "useSingleVarDeclarator": "error",
+        "noUnusedTemplateLiteral": "error",
+        "useNumberNamespace": "error",
+        "noInferrableTypes": "error",
+        "noUselessElse": "error",
         "noRestrictedImports": {
           "level": "warn",
           "options": {
@@ -42,7 +48,8 @@
             }
           }
         }
-      }
+      },
+      "nursery": {}
     }
   },
   "formatter": {
@@ -67,17 +74,18 @@
   },
   "files": {
     "maxSize": 100485760,
-    "ignore": [
-      "**/node_modules/**",
-      "**/dist_chrome/**",
-      "**/dist/**",
-      "**/.next/**",
-      "**/coverage/**",
-      "**/.cache/**",
-      "**/public/**",
-      "**/src/entities/**/*.js",
-      "**/src/entities/**/*.ts",
-      "**/src/entities/proto/**"
+    "includes": [
+      "**",
+      "!**/node_modules/**",
+      "!**/dist_chrome/**",
+      "!**/dist/**",
+      "!**/.next/**",
+      "!**/coverage/**",
+      "!**/.cache/**",
+      "!**/public/**",
+      "!**/src/entities/**/*.js",
+      "!**/src/entities/**/*.ts",
+      "!**/src/entities/proto/**"
     ]
   }
 }

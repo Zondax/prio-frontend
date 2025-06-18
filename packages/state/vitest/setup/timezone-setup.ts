@@ -84,6 +84,7 @@ export function withFixedDate<T>(date: Date, callback: () => T): T {
     return callback()
   } finally {
     // Restore original timer functionality
+    // biome-ignore lint/correctness/useHookAtTopLevel: this is a vitest utility, not a React hook
     vi.useRealTimers()
     Date.now = originalNow
   }

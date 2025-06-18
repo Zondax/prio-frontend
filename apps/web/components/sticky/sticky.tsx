@@ -1,8 +1,8 @@
 'use client'
 
-import { useStickyTop } from '@/components/sticky/sticky-top-context'
 import type { ReactNode } from 'react'
 import { useEffect } from 'react'
+import { useStickyTop } from '@/components/sticky/sticky-top-context'
 
 interface StickyProps {
   children: ReactNode

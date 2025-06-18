@@ -8,7 +8,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useLoadMore } from './use-load-more'
 
 // Create a mock for IntersectionObserver
-const mockIntersectionObserverCallback = vi.fn()
+const _mockIntersectionObserverCallback = vi.fn()
 const mockObserve = vi.fn()
 const mockDisconnect = vi.fn()
 

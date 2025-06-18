@@ -1,4 +1,4 @@
-import { THEME_MODES, getMapStyle } from '@mono-state/feature/map'
+import { getMapStyle, THEME_MODES } from '@mono-state/feature/map'
 import { useEffect, useState } from 'react'
 import { useColorScheme } from 'react-native'
 

@@ -1,5 +1,5 @@
 import { resolve } from 'node:path'
-import { type ManifestV3Export, crx } from '@crxjs/vite-plugin'
+import { crx, type ManifestV3Export } from '@crxjs/vite-plugin'
 import { defineConfig, mergeConfig } from 'vite'
 
 import baseConfig, { baseBuildOptions, baseManifest } from './vite.config.base'

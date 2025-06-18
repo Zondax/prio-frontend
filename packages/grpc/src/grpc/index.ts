@@ -1,6 +1,5 @@
+export type { ClientReadableStream } from 'grpc-web'
 export * from './baseClient'
+export * from './metadata'
 export * from './types'
 export * from './utils'
-export * from './metadata'
-
-export type { ClientReadableStream } from 'grpc-web'

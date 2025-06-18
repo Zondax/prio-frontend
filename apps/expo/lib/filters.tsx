@@ -1,5 +1,5 @@
 import { parseDateParam } from '@mono-state'
-import { type Filter, createDateRangeFilter } from '@mono-state/feature/events'
+import { createDateRangeFilter, type Filter } from '@mono-state/feature/events'
 import type { UnknownOutputParams } from 'expo-router'
 
 // Extract date filter from URL parameters

@@ -1,4 +1,4 @@
-# prio-next
+# ks-frontend
 
 :warning: Because of bun hoisting issues, the mobile app is not part of the monorepo workspace.
 

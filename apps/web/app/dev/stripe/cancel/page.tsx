@@ -1,9 +1,9 @@
 'use client'
 
+import { ArrowLeft, XCircle } from 'lucide-react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
 import { EmptyState } from '@/components/empty-state'
-import { XCircle, ArrowLeft } from 'lucide-react'
 
 function CancelPageContent() {
   const searchParams = useSearchParams()

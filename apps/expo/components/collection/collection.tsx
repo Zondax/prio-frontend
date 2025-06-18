@@ -1,17 +1,17 @@
 'use client'
 
+import { EventStatus } from '@mono-grpc/entities/proto/api/v1/common_pb' // TODO: change it
 import {
   type Event,
   type EventCollection,
   type EventCollectionWithSummary,
   type EventDetailState,
   type UpdateEventStatusFn,
-  ViewType,
   useEditCollectionDialog,
   useShareCollectionDialog,
+  ViewType,
 } from '@mono-state'
 import { usePinnedEvents } from '@mono-state/feature/events/hooks'
-import { EventStatus } from '@mono-grpc/entities/proto/api/v1/common_pb' // TODO: change it
 import React, { useCallback, useState } from 'react'
 import { View } from 'react-native'
 

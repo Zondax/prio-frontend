@@ -4,7 +4,7 @@
 
 import { act, renderHook } from '@testing-library/react'
 import type React from 'react' // For React.MutableRefObject
-import { beforeEach, describe, expect, it, test, vi } from 'vitest'
+import { describe, expect, it, test } from 'vitest'
 
 import { useColumns } from './use-columns'
 

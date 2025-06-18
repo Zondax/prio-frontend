@@ -1,5 +1,5 @@
-export { TopBar } from './topbar'
 export { Logo } from './logo'
 export { NavDesktop as MainNav } from './nav-desktop'
 export { NavMobile as MobileNav } from './nav-mobile'
-export type { TopBarItems, TopBarItem } from './types'
+export { TopBar } from './topbar'
+export type { TopBarItem, TopBarItems } from './types'

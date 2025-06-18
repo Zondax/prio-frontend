@@ -1,27 +1,25 @@
 'use client'
 
-import { Suspense } from 'react'
-import { useEffect, useCallback } from 'react'
-import { useParams, useSearchParams } from 'next/navigation'
 import { useUser } from '@zondax/auth-web'
 import { useGrpcSetup } from '@zondax/auth-web/hooks'
+import { ArrowLeft, Clock, Code, Database, Shield, User } from 'lucide-react'
 import {
-  useGetProductByIDStore,
-  useGetProductContentStore,
   createGetProductByIDRequest,
   createGetProductContentRequest,
   useEndpointStore,
+  useGetProductByIDStore,
+  useGetProductContentStore,
 } from 'mono-state'
+import Link from 'next/link'
+import { useParams, useSearchParams } from 'next/navigation'
+import { Suspense, useCallback, useEffect } from 'react'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { ArrowLeft, Shield, User, Clock, Database, Code } from 'lucide-react'
-import Link from 'next/link'
-
-import FrontendClaimsSection from './_components/FrontendClaimsSection'
 import BackendValidationSection from './_components/BackendValidationSection'
+import FrontendClaimsSection from './_components/FrontendClaimsSection'
 import ProtectedContentExample from './_components/ProtectedContentExample'
 
 function ProductContentPageContent() {

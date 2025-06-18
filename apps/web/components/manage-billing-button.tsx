@@ -1,10 +1,10 @@
 'use client'
 
-import { useCallback, useEffect } from 'react'
 import { useGrpcSetup } from '@zondax/auth-web/hooks'
-import { useCreatePortalSessionStore, createPortalSessionRequest, useEndpointStore } from 'mono-state'
-import { Button } from '@/components/ui/button'
 import { CreditCard, Loader2 } from 'lucide-react'
+import { createPortalSessionRequest, useCreatePortalSessionStore, useEndpointStore } from 'mono-state'
+import { useCallback, useEffect } from 'react'
+import { Button } from '@/components/ui/button'
 
 interface ManageBillingButtonProps {
   variant?: 'default' | 'outline' | 'secondary' | 'ghost' | 'link' | 'destructive'
@@ -38,7 +38,7 @@ export function ManageBillingButton({ variant = 'outline', size = 'default', cla
   }, [portalStore.data])
 
   const isLoading = portalStore.isLoading
-  const hasError = !!portalStore.error
+  const _hasError = !!portalStore.error
 
   return (
     <Button

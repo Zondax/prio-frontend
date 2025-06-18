@@ -1,11 +1,11 @@
 'use client'
 
+import { useUser } from '@zondax/auth-web'
+import Link from 'next/link'
 import DebugLayout from '@/components/debug/debug-layout'
 import EndpointSelector from '@/components/debug/endpoint-selector'
 import { FloatingSettingsPanel } from '@/components/debug/floating-settings-panel'
 import { TopBar } from '@/components/topbar'
-import { useUser } from '@zondax/auth-web'
-import Link from 'next/link'
 
 function CustomNavigation() {
   const { user, isLoaded } = useUser()

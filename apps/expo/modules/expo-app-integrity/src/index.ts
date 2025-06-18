@@ -1,10 +1,9 @@
 import * as Device from 'expo-device'
 import * as SecureStore from 'expo-secure-store'
 import { Platform } from 'react-native'
-
-import IntegrityModule from './IntegrityModule'
 import { SECURE_STORAGE_KEYS } from './config'
-import { AndroidIntegrityErrors, PlatformAgnosticErrors, iOSAppAttestErrors, unhandledException } from './errors'
+import { AndroidIntegrityErrors, iOSAppAttestErrors, PlatformAgnosticErrors, unhandledException } from './errors'
+import IntegrityModule from './IntegrityModule'
 
 /** iOS Only */
 const generateKey = async (): Promise<string | never> => await IntegrityModule.generateKey()

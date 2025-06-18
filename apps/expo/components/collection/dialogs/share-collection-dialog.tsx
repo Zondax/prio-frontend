@@ -1,8 +1,8 @@
 import {
+  createGetCollectionPermissionsRequest,
   type EventCollection,
   EventCollectionPermissionType,
   type EventCollectionWithSummary,
-  createGetCollectionPermissionsRequest,
   useCollectionPermissionsStore,
   useEndpointStore,
 } from '@mono-state'

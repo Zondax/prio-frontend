@@ -1,5 +1,5 @@
-import type { SubscriptionStatus, SubscriptionPlan } from '@mono-state/authorization/types'
-import { UserPublicMetadata, ProductPermissionList, UserSubscription } from '@mono-state/authorization/types'
+import type { SubscriptionPlan, SubscriptionStatus } from '@mono-state/authorization/types'
+import { ProductPermissionList, UserPublicMetadata, UserSubscription } from '@mono-state/authorization/types'
 
 // Clerk-specific types for conversion
 export interface ClerkSubscription {

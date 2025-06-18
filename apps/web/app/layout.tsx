@@ -1,12 +1,11 @@
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { AuthProvider } from '@zondax/auth-web'
+import { ThemeProvider } from '@zondax/ui-common'
 import type { Metadata } from 'next'
 import { Figtree, Inter as FontSans, Parkinsans } from 'next/font/google'
-
-import { ThemeProvider } from '@/components/theming/theme-provider'
-import { cn } from '@/lib/utils'
 import OtelProvider from '@/app/telemetry/OtelProvider'
+import { cn } from '@/lib/utils'
 
 import './globals.css'
 import DebugLayout from '@/components/debug/debug-layout'

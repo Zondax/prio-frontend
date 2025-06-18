@@ -1,5 +1,5 @@
 import { MAP_DEFAULTS, type MapMarker, type MapMoveEvent, useEndpointStore } from '@mono-state'
-import { type Filter, addGeoBoundsFilter } from '@mono-state/feature/events'
+import { addGeoBoundsFilter, type Filter } from '@mono-state/feature/events'
 import { useDebounce } from '@mono-state/hooks'
 import { type EventDetailState, useEventDetailStore } from '@mono-state/stores/event'
 import { useEventMapMarkersStore } from '@mono-state/stores/map'

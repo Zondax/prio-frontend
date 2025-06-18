@@ -1,4 +1,4 @@
-import type { UserPublicMetadata, SubscriptionStatus, SubscriptionPlan } from './types'
+import type { SubscriptionPlan, SubscriptionStatus, UserPublicMetadata } from './types'
 
 /**
  * Individual authorization methods that work directly with protobuf types

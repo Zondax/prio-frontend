@@ -1,6 +1,6 @@
 import { fetchAttestationChallenge, fetchMobileConfig } from '@zondax/auth-expo'
 import * as Crypto from 'expo-crypto'
-import React, { useCallback, useEffect, useState, type FC, type ReactNode } from 'react'
+import React, { type FC, type ReactNode, useCallback, useEffect, useState } from 'react'
 
 import { getAppId, getPlatform } from '../device'
 import { type ConfigState, SecureConfigContext } from '../hooks/secureConfig'

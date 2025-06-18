@@ -1,5 +1,5 @@
 import { useTheme } from '@react-navigation/native'
-import { type VariantProps, cva } from 'class-variance-authority'
+import { cva, type VariantProps } from 'class-variance-authority'
 import type { LucideIcon } from 'lucide-react-native'
 import * as React from 'react'
 import { View, type ViewProps } from 'react-native'

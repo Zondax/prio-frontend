@@ -1,8 +1,8 @@
 'use client'
 
 import { UserButton } from '@zondax/auth-web'
+import { ThemeSelector } from '@zondax/ui-common'
 import { useState } from 'react'
-import { ThemeSelector } from '../theming/theme-selector'
 import { Logo } from './logo'
 import { NavDesktop } from './nav-desktop'
 import { NavMobile } from './nav-mobile'

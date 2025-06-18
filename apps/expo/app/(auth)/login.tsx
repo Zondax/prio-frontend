@@ -5,12 +5,11 @@ import { useRouter } from 'expo-router'
 import { LogIn } from 'lucide-react-native'
 import React from 'react'
 import { View } from 'react-native'
+import { replace } from '@/lib/navigation'
 import { Button } from '~/components/ui/button'
 import { Card } from '~/components/ui/card'
 import { Text } from '~/components/ui/text'
 import { RouteConfiguration } from '~/routeConfig'
-
-import { replace } from '@/lib/navigation'
 
 export default function LoginScreen() {
   const router = useRouter()

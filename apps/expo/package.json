@@ -135,11 +135,18 @@
     "doctor": {
       "reactNativeDirectoryCheck": {
         "listUnknownPackages": false,
-        "exclude": ["mono-state", "@zondax/auth-web", "lucide-react-native"]
+        "exclude": [
+          "mono-state",
+          "@zondax/auth-web",
+          "lucide-react-native"
+        ]
       }
     },
     "install": {
-      "exclude": ["mono-state", "@zondax/auth-web"]
+      "exclude": [
+        "mono-state",
+        "@zondax/auth-web"
+      ]
     }
   }
 }

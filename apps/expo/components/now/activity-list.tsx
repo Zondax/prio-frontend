@@ -3,10 +3,9 @@ import { Image } from 'expo-image'
 import { ChevronDown, ChevronUp } from 'lucide-react-native'
 import React from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
+import { cn } from '@/lib/utils'
 import { Button } from '~/components/ui/button'
 import { Text } from '~/components/ui/text'
-
-import { cn } from '@/lib/utils'
 
 import { useTimelineLayout } from './timeline-layout-context'
 

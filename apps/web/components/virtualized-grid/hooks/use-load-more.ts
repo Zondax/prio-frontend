@@ -16,7 +16,7 @@ export function useLoadMore(
   rowVirtualizer: any,
   items: any[],
   itemChunks: any[][],
-  overscanRows: number,
+  _overscanRows: number,
   loadMoreThreshold: number,
   debug: boolean,
   logger: any,

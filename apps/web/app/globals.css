@@ -232,7 +232,10 @@ html > body[data-scroll-locked] {
 
 /* Transitions for slot selection */
 .slot-transition {
-  transition: background-color 0.15s ease-in-out, opacity 0.15s ease-in-out, transform 0.1s ease-out;
+  transition:
+    background-color 0.15s ease-in-out,
+    opacity 0.15s ease-in-out,
+    transform 0.1s ease-out;
 }
 
 /* Hover effects */

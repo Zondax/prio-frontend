@@ -1,6 +1,6 @@
-import { RouteConfiguration } from '@/routeConfig'
 import type { Href } from 'expo-router'
 import { Bookmark, Calendar, CircleUserIcon, Clock, type LucideIcon, Telescope } from 'lucide-react-native'
+import { RouteConfiguration } from '@/routeConfig'
 
 export interface TabConfig {
   pathname: Href

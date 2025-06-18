@@ -7,7 +7,7 @@ import { Skeleton } from '@src/components/ui/skeleton'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@src/components/ui/tooltip'
 import { useIsMobile } from '@src/hooks/use-mobile'
 import { cn } from '@src/lib/utils'
-import { type VariantProps, cva } from 'class-variance-authority'
+import { cva, type VariantProps } from 'class-variance-authority'
 import { PanelLeftIcon } from 'lucide-react'
 import * as React from 'react'
 

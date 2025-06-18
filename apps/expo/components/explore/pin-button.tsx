@@ -1,10 +1,9 @@
-import type { EventCollection } from '@mono-state'
-import type { CollectionFormData } from '@mono-state'
+import type { CollectionFormData, EventCollection } from '@mono-state'
 import { useCollectionsStore, useEndpointStore } from '@mono-state/stores'
 import { useGrpcSetup } from '@zondax/auth-expo/hooks'
 import { BookmarkCheck, CheckCircle, Pin, Plus, Search, X } from 'lucide-react-native'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { FlatList, Keyboard, Modal, Text, TextInput, TouchableOpacity, View, useWindowDimensions } from 'react-native'
+import { FlatList, Keyboard, Modal, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from 'react-native'
 import { Button } from '~/components/ui/button'
 
 import { NewCollectionDialog } from '../collection/dialogs/new-collection-dialog'

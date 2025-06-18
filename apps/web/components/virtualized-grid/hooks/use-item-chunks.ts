@@ -24,7 +24,7 @@ export function useItemChunks<T extends GridRenderItem>(items: T[], numColumns: 
       logger.debug('[useItemChunks]', {
         totalItems: items.length,
         columns: numColumns,
-        itemsWithSpans: itemsWithSpans.map(({ item, index, colSpan }) => ({ index, colSpan })),
+        itemsWithSpans: itemsWithSpans.map(({ index, colSpan }) => ({ index, colSpan })),
       })
     }
 

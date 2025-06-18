@@ -2,7 +2,7 @@
 
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { ChevronDown, ChevronUp, ChevronsUpDown } from 'lucide-react'
+import { ChevronDown, ChevronsUpDown, ChevronUp } from 'lucide-react'
 import * as React from 'react'
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
@@ -123,22 +123,15 @@ export default function VirtualizedTable<TData>({
                       }}
                     >
                       {header.isPlaceholder ? null : (
-                        <div
+                        <button
+                          type="button"
                           className={cn('flex items-center gap-1', header.column.getCanSort() && 'cursor-pointer select-none')}
                           onClick={header.column.getToggleSortingHandler()}
-                          onKeyDown={(e) => {
-                            if (header.column.getCanSort() && (e.key === 'Enter' || e.key === ' ')) {
-                              e.preventDefault()
-                              header.column.getToggleSortingHandler()?.(e)
-                            }
-                          }}
-                          role={header.column.getCanSort() ? 'button' : undefined}
-                          tabIndex={header.column.getCanSort() ? 0 : undefined}
                           aria-label={header.column.getCanSort() ? `Sort by ${header.column.columnDef.header}` : undefined}
                         >
                           {flexRender(header.column.columnDef.header, header.getContext())}
                           {header.column.getCanSort() && <span className="ml-1">{renderSortingIcon(header.column.getIsSorted())}</span>}
-                        </div>
+                        </button>
                       )}
                     </TableHead>
                   )

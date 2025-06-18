@@ -4,21 +4,13 @@ import type { PaymentGatewayClient } from '../../../grpc/src/entities/proto/api/
 import type {
   CreateCheckoutSessionRequest,
   CreateCheckoutSessionResponse,
-  GetCheckoutSessionStatusRequest,
-  GetCheckoutSessionStatusResponse,
   CreatePortalSessionRequest,
   CreatePortalSessionResponse,
+  GetCheckoutSessionStatusRequest,
+  GetCheckoutSessionStatusResponse,
 } from '../../../grpc/src/entities/proto/api/v1/payment-gateway_pb'
 
-import {
-  createCheckoutSessionRequest,
-  createPortalSessionRequest,
-  createGetCheckoutSessionStatusRequest,
-  createCheckoutSession,
-  createPortalSession,
-  getCheckoutSessionStatus,
-  createPaymentGatewayClient,
-} from '../api/payment-gateway'
+import { createCheckoutSession, createPaymentGatewayClient, createPortalSession, getCheckoutSessionStatus } from '../api/payment-gateway'
 
 export const useCreateCheckoutSessionStore = createGrpcSingleMethodStore<
   GrpcConfig,
