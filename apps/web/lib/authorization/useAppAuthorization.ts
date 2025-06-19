@@ -2,6 +2,8 @@ import {
   getSubscriptionPlan,
   getSubscriptionStatus,
   hasPermission,
+  hasAnySubscription,
+  hasAnyPermission,
   hasSubscription,
   isSubscriptionActive,
 } from '@mono-state/authorization/methods'
@@ -21,10 +23,12 @@ export interface UseAppAuthorizationReturn {
 
   // App-specific methods with protobuf types
   hasSubscription: (plan: SubscriptionPlan, productId: string) => boolean
+  hasAnySubscription: () => boolean
   isSubscriptionActive: (productId: string, activeStatuses?: SubscriptionStatus[]) => boolean
   getSubscriptionPlan: (productId: string) => SubscriptionPlan | null
   getSubscriptionStatus: (productId: string) => SubscriptionStatus | null
   hasPermission: (resource: string, resourceId: string) => boolean
+  hasAnyPermission: (resource: string) => boolean
 }
 
 /**
@@ -45,6 +49,8 @@ export function useAppAuthorization(): UseAppAuthorizationReturn {
     const createBoundMethods = (currentMetadata: UserPublicMetadata | null) => ({
       hasSubscription: (plan: SubscriptionPlan, productId: string) => hasSubscription(currentMetadata, plan, productId),
 
+      hasAnySubscription: () => hasAnySubscription(currentMetadata),
+
       isSubscriptionActive: (productId: string, activeStatuses?: SubscriptionStatus[]) =>
         isSubscriptionActive(currentMetadata, productId, activeStatuses),
 
@@ -53,6 +59,8 @@ export function useAppAuthorization(): UseAppAuthorizationReturn {
       getSubscriptionStatus: (productId: string) => getSubscriptionStatus(currentMetadata, productId),
 
       hasPermission: (resource: string, resourceId: string) => hasPermission(currentMetadata, resource, resourceId),
+
+      hasAnyPermission: (resource: string) => hasAnyPermission(currentMetadata, resource),
     })
 
     return createBoundMethods(metadata)

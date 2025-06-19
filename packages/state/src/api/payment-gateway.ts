@@ -78,11 +78,11 @@ export const createCheckoutSession = async (
   request: CreateCheckoutSessionRequest
 ): Promise<CreateCheckoutSessionResponse> => {
   try {
-    console.log('🛒 payment-gateway API: Creating checkout session for product:', request.getProductId())
+    console.debug('🛒 payment-gateway API: Creating checkout session for product:', request.getProductId())
 
     const response = await createCheckoutSessionWithAuth(client, clientParams, request)
 
-    console.log('✅ payment-gateway API: Checkout session created successfully', {
+    console.debug('✅ payment-gateway API: Checkout session created successfully', {
       sessionId: response.getSessionId(),
       clientSecret: response.getClientSecret() ? '***' : 'missing',
     })
@@ -99,11 +99,11 @@ export const getCheckoutSessionStatus = async (
   request: GetCheckoutSessionStatusRequest
 ): Promise<GetCheckoutSessionStatusResponse> => {
   try {
-    console.log('🔍 payment-gateway API: Getting checkout session status for:', request.getSessionId())
+    console.debug('🔍 payment-gateway API: Getting checkout session status for:', request.getSessionId())
 
     const response = await getCheckoutSessionStatusWithAuth(client, clientParams, request)
 
-    console.log('✅ payment-gateway API: Session status retrieved:', {
+    console.debug('✅ payment-gateway API: Session status retrieved:', {
       sessionId: response.getSessionId(),
       status: response.getStatus(),
     })
@@ -120,11 +120,11 @@ export const createPortalSession = async (
   request: CreatePortalSessionRequest
 ): Promise<CreatePortalSessionResponse> => {
   try {
-    console.log('🏛️ payment-gateway API: Creating portal session')
+    console.debug('🏛️ payment-gateway API: Creating portal session')
 
     const response = await createPortalSessionWithAuth(client, clientParams, request)
 
-    console.log('✅ payment-gateway API: Portal session created successfully', {
+    console.debug('✅ payment-gateway API: Portal session created successfully', {
       url: response.getUrl(),
     })
     return response

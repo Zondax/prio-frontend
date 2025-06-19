@@ -134,7 +134,7 @@ echo "📦 Initializing git submodules..."
 git submodule init
 
 echo "⬇️  Updating git submodules..."
-git submodule update --recursive --remote
+git submodule update --recursive
 
 # =============================================================================
 # POST-UPDATE TASKS
