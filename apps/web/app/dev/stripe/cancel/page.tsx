@@ -2,7 +2,7 @@
 
 import { ArrowLeft, XCircle } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { Suspense } from 'react'
+import * as React from 'react'
 import { EmptyState } from '@/components/empty-state'
 
 function CancelPageContent() {
@@ -32,7 +32,7 @@ function CancelPageContent() {
 
 export default function CancelPage() {
   return (
-    <Suspense
+    <React.Suspense
       fallback={
         <div className="container mx-auto flex h-screen flex-col items-center justify-center">
           <EmptyState
@@ -51,6 +51,6 @@ export default function CancelPage() {
       }
     >
       <CancelPageContent />
-    </Suspense>
+    </React.Suspense>
   )
 }

@@ -1,6 +1,22 @@
 'use client'
 
 import { useGrpcSetup } from '@zondax/auth-web/hooks'
+import type { GridRenderItem } from '@zondax/ui-common'
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  Skeleton,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+  VirtualizedGrid,
+} from '@zondax/ui-common'
 import { CreditCard, Crown, Loader2, Package, RefreshCw, ShoppingCart } from 'lucide-react'
 import {
   createCheckoutSessionRequest,
@@ -14,16 +30,9 @@ import {
 } from 'mono-state'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useCallback, useEffect, useState } from 'react'
+import * as React from 'react'
 import { EmptyState } from '@/components/empty-state'
 import { ManageBillingButton } from '@/components/manage-billing-button'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Skeleton } from '@/components/ui/skeleton'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import VirtualizedGrid from '@/components/virtualized-grid'
-import type { GridRenderItem } from '@/components/virtualized-grid/types'
 
 // Configuration
 const LOAD_LIMITS = {
@@ -254,7 +263,7 @@ function useProductsData() {
   const productsStore = useGetProductsStore()
   const { setInput } = productsStore
 
-  const load = useCallback(() => {
+  const load = React.useCallback(() => {
     const request = createGetProductsRequest({
       limit: LOAD_LIMITS.PRODUCTS,
       activeOnly: true,
@@ -273,7 +282,7 @@ function usePlansData() {
   const plans = useGetPlansStore()
   const { setInput } = plans
 
-  const load = useCallback(() => {
+  const load = React.useCallback(() => {
     const request = createGetPlansRequest({
       limit: LOAD_LIMITS.PLANS,
       activeOnly: true,
@@ -323,7 +332,7 @@ function transformPlansToGridItems(
 
 export default function StripePage() {
   const router = useRouter()
-  const [activeTab, setActiveTab] = useState('products')
+  const [activeTab, setActiveTab] = React.useState('products')
 
   // Store hooks
   const productsStore = useProductsData()
@@ -338,7 +347,7 @@ export default function StripePage() {
   useGrpcSetup(plansStore.setParams, selectedEndpoint)
   useGrpcSetup(checkoutStore.setParams, selectedEndpoint)
 
-  useEffect(() => {
+  React.useEffect(() => {
     // Only load once on initial mount
     productsStore.load()
     plansStore.load()
@@ -346,7 +355,7 @@ export default function StripePage() {
 
   // Handlers - simple functions without complex dependencies
   // Handlers - simple functions without complex dependencies
-  const handleBuyProduct = useCallback(
+  const handleBuyProduct = React.useCallback(
     (productId: string) => {
       const request = createCheckoutSessionRequest({
         productId: productId,
@@ -357,7 +366,7 @@ export default function StripePage() {
   )
 
   // Redirect to checkout when URL is available
-  useEffect(() => {
+  React.useEffect(() => {
     if (checkoutStore.data?.getUrl()) {
       router.push(checkoutStore.data.getUrl())
     }

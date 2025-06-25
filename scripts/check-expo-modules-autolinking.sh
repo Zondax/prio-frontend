@@ -1,6 +1,6 @@
 #!/bin/sh
 # Check that expo-modules-autolinking is set to "*" in the given package.json
-# Usage: ./scripts/check-expo-modules-autolinking.sh [path/to/package.json]
+# Usage: ./scripts/libs/check-expo-modules-autolinking.sh [path/to/package.json]
 
 PKG_FILE="${1:-apps/expo/package.json}"
 

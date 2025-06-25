@@ -1,11 +1,11 @@
 'use client'
 
-import { useCallback, useEffect } from 'react'
 import { useGrpcSetup } from '@zondax/auth-web/hooks'
-import { createPortalSessionRequest, useCreatePortalSessionStore, useEndpointStore } from 'mono-state'
-import { useAppAuthorization } from '@/lib/authorization/useAppAuthorization'
-import { Button } from '@/components/ui/button'
+import { Button } from '@zondax/ui-common'
 import { CreditCard, Loader2, Lock } from 'lucide-react'
+import { createPortalSessionRequest, useCreatePortalSessionStore, useEndpointStore } from 'mono-state'
+import { useCallback, useEffect } from 'react'
+import { useAppAuthorization } from '@/lib/authorization/useAppAuthorization'
 
 interface ManageBillingButtonProps {
   variant?: 'default' | 'outline' | 'secondary' | 'ghost' | 'link' | 'destructive'

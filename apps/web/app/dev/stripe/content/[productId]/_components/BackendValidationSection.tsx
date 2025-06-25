@@ -1,12 +1,10 @@
 'use client'
 
 import { useGrpcSetup } from '@zondax/auth-web/hooks'
+import { Alert, AlertDescription, Badge, Button } from '@zondax/ui-common'
 import { Database, Loader2, Lock, Server, Shield } from 'lucide-react'
 import { createGetProductContentRequest, useEndpointStore, useGetProductContentStore } from 'mono-state'
 import { useCallback, useEffect } from 'react'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 
 interface Props {
   productId: string

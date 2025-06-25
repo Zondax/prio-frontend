@@ -26,12 +26,24 @@
       "@mono-grpc/*": ["../../packages/grpc/src/*"],
       "@mono-state": ["../../packages/state/src"],
       "@mono-state/*": ["../../packages/state/src/*"],
+      "@mono-ui": ["../../packages/ui/src"],
+      "@mono-ui/*": ["../../packages/ui/src/*"],
       "@zondax/auth-core": ["../../libs/auth-core/src"],
       "@zondax/auth-core/*": ["../../libs/auth-core/src/*"],
       "@zondax/auth-web": ["../../libs/auth-web/src"],
-      "@zondax/auth-web/*": ["../../libs/auth-web/src/*"]
+      "@zondax/auth-web/*": ["../../libs/auth-web/src/*"],
+      "@zondax/ui-common": ["../../libs/ui-common/src"],
+      "@zondax/ui-common/*": ["../../libs/ui-common/src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "../../libs/ui-common/src/hooks/use-is-client.ts",
+    "../../libs/ui-common/src/components/debug/floating-settings-panel.tsx",
+    "../../libs/ui-common/src/components/debug/floating-settings-provider.tsx"
+  ],
   "exclude": ["node_modules", "dist"]
 }

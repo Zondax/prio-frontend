@@ -88,13 +88,7 @@ const nextConfig = {
     return productionHeaders
   },
   async redirects() {
-    return [
-      {
-        source: '/what-is',
-        destination: '/',
-        permanent: true,
-      },
-    ]
+    return []
   },
 }
 

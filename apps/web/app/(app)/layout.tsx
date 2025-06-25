@@ -1,11 +1,7 @@
 'use client'
 
 import { useUser } from '@zondax/auth-web'
-import DebugLayout from '@/components/debug/debug-layout'
 
-import '@/app/globals.css'
-
-import { FloatingSettingsPanel } from '@/components/debug/floating-settings-panel'
 import { StickyRenderer } from '@/components/sticky/sticky-renderer'
 import { TopBar } from '@/components/topbar'
 
@@ -28,11 +24,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     return (
       <div className="max-w-7xl mx-auto">
         <StickyRenderer>
-          <DebugLayout index={1}>
-            <div className="flex-1">{children}</div>
-          </DebugLayout>
+          <div className="flex-1">{children}</div>
         </StickyRenderer>
-        <FloatingSettingsPanel />
       </div>
     )
   }
@@ -41,12 +34,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="max-w-7xl mx-auto">
       <StickyRenderer>
-        <DebugLayout index={1}>
-          <TopBar menuItems={[]} />
-          <div className="flex-1">{children}</div>
-        </DebugLayout>
+        <TopBar menuItems={[]} />
+        <div className="flex-1">{children}</div>
       </StickyRenderer>
-      <FloatingSettingsPanel />
     </div>
   )
 }

@@ -5,11 +5,8 @@ export default defineConfig({
   resolve: {
     alias: [
       { find: '@', replacement: resolve(process.cwd(), './') },
-      { find: '~', replacement: resolve(process.cwd(), './') },
       { find: '@/lib', replacement: resolve(process.cwd(), './lib') },
-      { find: '~/lib', replacement: resolve(process.cwd(), './lib') },
       { find: '@/components', replacement: resolve(process.cwd(), './components') },
-      { find: '~/components', replacement: resolve(process.cwd(), './components') },
     ],
   },
   test: {

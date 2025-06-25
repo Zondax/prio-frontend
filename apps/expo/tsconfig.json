@@ -5,17 +5,15 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./*"],
       "@/*": ["./*"],
-      "@/auth": ["./auth"],
       "@mono-grpc": ["../../packages/grpc/src"],
       "@mono-grpc/*": ["../../packages/grpc/src/*"],
       "@mono-state": ["../../packages/state/src"],
       "@mono-state/*": ["../../packages/state/src/*"],
       "@zondax/auth-core": ["../../libs/auth-core/src"],
       "@zondax/auth-core/*": ["../../libs/auth-core/src/*"],
-      "@zondax/auth-expo": ["../../libs/auth-expo/src"],
-      "@zondax/auth-expo/*": ["../../libs/auth-expo/src/*"]
+      "@zondax/ui-common": ["../../libs/ui-common/src"],
+      "@zondax/ui-common/*": ["../../libs/ui-common/src/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "nativewind-env.d.ts"],

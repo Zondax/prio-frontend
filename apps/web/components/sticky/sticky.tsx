@@ -1,18 +1,17 @@
 'use client'
 
-import type { ReactNode } from 'react'
-import { useEffect } from 'react'
-import { useStickyTop } from '@/components/sticky/sticky-top-context'
+import * as React from 'react'
+import { useStickyTop } from './context'
 
 interface StickyProps {
-  children: ReactNode
+  children: React.ReactNode
   stickyHeight: string | number // e.g., '3rem', 50 (for px)
 }
 
 export function Sticky({ children, stickyHeight }: StickyProps) {
   const { setStickyElement, clearStickyElement } = useStickyTop()
 
-  useEffect(() => {
+  React.useEffect(() => {
     // Use the passed children and stickyHeight to set the sticky element
     setStickyElement(children, stickyHeight)
 

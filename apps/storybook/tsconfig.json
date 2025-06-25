@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "jsx": "react-jsx",
+    "paths": {
+      "@mono-ui/*": ["../../packages/ui/src/*"],
+      "@mono-ui": ["../../packages/ui/src/index.ts"],
+      "@zondax/ui-common/*": ["../../libs/ui-common/src/*"],
+      "@zondax/ui-common": ["../../libs/ui-common/src/index.ts"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx"]
+}

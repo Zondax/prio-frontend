@@ -1,16 +1,11 @@
-import { Analytics } from '@vercel/analytics/react'
-import { SpeedInsights } from '@vercel/speed-insights/next'
 import { AuthProvider } from '@zondax/auth-web'
-import { ThemeProvider } from '@zondax/ui-common'
+import { cn, ThemeProvider } from '@zondax/ui-common'
 import type { Metadata } from 'next'
 import { Figtree, Inter as FontSans, Parkinsans } from 'next/font/google'
 import OtelProvider from '@/app/telemetry/OtelProvider'
-import { cn } from '@/lib/utils'
 
-import './globals.css'
-import DebugLayout from '@/components/debug/debug-layout'
-import { FloatingSettingsProvider } from '@/components/debug/floating-settings-context'
-import { StickyTopProvider } from '@/components/sticky/sticky-top-provider'
+import '@/styles/globals.css'
+import { StickyTopProvider } from '@/components/sticky/provider'
 
 // Configure inter with optional subsets
 const fontSans = FontSans({
@@ -58,15 +53,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <html lang="en" suppressHydrationWarning className="overflow-x-hidden">
           <body className={cn('bg-background font-body antialiased', fontSans.variable, fontBody.variable, fontHeading.variable)}>
             <div className="flex flex-col min-h-screen w-full mx-auto">
-              <DebugLayout index={0} className="flex-1">
-                <FloatingSettingsProvider>
-                  <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
-                    <StickyTopProvider>{children}</StickyTopProvider>
-                  </ThemeProvider>
-                  <Analytics />
-                  <SpeedInsights />
-                </FloatingSettingsProvider>
-              </DebugLayout>
+              <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
+                <StickyTopProvider>{children}</StickyTopProvider>
+              </ThemeProvider>
             </div>
           </body>
         </html>

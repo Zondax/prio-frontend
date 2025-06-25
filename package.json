@@ -17,6 +17,7 @@
     "dev:expo:android": "pnpm --filter mono-expo android",
     "dev:expo:ios": "pnpm --filter mono-expo ios",
     "dev:expo:web": "pnpm --filter mono-expo web",
+    "dev:storybook": "pnpm --filter mono-storybook dev",
     "dev:ext": "pnpm --filter mono-ext dev",
     "dev:web": "pnpm --filter mono-web dev",
     "doctor": "pnpm --filter mono-expo run doctor",
@@ -25,9 +26,12 @@
     "format:check": "biome format .",
     "install:expo": "pnpm --filter mono-expo install --pnpm",
     "lint": "biome lint .",
-    "lint:analyze": "./scripts/biome-analyze-rules.sh",
+    "lint:analyze": "./libs/scripts/biome-analyze-rules.sh",
     "lint:fix": "biome check --write --unsafe .",
+    "fix": "pnpm run lint:fix",
     "test": "pnpm recursive run test",
+    "test:expo": "echo disabled",
+    "test:expo:coverage": "echo disabled",
     "test:e2e:install": "pnpm --filter mono-web test:e2e:install",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
@@ -35,19 +39,19 @@
     "vendor:grpc": "rm -rf packages/grpc && cp -r external/backend/ts/grpc packages/grpc"
   },
   "resolutions": {
-    "@types/react": "18.3.12",
-    "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "@types/react": "19.0.10",
+    "react": "^19.0",
+    "react-dom": "^19.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.0.0",
+    "@biomejs/biome": "^2.0.5",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@types/async": "^3.2.24",
     "@vitest/coverage-v8": "^3.2.4",
     "globals": "^16.2.0",
     "lefthook": "1.11.14",
-    "vite": "6.3.5",
+    "vite": "7.0.0",
     "vitest": "^3.2.4"
   },
   "engines": {

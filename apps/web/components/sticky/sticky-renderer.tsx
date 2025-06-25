@@ -1,10 +1,10 @@
 'use client'
 
-import type { ReactNode } from 'react'
-import { useStickyTop } from './sticky-top-context'
+import type * as React from 'react'
+import { useStickyTop } from './context'
 
 interface StickyRendererProps {
-  children: ReactNode
+  children: React.ReactNode
 }
 
 export function StickyRenderer({ children }: StickyRendererProps) {

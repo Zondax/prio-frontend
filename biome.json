@@ -1,6 +1,12 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.0.0/schema.json",
-  "assist": { "actions": { "source": { "organizeImports": "on" } } },
+  "$schema": "https://biomejs.dev/schemas/2.0.5/schema.json",
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
   "linter": {
     "enabled": true,
     "includes": ["**", "!**/apps/**/*/components/ui/**", "!**/apps/expo/**"],
@@ -85,7 +91,8 @@
       "!**/public/**",
       "!**/src/entities/**/*.js",
       "!**/src/entities/**/*.ts",
-      "!**/src/entities/proto/**"
+      "!**/src/entities/proto/**",
+      "!**/src/components/ui/*"
     ]
   }
 }

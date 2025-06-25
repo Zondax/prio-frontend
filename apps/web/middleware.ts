@@ -2,7 +2,7 @@ import { authMiddleware, createRouteMatcher } from '@zondax/auth-web/server'
 
 const isPublicRoute = createRouteMatcher(['/', '/sign-in(.*)', '/sign-up(.*)'])
 
-export default authMiddleware(async (auth, req) => {
+export default authMiddleware(async (auth: { protect: () => any }, req: any) => {
   // Allow public routes
   if (isPublicRoute(req)) {
     return

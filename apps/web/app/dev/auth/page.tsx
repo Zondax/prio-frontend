@@ -1,18 +1,25 @@
 'use client'
 
 import { useAuth, useUser } from '@zondax/auth-web'
+import {
+  Badge,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Label,
+  Separator,
+  Skeleton,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from '@zondax/ui-common'
 import { format } from 'date-fns'
 import { Clock, KeyRound, Shield, User, UserCheck } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
-
+import { CopyButton } from '@/components/copy-button'
 import { EmptyState } from '@/components/empty-state'
-import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { CopyButton } from '@/components/ui/copy-button'
-import { Label } from '@/components/ui/label'
-import { Separator } from '@/components/ui/separator'
-import { Skeleton } from '@/components/ui/skeleton'
-import { Table, TableBody, TableCell, TableRow } from '@/components/ui/table'
 
 interface TokenInfo {
   token: string

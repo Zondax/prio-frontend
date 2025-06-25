@@ -1,10 +1,8 @@
 'use client'
 
+import { Button, Card } from '@zondax/ui-common'
 import { Coffee, Compass, Rocket } from 'lucide-react'
 import Link from 'next/link'
-
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
 
 export default function NotFound() {
   return (

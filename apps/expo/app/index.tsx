@@ -1,37 +1,21 @@
-import { useAuth } from '@zondax/auth-expo'
-import { useRouter } from 'expo-router'
-import React, { useState } from 'react'
-import { ActivityIndicator, View } from 'react-native'
-import { RouteConfiguration } from '~/routeConfig'
+import React from 'react'
+import { Pressable, Text, View } from 'react-native'
 
-// TODO: We should see the behavior of the auth and refactor it
-export default function WelcomeScreen() {
-  const router = useRouter()
-  const { accessToken, isLoading } = useAuth()
-  const [hasNavigated, setHasNavigated] = useState(false)
-
-  React.useEffect(() => {
-    // Only attempt navigation when auth is loaded and we haven't navigated yet
-    if (!isLoading && !hasNavigated) {
-      setHasNavigated(true)
-      try {
-        if (accessToken) {
-          router.replace(RouteConfiguration.protected.explore)
-        } else {
-          router.replace(RouteConfiguration.auth.signin)
-        }
-      } catch (error) {
-        console.error('Navigation error:', error)
-        // If navigation fails, reset the flag to try again
-        setHasNavigated(false)
-      }
-    }
-  }, [accessToken, isLoading, hasNavigated, router])
-
-  // Show loading indicator while redirecting
+export default function LandingPage() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <ActivityIndicator size="large" />
+    <View className="flex-1 justify-center items-center bg-white">
+      <Text className="text-2xl font-bold text-gray-900 mb-8">Hello Kickstarter</Text>
+
+      {/* Example button with safe touch handling and proper shadow */}
+      <Pressable className="bg-blue-500 px-6 py-3 rounded-lg shadow-md active:shadow-lg">
+        <Text className="text-white font-semibold">Click me</Text>
+      </Pressable>
+
+      {/* Card with proper shadow styling */}
+      <View className="mt-8 p-6 bg-white rounded-xl shadow-lg border border-gray-100">
+        <Text className="text-lg font-semibold text-gray-800 mb-2">Sample Card</Text>
+        <Text className="text-gray-600">This card uses the updated shadow utilities that are compatible with React Native.</Text>
+      </View>
     </View>
   )
 }

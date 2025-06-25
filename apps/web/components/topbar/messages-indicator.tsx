@@ -1,9 +1,7 @@
 'use client'
 
+import { Button, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@zondax/ui-common'
 import { Bell } from 'lucide-react'
-
-import { Button } from '@/components/ui/button'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 export function MessagesIndicator() {
   // Placeholder for actual notification count and logic

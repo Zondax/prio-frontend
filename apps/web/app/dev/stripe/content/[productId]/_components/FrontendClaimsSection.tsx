@@ -1,10 +1,8 @@
 'use client'
 
+import { Alert, AlertDescription, Badge, Button } from '@zondax/ui-common'
 import { CheckCircle, Clock, RefreshCw, User, XCircle } from 'lucide-react'
 import { useState } from 'react'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { useAppAuthorization } from '@/lib/authorization/useAppAuthorization'
 
 interface FrontendClaimsSectionProps {

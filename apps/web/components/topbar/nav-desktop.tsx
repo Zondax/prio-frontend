@@ -1,11 +1,10 @@
 'use client'
 
+import { cn, ToggleGroup, ToggleGroupItem } from '@zondax/ui-common'
+import { useIsClientSide } from '@zondax/ui-common/hooks'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
-import { useIsClientSide } from '@/hooks/use-is-client'
-import { cn } from '@/lib/utils'
 import type { TopBarItems } from '.'
 
 interface NavDesktopProps {

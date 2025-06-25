@@ -1,0 +1,12 @@
+@import "../../../libs/ui-common/src/styles/globals.css";
+
+/* App-specific source paths */
+@source "../app/**/*.{js,ts,jsx,tsx}";
+@source "../components/**/*.{js,ts,jsx,tsx}";
+
+/* App-specific theme customizations can go here */
+@theme {
+  /* Override or extend ui-common theme variables here if needed */
+}
+
+/* App-specific custom styles can go here */

@@ -1,12 +1,6 @@
 import { sha256 } from '@noble/hashes/sha2'
 import { bytesToHex } from '@noble/hashes/utils'
-import { type ClassValue, clsx } from 'clsx'
 import { format, formatDistanceToNow, isToday, isYesterday } from 'date-fns'
-import { twMerge } from 'tailwind-merge'
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
 
 /**
  * Extract UTM parameters from search params

@@ -2,23 +2,23 @@ import type { ConfigContext, ExpoConfig } from 'expo/config'
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: 'prio',
-  slug: 'prio',
+  name: 'kickstarter',
+  slug: 'kickstarter',
   version: '0.2.0',
   orientation: 'portrait',
   icon: './assets/images/icon.png',
-  scheme: 'prio',
+  scheme: 'kickstarter',
   userInterfaceStyle: 'automatic',
   newArchEnabled: true,
   splash: {
-    image: './assets/images/prio-logo-light.png',
+    image: './assets/images/ks-logo-light.png',
     resizeMode: 'contain',
     backgroundColor: '#ffffff',
   },
   assetBundlePatterns: ['**/*'],
   ios: {
     supportsTablet: true,
-    bundleIdentifier: 'now.prio.app',
+    bundleIdentifier: 'ks.zondax.ch',
     usesAppleSignIn: false,
     requireFullScreen: true,
     config: {
@@ -26,11 +26,14 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
   },
   android: {
-    package: 'now.prio.app',
+    package: 'ks.zondax.ch',
     adaptiveIcon: {
       foregroundImage: './assets/images/adaptive-icon.png',
       backgroundColor: '#ffffff',
     },
+  },
+  web: {
+    bundler: 'metro',
   },
   plugins: [
     'expo-router',
@@ -44,16 +47,15 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       'expo-splash-screen',
       {
-        image: './assets/images/prio-logo-light.png',
+        image: './assets/images/ks-logo-light.png',
         backgroundColor: '#ffffff',
         imageWidth: 200,
         dark: {
-          image: './assets/images/prio-logo-dark.png',
+          image: './assets/images/ks-logo-dark.png',
           backgroundColor: '#000000',
         },
       },
     ],
-    '@maplibre/maplibre-react-native',
     [
       'expo-font',
       {

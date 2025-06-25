@@ -3,12 +3,9 @@
 import { usePreferencesStore } from '@mono-state'
 import { useEndpointStore } from '@mono-state/stores'
 import { useGrpcSetup } from '@zondax/auth-web/hooks'
+import { Input, Label, Skeleton } from '@zondax/ui-common'
 import { RefreshCcw } from 'lucide-react'
 import { useId } from 'react'
-
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Skeleton } from '@/components/ui/skeleton'
 
 export default function UserPreferencesPage() {
   const { internal, isLoading, error, setParams, clientReady, forceRefresh, getData, getConfirmedData, write } = usePreferencesStore()

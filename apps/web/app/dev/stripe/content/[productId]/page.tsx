@@ -2,6 +2,20 @@
 
 import { useUser } from '@zondax/auth-web'
 import { useGrpcSetup } from '@zondax/auth-web/hooks'
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  Skeleton,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@zondax/ui-common'
 import { ArrowLeft, Clock, Code, Database, Shield, User } from 'lucide-react'
 import {
   createGetProductByIDRequest,
@@ -12,12 +26,7 @@ import {
 } from 'mono-state'
 import Link from 'next/link'
 import { useParams, useSearchParams } from 'next/navigation'
-import { Suspense, useCallback, useEffect } from 'react'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Skeleton } from '@/components/ui/skeleton'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import * as React from 'react'
 import BackendValidationSection from './_components/BackendValidationSection'
 import FrontendClaimsSection from './_components/FrontendClaimsSection'
 import ProtectedContentExample from './_components/ProtectedContentExample'
@@ -44,7 +53,7 @@ function ProductContentPageContent() {
   const { setInput: setProductContentInput } = productContentStore
 
   // Create callbacks for setting inputs
-  const loadProductInfo = useCallback(
+  const loadProductInfo = React.useCallback(
     (id: string) => {
       const productRequest = createGetProductByIDRequest(id)
       setProductInfoInput(productRequest)
@@ -52,7 +61,7 @@ function ProductContentPageContent() {
     [setProductInfoInput]
   )
 
-  const loadProductContent = useCallback(
+  const loadProductContent = React.useCallback(
     (id: string) => {
       const contentRequest = createGetProductContentRequest(id)
       setProductContentInput(contentRequest)
@@ -61,7 +70,7 @@ function ProductContentPageContent() {
   )
 
   // Load product information and validate access
-  useEffect(() => {
+  React.useEffect(() => {
     if (productId) {
       loadProductInfo(productId)
       loadProductContent(productId)
@@ -377,8 +386,8 @@ function ProductContentPageFallback() {
 
 export default function ProductContentPage() {
   return (
-    <Suspense fallback={<ProductContentPageFallback />}>
+    <React.Suspense fallback={<ProductContentPageFallback />}>
       <ProductContentPageContent />
-    </Suspense>
+    </React.Suspense>
   )
 }

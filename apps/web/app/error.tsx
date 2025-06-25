@@ -1,10 +1,8 @@
 'use client'
 
+import { Button, Card } from '@zondax/ui-common'
 import { Bug, Rocket, Zap } from 'lucide-react'
 import { useEffect } from 'react'
-
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
 
 export default function ErrorPage({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {

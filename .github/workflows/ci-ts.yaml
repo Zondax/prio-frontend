@@ -1,0 +1,50 @@
+name: CI-ts
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
+      - dev
+  schedule:
+    - cron: "0 0 * * *" # Every day at midnight UTC
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.head.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ts-checks:
+    uses: zondax/_workflows/.github/workflows/_checks-ts.yaml@main
+    with:
+      package_manager: pnpm
+      github_app_auth: true
+      github_app_repos: ks-frontend,web-golem
+    secrets:
+      app_id: ${{ secrets.PULUMI_GOLEM_APP_ID }}
+      app_pem: ${{ secrets.PULUMI_GOLEM_APP_PEM }}
+
+  playwright-tests:
+    needs: ts-checks
+    uses: zondax/_workflows/.github/workflows/_checks-playwright.yaml@main
+    with:
+      working_directory: "apps/web"
+      github_app_auth: true
+      github_app_repos: ks-frontend,web-golem
+    secrets:
+      app_id: ${{ secrets.PULUMI_GOLEM_APP_ID }}
+      app_pem: ${{ secrets.PULUMI_GOLEM_APP_PEM }}
+      env_local: |
+        # Project-specific variables
+        PROJECT="ks-frontend"
+        NAMESPACE="ks-frontend"
+
+        # API keys
+        NEXT_PUBLIC_LOCATIONIQ_TOKEN="${{ secrets.NEXT_PUBLIC_LOCATIONIQ_TOKEN }}"
+        NEXT_PUBLIC_GRPC_SERVER="${{ secrets.NEXT_PUBLIC_GRPC_SERVER }}"
+
+        # Database
+        DATABASE_NEON_URL="${{ secrets.DATABASE_NEON_URL }}"

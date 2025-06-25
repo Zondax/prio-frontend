@@ -1,10 +1,9 @@
 'use client'
 
 import { useUser } from '@zondax/auth-web'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@zondax/ui-common'
 import { ArrowRight, CreditCard, Database, Shield } from 'lucide-react'
 import Link from 'next/link'
-
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function DevPage() {
   const { user, isLoaded } = useUser()
