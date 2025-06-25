@@ -15,7 +15,7 @@
     "deps:fix": "echo 'nothing to fix'",
     "deps:update": "pnpm exec npm-check-updates -u -t semver && pnpm install && pnpm run deps:fix",
     "dev": "next dev --turbopack",
-    "env:init": "op read op://.prio-dev/m2n2vr22pck3mfnna6qzhasis4/notesPlain > .env",
+    "env:init": "../../scripts/init-env.sh web",
     "start": "next start",
     "test": "vitest run",
     "test:e2e": "playwright test e2e",

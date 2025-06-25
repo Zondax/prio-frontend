@@ -46,5 +46,7 @@ jobs:
         NEXT_PUBLIC_LOCATIONIQ_TOKEN="${{ secrets.NEXT_PUBLIC_LOCATIONIQ_TOKEN }}"
         NEXT_PUBLIC_GRPC_SERVER="${{ secrets.NEXT_PUBLIC_GRPC_SERVER }}"
 
-        # Database
-        DATABASE_NEON_URL="${{ secrets.DATABASE_NEON_URL }}"
+        # Authn
+        NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}"
+        CLERK_SECRET_KEY="${{ secrets.CLERK_SECRET_KEY }}"
+        NEXT_PUBLIC_AUTH_PROVIDER="clerk"

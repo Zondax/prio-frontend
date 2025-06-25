@@ -1,0 +1,10 @@
+{
+  "gcp": {
+    "projectId": "100436977551",
+    "secrets": {
+      "web": "mono-web-env",
+      "expo": "mono-expo-env",
+      "ext": "mono-ext-env"
+    }
+  }
+}

@@ -13,7 +13,7 @@
     "dev:local": "expo start --dev-client",
     "dev:web": "expo start -c --web",
     "doctor": "pnpm dlx expo-doctor",
-    "env:init": "op read op://.prio-dev/m2n2vr22pck3mfnna6qzhasis4/notesPlain > .env",
+    "env:init": "../../scripts/init-env.sh expo",
     "postinstall": "pnpm exec tailwindcss -i ./global.css -o ./node_modules/.cache/nativewind/global.css",
     "ios": "expo run:ios",
     "test": "FORCE_COLOR=1 vitest run --coverage --passWithNoTests",

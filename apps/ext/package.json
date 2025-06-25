@@ -18,6 +18,7 @@
     "dev": "nodemon --config nodemon.chrome.json",
     "dev:chrome": "nodemon --config nodemon.chrome.json",
     "dev:firefox": "nodemon --config nodemon.firefox.json",
+    "env:init": "../../scripts/init-env.sh ext",
     "test": "vitest run --coverage --passWithNoTests",
     "test:watch": "vitest --watch"
   },
