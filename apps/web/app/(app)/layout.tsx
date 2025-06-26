@@ -1,9 +1,8 @@
 'use client'
 
 import { useUser } from '@zondax/auth-web'
-
+import { TopBar } from '@zondax/ui-common'
 import { StickyRenderer } from '@/components/sticky/sticky-renderer'
-import { TopBar } from '@/components/topbar'
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const { user, isLoaded } = useUser()

@@ -1,7 +1,11 @@
 import type { StorybookConfig } from '@storybook/react-vite'
 
 const config: StorybookConfig = {
-  stories: ['../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)', '../**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  stories: [
+    '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+    '../**/*.stories.@(js|jsx|mjs|ts|tsx)',
+    '../../../libs/ui-common/src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+  ],
   addons: ['@storybook/addon-docs', '@storybook/addon-themes'],
   framework: {
     name: '@storybook/react-vite',
@@ -35,6 +39,15 @@ const config: StorybookConfig = {
         'react-dom/server',
       ],
       include: [...(config.optimizeDeps?.include || []), 'react', 'react-dom'],
+    }
+
+    // Mock Next.js navigation module
+    config.resolve = {
+      ...config.resolve,
+      alias: {
+        ...config.resolve?.alias,
+        'next/navigation': new URL('./mocks/next-navigation.js', import.meta.url).pathname,
+      },
     }
 
     return config
