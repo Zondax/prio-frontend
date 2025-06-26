@@ -17,7 +17,7 @@ function CustomNavigation() {
 
 export default function DevLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col h-full max-w-7xl mx-auto">
+    <div className="flex flex-col h-full w-full px-4 sm:px-6 lg:px-8 xl:px-12">
       <TopBar menuItems={[]}>
         <Link href="/dev">
           <div className="bg-primary text-primary-foreground px-3 py-1 rounded-md text-sm font-medium cursor-pointer hover:bg-primary/90 transition-colors">
