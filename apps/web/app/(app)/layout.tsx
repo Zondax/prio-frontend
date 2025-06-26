@@ -22,7 +22,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   // If user is not authenticated, show content without TopBar
   if (!user) {
     return (
-      <div className="max-w-7xl mx-auto">
+      // TODO: Enhance layout styles
+      <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12">
         <StickyRenderer>
           <div className="flex-1">{children}</div>
         </StickyRenderer>
@@ -32,7 +33,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   // If user is authenticated, show content with TopBar but no menu items
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12">
       <StickyRenderer>
         <TopBar menuItems={[]} />
         <div className="flex-1">{children}</div>
