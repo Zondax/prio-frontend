@@ -31,7 +31,7 @@ const fontHeading = Parkinsans({
 })
 
 export const metadata: Metadata = {
-  title: 'Kickstarter',
+  title: 'Prio',
   description: 'A clean Next.js template for building products.',
   // TODO: Add fav icon
   icons: {

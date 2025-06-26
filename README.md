@@ -74,6 +74,32 @@ pnpm env:init:ext
 
 The `pnpm env:init` command will attempt to initialize all apps and continue even if some fail, giving you a summary at the end.
 
+## Git Submodules
+
+This project uses Git submodules to manage shared libraries. The `libs` directory contains the `web-golem` library as a submodule.
+
+### Initializing Submodules
+
+After cloning the repository, you need to initialize and update the submodules:
+
+```sh
+# Initialize and update all submodules
+git submodule update --init --recursive
+
+# Or do it in two steps
+git submodule init
+git submodule update
+```
+
+### Updating Submodules
+
+To update submodules to their latest versions:
+
+```sh
+# Update all submodules to their latest commit
+git submodule update --remote
+```
+
 ## VSCode Extensions
 
 This project includes recommended extensions in `.vscode/extensions.json`. To ensure everyone on the team installs these extensions:
