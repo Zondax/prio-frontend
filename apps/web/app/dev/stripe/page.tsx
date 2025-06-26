@@ -390,7 +390,7 @@ export default function StripePage() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-4">🚀 Kickstarter Stripe Integration</h1>
+          <h1 className="text-4xl font-bold text-foreground mb-4">🚀 Prio Stripe Integration</h1>
           <p className="text-xl text-muted-foreground mb-6">Browse our products and subscription plans</p>
 
           {/* Manage Billing Button */}

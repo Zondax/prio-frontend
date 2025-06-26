@@ -2,9 +2,9 @@
 
 import { OtelProvider as BaseOtelProvider, type OtelConfig } from '@zondax/otel-web'
 
-// Kickstarter web app specific configuration using environment variables
-const KICKSTARTER_CONFIG: OtelConfig = {
-  serviceName: process.env.NEXT_PUBLIC_SERVICE_NAME || 'kickstarter-web-client',
+// Prio web app specific configuration using environment variables
+const PRIO_CONFIG: OtelConfig = {
+  serviceName: process.env.NEXT_PUBLIC_SERVICE_NAME || 'prio-web-client',
   serviceVersion: process.env.NEXT_PUBLIC_SERVICE_VERSION || '1.0.0',
   signozEndpoint: process.env.NEXT_PUBLIC_SIGNOZ_ENDPOINT,
   signozApiKey: process.env.NEXT_PUBLIC_SIGNOZ_API_KEY,
@@ -23,9 +23,9 @@ interface OtelProviderProps {
 }
 
 /**
- * Kickstarter Web App OpenTelemetry Provider
+ * Prio Web App OpenTelemetry Provider
  *
- * Wraps the base OtelProvider with kickstarter-specific configuration.
+ * Wraps the base OtelProvider with prio-specific configuration.
  * This allows for easy customization while using the shared otel-web package.
  *
  * Configuration is loaded from environment variables:
@@ -37,5 +37,5 @@ interface OtelProviderProps {
  * - NEXT_PUBLIC_OTEL_CONSOLE_LOGGING: Enable console logging (true/false)
  */
 export default function OtelProvider({ children }: OtelProviderProps) {
-  return <BaseOtelProvider config={KICKSTARTER_CONFIG}>{children}</BaseOtelProvider>
+  return <BaseOtelProvider config={PRIO_CONFIG}>{children}</BaseOtelProvider>
 }
