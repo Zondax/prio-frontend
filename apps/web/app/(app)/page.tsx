@@ -42,7 +42,6 @@ export default function HomePage() {
       <div className="text-center space-y-8">
         <div className="space-y-4">
           <h1 className="text-4xl font-bold tracking-tight">Welcome to Prio</h1>
-          <p className="text-lg text-muted-foreground">A clean Next.js template for building products</p>
           <p className="text-sm text-muted-foreground">Hello, {user.firstName || user.emailAddresses[0]?.emailAddress}!</p>
         </div>
 
