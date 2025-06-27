@@ -36,14 +36,6 @@
       "@zondax/ui-common/*": ["../../libs/ui-common/src/*"]
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "../../libs/ui-common/src/hooks/use-is-client.ts",
-    "../../libs/ui-common/src/components/debug/floating-settings-panel.tsx",
-    "../../libs/ui-common/src/components/debug/floating-settings-provider.tsx"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }

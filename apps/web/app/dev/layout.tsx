@@ -3,7 +3,7 @@
 import { useUser } from '@zondax/auth-web'
 import Link from 'next/link'
 import EndpointSelector from '@/components/endpoint-selector'
-import { TopBar } from '@/components/topbar'
+import { TopBar } from '@zondax/ui-common'
 
 function CustomNavigation() {
   const { user, isLoaded } = useUser()

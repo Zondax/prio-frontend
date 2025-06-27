@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # =============================================================================
 # Submodule Update Script for Vercel Build Environment
 # =============================================================================
@@ -9,8 +8,8 @@
 #
 # Required Environment Variables:
 # - PULUMI_GOLEM_APP_PEM: GitHub App private key (PEM format)
-# - PULUMI_GITHUB_APP_ID: GitHub App ID
-# - PULUMI_GITHUB_INSTALLATION_ID: GitHub App installation ID
+# - PULUMI_GOLEM_APP_ID: GitHub App ID
+# - PULUMI_GOLEM_INSTALLATION_ID: GitHub App installation ID
 # =============================================================================
 
 set -e  # Exit immediately if a command exits with a non-zero status
@@ -29,15 +28,15 @@ if [ -z "$PULUMI_GOLEM_APP_PEM" ]; then
     exit 1
 fi
 
-if [ -z "$PULUMI_GITHUB_APP_ID" ]; then
-    echo "❌ Error: PULUMI_GITHUB_APP_ID environment variable is not set"
-    echo "Please set the PULUMI_GITHUB_APP_ID environment variable with your GitHub App's ID"
+if [ -z "$PULUMI_GOLEM_APP_ID" ]; then
+    echo "❌ Error: PULUMI_GOLEM_APP_ID environment variable is not set"
+    echo "Please set the PULUMI_GOLEM_APP_ID environment variable with your GitHub App's ID"
     exit 1
 fi
 
-if [ -z "$PULUMI_GITHUB_INSTALLATION_ID" ]; then
-    echo "❌ Error: PULUMI_GITHUB_INSTALLATION_ID environment variable is not set"
-    echo "Please set the PULUMI_GITHUB_INSTALLATION_ID environment variable with your GitHub App's installation ID"
+if [ -z "$PULUMI_GOLEM_INSTALLATION_ID" ]; then
+    echo "❌ Error: PULUMI_GOLEM_INSTALLATION_ID environment variable is not set"
+    echo "Please set the PULUMI_GOLEM_INSTALLATION_ID environment variable with your GitHub App's installation ID"
     exit 1
 fi
 
@@ -73,7 +72,7 @@ header=$(echo -n "${header_json}" | b64enc)
 payload_json="{
     \"iat\":${iat},
     \"exp\":${exp},
-    \"iss\":\"${PULUMI_GITHUB_APP_ID}\"
+    \"iss\":\"${PULUMI_GOLEM_APP_ID}\"
 }"
 payload=$(echo -n "${payload_json}" | b64enc)
 
@@ -95,7 +94,7 @@ echo "🎫 Obtaining installation access token..."
 INSTALLATION_TOKEN_RESPONSE=$(curl -s -X POST \
     -H "Authorization: Bearer $JWT_TOKEN" \
     -H "Accept: application/vnd.github.v3+json" \
-    "https://api.github.com/app/installations/$PULUMI_GITHUB_INSTALLATION_ID/access_tokens")
+    "https://api.github.com/app/installations/$PULUMI_GOLEM_INSTALLATION_ID/access_tokens")
 
 # Extract token from response
 INSTALLATION_TOKEN=$(echo "$INSTALLATION_TOKEN_RESPONSE" | tr ',' '\n' | grep '"token"' | cut -d'"' -f4)
