@@ -21,12 +21,12 @@
     "dev:ext": "pnpm --filter mono-ext dev",
     "dev:web": "pnpm --filter mono-web dev",
     "doctor": "pnpm --filter mono-expo run doctor",
-    "env:init": "./scripts/init-all-env.sh",
-    "env:init:web": "./scripts/init-env.sh web",
-    "env:init:expo": "./scripts/init-env.sh expo",
-    "env:init:ext": "./scripts/init-env.sh ext",
-    "init": "./scripts/init-all-env.sh",
-    "start": "./scripts/init-all-env.sh",
+    "env:init": "npx -y @zondax/cli@latest env init",
+    "env:init:web": "npx -y @zondax/cli@latest env init web",
+    "env:init:expo": "npx -y @zondax/cli@latest env init expo",
+    "env:init:ext": "npx -y @zondax/cli@latest env init ext",
+    "init": "pnpm env:init",
+    "start": "pnpm env:init",
     "format": "biome format --write .",
     "format:check": "biome format .",
     "install:expo": "pnpm --filter mono-expo install --pnpm",
@@ -41,7 +41,11 @@
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
     "test:watch": "vitest",
-    "vendor:grpc": "rm -rf packages/grpc && cp -r external/backend/ts/grpc packages/grpc"
+    "vendor:grpc": "rm -rf packages/grpc && cp -r external/backend/ts/grpc packages/grpc",
+    "shadcn": "pnpm --filter mono-web shadcn",
+    "ci:check": "pnpm install && pnpm fix && pnpm build:web && pnpm build:ext",
+    "build:check": "pnpm install && pnpm fix && pnpm build:web && pnpm build:ext && pnpm build:expo",
+    "build:storybook": "pnpm --filter mono-storybook build"
   },
   "resolutions": {
     "@types/react": "19.0.10",
@@ -49,7 +53,7 @@
     "react-dom": "^19.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.0.5",
+    "@biomejs/biome": "^2.0.6",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@types/async": "^3.2.24",

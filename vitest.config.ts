@@ -7,13 +7,14 @@ const workspaceDirs = ['apps', 'libs', 'packages'] as const
 // Globs
 const testFileGlob = '**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'
 const coverageFileGlob = '**/*.{js,ts,jsx,tsx}'
-const excludeGlobs = ['**/node_modules/**', '**/dist/**', '**/build/**', '**/e2e/**', '**/.next/**']
+const excludeGlobs = ['**/node_modules/**', '**/dist/**', '**/build/**', '**/e2e/**', '**/.next/**', 'libs/auth-expo/**']
 
 // Map of package aliases ➜ relative source paths (from repo root)
 const aliasRoots: Record<string, string> = {
   '@mono-grpc': 'packages/grpc/src',
   '@zondax/auth-core': 'libs/auth-core/src',
   '@zondax/auth-web': 'libs/auth-web/src',
+  '@zondax/ui-common': 'libs/ui-common/src',
   '@mono-state': 'packages/state/src',
 }
 

@@ -2,7 +2,6 @@
 
 import { useUser } from '@zondax/auth-web'
 import { TopBar } from '@zondax/ui-common'
-import { StickyRenderer } from '@/components/sticky/sticky-renderer'
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const { user, isLoaded } = useUser()
@@ -23,9 +22,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     return (
       // TODO: Enhance layout styles
       <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12">
-        <StickyRenderer>
-          <div className="flex-1">{children}</div>
-        </StickyRenderer>
+        <div className="flex-1">{children}</div>
       </div>
     )
   }
@@ -33,10 +30,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   // If user is authenticated, show content with TopBar but no menu items
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12">
-      <StickyRenderer>
-        <TopBar menuItems={[]} />
-        <div className="flex-1">{children}</div>
-      </StickyRenderer>
+      <TopBar />
+      <div className="flex-1">{children}</div>
     </div>
   )
 }

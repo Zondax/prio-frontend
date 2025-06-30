@@ -1,6 +1,7 @@
-@import "tailwindcss";
+@import "../../../../../libs/ui-common/src/styles/globals.css";
 
-@plugin "tailwindcss-animate";
+/* Extension-specific source paths */
+@source "../../**/*.{js,ts,jsx,tsx}";
 
 @custom-variant dark (&:is(.dark *));
 
