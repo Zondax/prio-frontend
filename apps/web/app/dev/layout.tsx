@@ -1,37 +1,30 @@
 'use client'
 
-import { useUser } from '@zondax/auth-web'
-import { TopBar, useTopBarItem } from '@zondax/ui-common'
-import Link from 'next/link'
-import EndpointSelector from '@/components/endpoint-selector'
+import { LogoItem, ThemeToggleItem, TopBar, TriSection, useTopBarItem } from '@zondax/ui-common'
+import { DevLinkItem } from '@/components/contextual/DevLinkItem'
+import { EndpointSelectorItem } from '@/components/contextual/EndpointSelectorItem'
+import { UserButtonItem } from '@/components/contextual/UserButtonItem'
 
-function DevNavigation() {
-  const { user, isLoaded } = useUser()
-
-  // Add Dev link to TopBar
-  useTopBarItem(
-    'dev-link',
-    <Link href="/dev">
-      <div className="bg-primary text-primary-foreground px-3 py-1 rounded-md text-sm font-medium cursor-pointer hover:bg-primary/90 transition-colors">
-        Dev
-      </div>
-    </Link>,
-    'left',
-    1
+function DevTopBarItems() {
+  return (
+    <>
+      <LogoItem locationHook={useTopBarItem} text="Prio" section={TriSection.Left} priority={0} />
+      <DevLinkItem locationHook={useTopBarItem} section={TriSection.Left} priority={10} />
+      <EndpointSelectorItem locationHook={useTopBarItem} section={TriSection.Right} priority={5} showWhenAuthenticated={true} />
+      <ThemeToggleItem locationHook={useTopBarItem} section={TriSection.Right} priority={10} />
+      <UserButtonItem locationHook={useTopBarItem} section={TriSection.Right} priority={20} />
+    </>
   )
-
-  // Add EndpointSelector (conditionally rendered)
-  useTopBarItem('endpoint-selector', isLoaded && user ? <EndpointSelector /> : null, 'right', 1)
-
-  return null
 }
 
 export default function DevLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col h-full w-full px-4 sm:px-6 lg:px-8 xl:px-12">
-      <DevNavigation />
+    <div className="flex flex-col h-full w-full">
+      <DevTopBarItems />
       <TopBar />
-      <main className="flex-1 overflow-auto">{children}</main>
+      <div className="px-4 sm:px-6 lg:px-8 xl:px-12">
+        <main className="flex-1 overflow-auto">{children}</main>
+      </div>
     </div>
   )
 }

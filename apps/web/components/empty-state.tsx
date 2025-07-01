@@ -1,8 +1,10 @@
 'use client'
 
-import { Button, cn } from '@zondax/ui-common'
+import { Button } from '@zondax/ui-common'
+import { cn } from '@zondax/ui-common/src/lib/utils'
 import type { LucideIcon } from 'lucide-react'
 import Link from 'next/link'
+import type React from 'react'
 
 interface EmptyStateProps {
   icon: LucideIcon

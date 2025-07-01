@@ -1,10 +1,21 @@
 'use client'
 
 import { useUser } from '@zondax/auth-web'
-import { TopBar } from '@zondax/ui-common'
+import { LogoItem, ThemeToggleItem, TopBar, TriSection, useTopBarItem } from '@zondax/ui-common'
+import { UserButtonItem } from '../../components/contextual/UserButtonItem'
+
+function AppTopBarItems() {
+  return (
+    <>
+      <LogoItem locationHook={useTopBarItem} text="Prio" section={TriSection.Left} priority={0} />
+      <ThemeToggleItem locationHook={useTopBarItem} section={TriSection.Right} priority={10} />
+      <UserButtonItem locationHook={useTopBarItem} section={TriSection.Right} priority={20} />
+    </>
+  )
+}
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-  const { user, isLoaded } = useUser()
+  const { isLoaded } = useUser()
 
   // Show loading state while checking authentication
   if (!isLoaded) {
@@ -17,21 +28,13 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     )
   }
 
-  // If user is not authenticated, show content without TopBar
-  if (!user) {
-    return (
-      // TODO: Enhance layout styles
-      <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12">
+  return (
+    <div className="w-full">
+      <AppTopBarItems />
+      <TopBar />
+      <div className="px-4 sm:px-6 lg:px-8 xl:px-12">
         <div className="flex-1">{children}</div>
       </div>
-    )
-  }
-
-  // If user is authenticated, show content with TopBar but no menu items
-  return (
-    <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12">
-      <TopBar />
-      <div className="flex-1">{children}</div>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import type { Preview } from '@storybook/react-vite'
-import { ThemeProvider } from '@zondax/ui-common/src/components/theming/theme-provider'
+import { ThemeProvider } from '@zondax/ui-common'
 import '@zondax/ui-common/src/styles/globals.css'
 import React from 'react'
 
