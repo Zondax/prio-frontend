@@ -33,6 +33,9 @@
       "@zondax/auth-web": ["../../libs/auth-web/src"],
       "@zondax/auth-web/*": ["../../libs/auth-web/src/*"],
       "@zondax/ui-common": ["../../libs/ui-common/src"],
+      "@zondax/ui-common/server": ["../../libs/ui-common/src/server"],
+      "@zondax/ui-common/client": ["../../libs/ui-common/src/client"],
+      "@zondax/ui-common/styles/*": ["../../libs/ui-common/src/styles/*"],
       "@zondax/ui-common/*": ["../../libs/ui-common/src/*"]
     }
   },
