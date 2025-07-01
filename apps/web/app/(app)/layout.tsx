@@ -1,7 +1,7 @@
 'use client'
 
 import { useUser } from '@zondax/auth-web'
-import { LogoItem, ThemeToggleItem, TopBar, TriSection, useTopBarItem } from '@zondax/ui-common'
+import { LogoItem, ThemeToggleItem, TopBar, TriSection, useTopBarItem } from '@zondax/ui-common/client'
 import { UserButtonItem } from '../../components/contextual/UserButtonItem'
 
 function AppTopBarItems() {

@@ -2,7 +2,7 @@
 
 import { useEndpointStore } from '@mono-state'
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@zondax/ui-common'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@zondax/ui-common/client'
 
 // Extracted EndpointSelector component
 export default function EndpointSelector() {

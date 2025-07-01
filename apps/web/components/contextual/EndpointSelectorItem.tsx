@@ -1,7 +1,7 @@
 'use client'
 
 import { useUser } from '@zondax/auth-web'
-import { TriSection, withContextualItem } from '@zondax/ui-common'
+import { TriSection, withContextualItem } from '@zondax/ui-common/client'
 import { useMemo } from 'react'
 import EndpointSelector from '@/components/endpoint-selector'
 

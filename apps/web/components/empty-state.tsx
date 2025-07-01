@@ -1,7 +1,6 @@
 'use client'
 
-import { Button } from '@zondax/ui-common'
-import { cn } from '@zondax/ui-common/src/lib/utils'
+import { Button, cn } from '@zondax/ui-common/client'
 import type { LucideIcon } from 'lucide-react'
 import Link from 'next/link'
 import type React from 'react'

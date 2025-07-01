@@ -15,7 +15,7 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from '@zondax/ui-common'
+} from '@zondax/ui-common/client'
 import { ArrowLeft, Clock, Code, Database, Shield, User } from 'lucide-react'
 import {
   createGetProductByIDRequest,

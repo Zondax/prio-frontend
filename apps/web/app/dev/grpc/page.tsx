@@ -1,9 +1,11 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@zondax/ui-common'
+'use client'
+
+import { Card, CardContent, CardHeader, CardTitle } from '@zondax/ui-common/client'
 import { User } from 'lucide-react'
 
 import UserPreferencesPage from './UserPreferences'
 
-export default async function GrpcPage() {
+export default function GrpcPage() {
   return (
     <div className="mt-4">
       <Card>

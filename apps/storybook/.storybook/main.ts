@@ -22,6 +22,26 @@ const config: StorybookConfig = {
       'process.env': {},
     }
 
+    // Suppress "use client" directive warnings
+    config.build = {
+      ...config.build,
+      rollupOptions: {
+        ...config.build?.rollupOptions,
+        onwarn(warning, warn) {
+          // Suppress "use client" directive warnings
+          if (warning.message.includes('Module level directives cause errors when bundled')) {
+            return
+          }
+          // Suppress sourcemap warnings
+          if (warning.message.includes('Error when using sourcemap for reporting an error')) {
+            return
+          }
+          // Let other warnings through
+          warn(warning)
+        },
+      },
+    }
+
     // Configure optimizeDeps to exclude problematic dependencies
     config.optimizeDeps = {
       ...config.optimizeDeps,

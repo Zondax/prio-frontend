@@ -1,7 +1,7 @@
 'use client'
 
 import { UserButton } from '@zondax/auth-web'
-import { TriSection, withContextualItem } from '@zondax/ui-common'
+import { TriSection, withContextualItem } from '@zondax/ui-common/client'
 
 /**
  * Contextual wrapper for UserButton component

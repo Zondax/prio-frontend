@@ -1,6 +1,6 @@
 'use client'
 
-import { ThemeProvider, TopBarProvider } from '@zondax/ui-common'
+import { ThemeProvider, TopBarProvider } from '@zondax/ui-common/client'
 import type { ReactNode } from 'react'
 
 export default function ClientProviders({ children }: { children: ReactNode }) {

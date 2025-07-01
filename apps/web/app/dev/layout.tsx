@@ -1,6 +1,6 @@
 'use client'
 
-import { LogoItem, ThemeToggleItem, TopBar, TriSection, useTopBarItem } from '@zondax/ui-common'
+import { LogoItem, ThemeToggleItem, TopBar, TriSection, useTopBarItem } from '@zondax/ui-common/client'
 import { DevLinkItem } from '@/components/contextual/DevLinkItem'
 import { EndpointSelectorItem } from '@/components/contextual/EndpointSelectorItem'
 import { UserButtonItem } from '@/components/contextual/UserButtonItem'

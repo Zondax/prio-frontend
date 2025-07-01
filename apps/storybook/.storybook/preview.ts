@@ -1,6 +1,6 @@
 import type { Preview } from '@storybook/react-vite'
-import { ThemeProvider } from '@zondax/ui-common'
-import '@zondax/ui-common/src/styles/globals.css'
+import { ThemeProvider } from '@zondax/ui-common/client'
+import '@zondax/ui-common/styles/globals.css'
 import React from 'react'
 
 // Define process globally for components that might need it

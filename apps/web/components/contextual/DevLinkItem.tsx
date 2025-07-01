@@ -1,6 +1,6 @@
 'use client'
 
-import { TriSection, withContextualItem } from '@zondax/ui-common'
+import { TriSection, withContextualItem } from '@zondax/ui-common/client'
 import Link from 'next/link'
 
 interface DevLinkProps {

@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Card } from '@zondax/ui-common'
+import { Button, Card } from '@zondax/ui-common/client'
 import { Coffee, Compass, Rocket } from 'lucide-react'
 import Link from 'next/link'
 
