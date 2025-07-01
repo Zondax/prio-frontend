@@ -1,25 +1,15 @@
 'use client'
 
 import { useUser } from '@zondax/auth-web'
-import { type ContextualItemComponentProps, TriSection } from '@zondax/ui-common'
+import { TriSection, withContextualItem } from '@zondax/ui-common'
 import { useMemo } from 'react'
 import EndpointSelector from '@/components/endpoint-selector'
 
-export interface EndpointSelectorItemProps extends ContextualItemComponentProps<`${TriSection}`> {
+interface ConditionalEndpointSelectorProps {
   showWhenAuthenticated?: boolean
 }
 
-/**
- * Contextual wrapper for EndpointSelector component
- * Only shows when user is authenticated by default
- */
-export function EndpointSelectorItem({
-  locationHook: location,
-  section = TriSection.Right,
-  priority = 5,
-  persistent = true,
-  showWhenAuthenticated = true,
-}: EndpointSelectorItemProps) {
+function ConditionalEndpointSelector({ showWhenAuthenticated = true }: ConditionalEndpointSelectorProps) {
   const { user, isLoaded } = useUser()
 
   const shouldShow = useMemo(() => {
@@ -27,12 +17,18 @@ export function EndpointSelectorItem({
     return isLoaded && user
   }, [isLoaded, user, showWhenAuthenticated])
 
-  const endpointSelectorComponent = useMemo(() => {
-    if (!shouldShow) return null
-    return <EndpointSelector />
-  }, [shouldShow])
+  if (!shouldShow) return null
 
-  location('endpoint-selector', endpointSelectorComponent, section, priority, persistent)
-
-  return null
+  return <EndpointSelector />
 }
+
+/**
+ * Contextual wrapper for EndpointSelector component
+ * Only shows when user is authenticated by default
+ */
+export const EndpointSelectorItem = withContextualItem<typeof ConditionalEndpointSelector, `${TriSection}`>(ConditionalEndpointSelector, {
+  id: 'endpoint-selector',
+  defaultSection: TriSection.Right,
+  defaultPriority: 5,
+  defaultPersistent: true,
+})
