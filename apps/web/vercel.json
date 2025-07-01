@@ -1,6 +1,6 @@
 {
   "framework": "nextjs",
-  "buildCommand": "npx -y @zondax/cli@latest ci checkout --install-deps && pnpm build",
+  "buildCommand": "./build_vercel.sh",
   "installCommand": "pnpm install",
   "outputDirectory": ".next"
 }
