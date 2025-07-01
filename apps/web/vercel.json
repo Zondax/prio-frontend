@@ -1,6 +1,6 @@
 {
   "framework": "nextjs",
-  "buildCommand": "../../scripts/update-submodules.sh && pnpm --filter mono-web build",
+  "buildCommand": "npx -y @zondax/cli@latest ci checkout --install-deps && pnpm build",
   "installCommand": "pnpm install",
   "outputDirectory": ".next"
 }
