@@ -1,9 +1,9 @@
 'use client'
 
+import { EmptyState } from '@zondax/ui-common/client'
 import { ArrowLeft, XCircle } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import * as React from 'react'
-import { EmptyState } from '@/components/empty-state'
 
 function CancelPageContent() {
   const searchParams = useSearchParams()

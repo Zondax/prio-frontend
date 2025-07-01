@@ -1,9 +1,9 @@
 'use client'
 
+import { EmptyState } from '@zondax/ui-common/client'
 import { CheckCircle, ShoppingCart } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import * as React from 'react'
-import { EmptyState } from '@/components/empty-state'
 
 function SuccessPageContent() {
   const searchParams = useSearchParams()
