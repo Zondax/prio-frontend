@@ -12,6 +12,7 @@
     "deps:flush": "find . -name 'node_modules' -type d -prune | xargs rm -rf",
     "deps:update": "pnpm --filter 'mono-*' --filter '@zondax/*' run deps:update",
     "dev": "pnpm dev:web",
+    "dev:no-release": "pnpm --filter @zondax/no-release dev",
     "dev:expo": "pnpm --filter mono-expo web",
     "dev:expo-local": "pnpm --filter mono-expo dev:local",
     "dev:expo:android": "pnpm --filter mono-expo android",

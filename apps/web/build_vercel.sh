@@ -13,20 +13,38 @@ npx -y @zondax/cli@latest ci checkout --install-deps
 # Check if this is a production build without permission
 if [ "$VERCEL_ENV" = "production" ] && [ "$ALLOW_PRODUCTION_RELEASE" != "true" ]; then
   echo ""
-  echo "⚠️  Production release not allowed!"
-  echo "   To enable production builds, set ALLOW_PRODUCTION_RELEASE=true in Vercel environment variables."
+  echo "⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️"
+  echo "⚠️                                                      ⚠️"
+  echo "⚠️         PRODUCTION RELEASE NOT ALLOWED!              ⚠️"
+  echo "⚠️                                                      ⚠️"
+  echo "⚠️  To enable production builds, set:                  ⚠️"
+  echo "⚠️  ALLOW_PRODUCTION_RELEASE=true                      ⚠️"
+  echo "⚠️  in Vercel environment variables                    ⚠️"
+  echo "⚠️                                                      ⚠️"
+  echo "⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️"
   echo ""
-  echo "📄 Using failsafe page instead of building the application..."
+  echo "🚫🚫🚫 REPLACING APP WITH NO-RELEASE VERSION 🚫🚫🚫"
+  echo "🚫🚫🚫 THIS IS NOT THE REAL APPLICATION!     🚫🚫🚫"
+  echo ""
   
-  # Create the .next directory structure for Vercel
-  mkdir -p .next
+  # Delete everything except build scripts and vercel config
+  find . -maxdepth 1 -not -name '.' \
+    -not -name 'build_vercel.sh' \
+    -not -name 'vercel.json' \
+    -exec rm -rf {} +
   
-  # Copy all failsafe files to .next directory
-  cp failsafe/index.html .next/
-  cp failsafe/server.js .next/
-  cp failsafe/package.json .next/
+  # Copy all no-release app files
+  cp -r ../../libs/no-release/* .
+  
+  # Install dependencies for no-release app
+  echo "📦 Installing no-release dependencies..."
+  pnpm install --frozen-lockfile
+  
+  # Build normally
+  echo "🔨 Building no-release app..."
+  pnpm build
 
-  echo "✅ Failsafe build completed"
+  echo "✅ No-release build completed"
   
 else
   # Normal production or non-production build

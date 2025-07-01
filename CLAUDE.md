@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is **prio-frontend**, a sophisticated multi-platform monorepo supporting web, mobile (Expo), browser extensions, and component documentation. The project uses pnpm workspaces and follows a strict quality-first development approach.
 
+For details on how this project evolved from the original ks-frontend kickstarter, see [kickstarter-divergence.md](./kickstarter-divergence.md).
+
 **Key Applications:**
 - **apps/web** - Next.js 15 web application with App Router
 - **apps/expo** - React Native mobile app (outside workspace due to bun hoisting issues)
