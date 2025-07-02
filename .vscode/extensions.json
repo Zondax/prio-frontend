@@ -2,6 +2,7 @@
   "recommendations": [
     "biomejs.biome",
     "oven.bun-vscode",
+    "pflannery.vscode-versionlens",
     "bradlc.vscode-tailwindcss",
     "bradlc.hsl",
     "ms-playwright.playwright",
