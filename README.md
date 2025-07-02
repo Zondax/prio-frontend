@@ -112,3 +112,4 @@ This project includes recommended extensions in `.vscode/extensions.json`. To en
    - Installing the extensions shown under "Workspace Recommendations"
 
 If you find an extension useful for this project, please update the `.vscode/extensions.json` file and document why it's beneficial in your PR.
+
