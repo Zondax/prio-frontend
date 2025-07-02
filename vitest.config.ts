@@ -46,6 +46,13 @@ export default defineConfig({
     environment: 'jsdom',
     // Set test timeout to 10 seconds
     testTimeout: 10_000,
+    // Fix EPIPE errors in CI by reducing resource usage
+    pool: 'forks',
+    poolOptions: {
+      forks: {
+        singleFork: true,
+      },
+    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'json-summary', 'html'],
