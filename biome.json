@@ -27,7 +27,7 @@
       "a11y": {
         "useKeyWithClickEvents": "warn",
         "useButtonType": "warn",
-        "useSemanticElements": "warn",
+        "useSemanticElements": "off",
         "useFocusableInteractive": "warn",
         "useValidAnchor": "warn"
       },
