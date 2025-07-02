@@ -46,11 +46,11 @@ export default defineConfig({
     environment: 'jsdom',
     // Set test timeout to 10 seconds
     testTimeout: 10_000,
-    // Fix EPIPE errors in CI by reducing resource usage
-    pool: 'forks',
+    // Fix EPIPE errors in CI by using threads with limited workers
+    pool: 'threads',
     poolOptions: {
-      forks: {
-        singleFork: true,
+      threads: {
+        singleThread: true,
       },
     },
     coverage: {
