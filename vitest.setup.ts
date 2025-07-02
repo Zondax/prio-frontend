@@ -15,6 +15,17 @@ if (typeof (globalThis as any).__DEV__ === 'undefined') {
   ;(globalThis as any).__DEV__ = false
 }
 
+// Mock ResizeObserver for tests
+global.ResizeObserver = class ResizeObserver {
+  constructor(cb: ResizeObserverCallback) {
+    this.cb = cb
+  }
+  cb: ResizeObserverCallback
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
 afterEach(() => {
   cleanup()
 })
