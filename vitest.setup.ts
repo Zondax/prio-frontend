@@ -1,4 +1,7 @@
-import '@testing-library/jest-dom/vitest'
+/**
+ * Root vitest setup for prio-frontend
+ * Migrated from jest-dom to native Vitest assertions (2025-01)
+ */
 import { EventEmitter as NodeEventEmitter } from 'node:events'
 import { cleanup } from '@testing-library/react'
 import { afterEach } from 'vitest'
