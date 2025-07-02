@@ -39,7 +39,7 @@
     "test:expo": "echo disabled",
     "test:expo:coverage": "echo disabled",
     "test:e2e:install": "pnpm --filter mono-web test:e2e:install",
-    "test:coverage": "vitest run --coverage",
+    "test:coverage": "vitest run --coverage --pool=threads --poolOptions.threads.singleThread=true",
     "test:ui": "vitest --ui",
     "test:watch": "vitest",
     "vendor:grpc": "rm -rf packages/grpc && cp -r external/backend/ts/grpc packages/grpc",
