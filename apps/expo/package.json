@@ -67,7 +67,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
-    "expo": "^53.0.15",
+    "expo": "^53.0.16",
     "expo-application": "~6.1.5",
     "expo-asset": "^11.1.6",
     "expo-auth-session": "~6.2.0",
