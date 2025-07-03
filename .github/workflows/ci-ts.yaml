@@ -23,6 +23,8 @@ jobs:
       package_manager: pnpm
       github_app_auth: true
       github_app_repos: web-golem
+      gcp_wif_provider: ${{ vars.PULUMI_FRONTEND_WIF_PROVIDER }}
+      gcp_project_id: ${{ vars.PULUMI_GCP_PROJECT_ID }}
     secrets:
       app_id: ${{ secrets.PULUMI_GOLEM_APP_ID }}
       app_pem: ${{ secrets.PULUMI_GOLEM_APP_PEM }}
@@ -35,6 +37,8 @@ jobs:
       github_app_auth: true
       github_app_repos: web-golem
       autoinit_env: true
+      gcp_wif_provider: ${{ vars.PULUMI_FRONTEND_WIF_PROVIDER }}
+      gcp_project_id: ${{ vars.PULUMI_GCP_PROJECT_ID }}
     secrets:
       app_id: ${{ secrets.PULUMI_GOLEM_APP_ID }}
       app_pem: ${{ secrets.PULUMI_GOLEM_APP_PEM }}
