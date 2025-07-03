@@ -29,7 +29,7 @@ global.ResizeObserver = class ResizeObserver {
   disconnect() {}
 }
 
-// Mock IntersectionObserver for tests  
+// Mock IntersectionObserver for tests
 global.IntersectionObserver = class IntersectionObserver {
   constructor(cb: IntersectionObserverCallback, options?: IntersectionObserverInit) {
     this.cb = cb
