@@ -1,4 +1,4 @@
-@import "../../../libs/ui-common/src/styles/globals.css";
+@import "@zondax/ui-common/styles/globals.css";
 
 /* App-specific source paths */
 @source "../app/**/*.{js,ts,jsx,tsx}";

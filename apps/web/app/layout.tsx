@@ -1,11 +1,11 @@
 import { AuthProvider } from '@zondax/auth-web'
-import { cn, ThemeProvider } from '@zondax/ui-common'
+import { cn } from '@zondax/ui-common/server'
 import type { Metadata } from 'next'
 import { Figtree, Inter as FontSans, Parkinsans } from 'next/font/google'
 import OtelProvider from '@/app/telemetry/OtelProvider'
+import ClientProviders from './client-providers'
 
 import '@/styles/globals.css'
-import { StickyTopProvider } from '@/components/sticky/provider'
 
 // Configure inter with optional subsets
 const fontSans = FontSans({
@@ -53,9 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <html lang="en" suppressHydrationWarning className="overflow-x-hidden">
           <body className={cn('bg-background font-body antialiased', fontSans.variable, fontBody.variable, fontHeading.variable)}>
             <div className="flex flex-col min-h-screen w-full mx-auto">
-              <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
-                <StickyTopProvider>{children}</StickyTopProvider>
-              </ThemeProvider>
+              <ClientProviders>{children}</ClientProviders>
             </div>
           </body>
         </html>

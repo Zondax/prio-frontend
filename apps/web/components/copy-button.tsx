@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, cn } from '@zondax/ui-common'
+import { Button, cn } from '@zondax/ui-common/client'
 import { Check, Copy } from 'lucide-react'
 import { useState } from 'react'
 

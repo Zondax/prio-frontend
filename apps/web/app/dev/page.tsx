@@ -1,7 +1,7 @@
 'use client'
 
 import { useUser } from '@zondax/auth-web'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@zondax/ui-common'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@zondax/ui-common/client'
 import { ArrowRight, CreditCard, Database, Shield } from 'lucide-react'
 import Link from 'next/link'
 

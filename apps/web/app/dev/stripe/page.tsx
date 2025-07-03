@@ -1,7 +1,7 @@
 'use client'
 
 import { useGrpcSetup } from '@zondax/auth-web/hooks'
-import type { GridRenderItem } from '@zondax/ui-common'
+import type { GridRenderItem } from '@zondax/ui-common/client'
 import {
   Badge,
   Button,
@@ -10,13 +10,14 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  EmptyState,
   Skeleton,
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
   VirtualizedGrid,
-} from '@zondax/ui-common'
+} from '@zondax/ui-common/client'
 import { CreditCard, Crown, Loader2, Package, RefreshCw, ShoppingCart } from 'lucide-react'
 import {
   createCheckoutSessionRequest,
@@ -31,7 +32,6 @@ import {
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import * as React from 'react'
-import { EmptyState } from '@/components/empty-state'
 import { ManageBillingButton } from '@/components/manage-billing-button'
 
 // Configuration
