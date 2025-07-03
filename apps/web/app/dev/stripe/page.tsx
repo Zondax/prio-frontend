@@ -10,6 +10,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  EmptyState,
   Skeleton,
   Tabs,
   TabsContent,
@@ -31,7 +32,6 @@ import {
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import * as React from 'react'
-import { EmptyState } from '@/components/empty-state'
 import { ManageBillingButton } from '@/components/manage-billing-button'
 
 // Configuration

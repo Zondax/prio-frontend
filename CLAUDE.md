@@ -2,6 +2,31 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## ⚠️ CRITICAL: React & Expo Version Relationship
+
+**React versions are tightly coupled with Expo SDK versions. NEVER change React versions without considering Expo compatibility:**
+
+- **Expo SDK 53**: Requires React 19.0.0 exactly (not 19.1.0 or any other version)
+- **React-dom**: Must match React version exactly to avoid version mismatch errors in tests
+- **Breaking rule**: Updating React versions without checking Expo compatibility will break mobile builds
+
+**Safe approach**:
+1. Always check Expo SDK documentation before changing React versions
+2. Use pnpm resolutions and overrides to force exact version matching:
+   ```json
+   "resolutions": {
+     "react": "19.0.0",
+     "react-dom": "19.0.0"
+   },
+   "pnpm": {
+     "overrides": {
+       "react": "19.0.0", 
+       "react-dom": "19.0.0"
+     }
+   }
+   ```
+3. Test both web/extension AND expo builds after any dependency changes
+
 ## Project Overview
 
 This is **prio-frontend**, a sophisticated multi-platform monorepo supporting web, mobile (Expo), browser extensions, and component documentation. The project uses pnpm workspaces and follows a strict quality-first development approach.
@@ -77,6 +102,35 @@ The UI system provides:
 - Full accessibility compliance and theme support
 
 ## Critical Development Patterns
+
+### HTML Structure and Accessibility
+**NEVER** nest interactive elements (buttons, links) inside other interactive elements:
+```typescript
+// ❌ Wrong - causes hydration errors and accessibility issues
+<button onClick={handleSelect}>
+  <span>Item content</span>
+  <button onClick={handleAction}>Action</button> {/* INVALID */}
+</button>
+
+// ✅ Correct - use div with proper ARIA attributes
+<div 
+  role="button" 
+  tabIndex={0}
+  onClick={handleSelect}
+  onKeyDown={(e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      handleSelect()
+    }
+  }}
+>
+  <span>Item content</span>
+  <button onClick={(e) => {
+    e.stopPropagation()
+    handleAction()
+  }}>Action</button>
+</div>
+```
 
 ### Server vs Client Components
 **NEVER** import from `@zondax/ui-common` in React Server Components:
@@ -187,3 +241,7 @@ Lefthook automatically runs quality checks on commit:
 - Biome linting and formatting
 - TypeScript type checking
 - Test validation where applicable
+
+## Ongoing Development Notes
+
+- Let's put the CI large files on pause, we will continue later

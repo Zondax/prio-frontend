@@ -23,6 +23,7 @@
     "dev:web": "pnpm --filter mono-web dev",
     "doctor": "pnpm --filter mono-expo run doctor",
     "env:init": "npx -y @zondax/cli@latest env init",
+    "env:init:ci": "npx -y @zondax/cli@latest env init web",
     "env:init:web": "npx -y @zondax/cli@latest env init web",
     "env:init:expo": "npx -y @zondax/cli@latest env init expo",
     "env:init:ext": "npx -y @zondax/cli@latest env init ext",
@@ -35,13 +36,16 @@
     "lint:analyze": "./libs/scripts/biome-analyze-rules.sh",
     "lint:fix": "biome check --write --unsafe .",
     "fix": "pnpm run lint:fix",
-    "test": "pnpm recursive run test",
+    "test": "pnpm typecheck && pnpm recursive run test",
     "test:expo": "echo disabled",
     "test:expo:coverage": "echo disabled",
     "test:e2e:install": "pnpm --filter mono-web test:e2e:install",
-    "test:coverage": "vitest run --coverage",
+    "test:coverage": "vitest run --coverage --reporter=verbose",
     "test:ui": "vitest --ui",
     "test:watch": "vitest",
+    "typecheck": "pnpm --filter mono-web typecheck && pnpm --filter mono-ext typecheck",
+    "typecheck:web": "pnpm --filter mono-web typecheck",
+    "typecheck:ext": "pnpm --filter mono-ext typecheck",
     "vendor:grpc": "rm -rf packages/grpc && cp -r external/backend/ts/grpc packages/grpc",
     "shadcn": "pnpm --filter mono-web shadcn",
     "ci:check": "pnpm install && pnpm fix && pnpm build:web && pnpm build:ext",
@@ -50,24 +54,17 @@
   },
   "resolutions": {
     "@types/react": "19.0.10",
-    "react": "^19.0",
-    "react-dom": "^19.0"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^2.0.6",
-    "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.3.0",
-    "@types/async": "^3.2.24",
-    "@vitest/coverage-v8": "^3.2.4",
-    "globals": "^16.2.0",
-    "lefthook": "1.11.14",
-    "vite": "7.0.0",
-    "vitest": "^3.2.4"
-  },
-  "engines": {
-    "node": ">=22"
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
   },
   "pnpm": {
+    "overrides": {
+      "react": "19.0.0",
+      "react-dom": "19.0.0",
+      "@testing-library/react>react": "19.0.0",
+      "@testing-library/react>react-dom": "19.0.0",
+      "@expo/config-plugins": "~10.0.1"
+    },
     "onlyBuiltDependencies": [
       "@biomejs/biome",
       "@clerk/shared",
@@ -80,6 +77,22 @@
       "sharp",
       "unrs-resolver"
     ]
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.0.6",
+    "@testing-library/react": "^16.3.0",
+    "@types/async": "^3.2.24",
+    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/ui": "^3.2.4",
+    "globals": "^16.2.0",
+    "lefthook": "1.11.14",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "vite": "7.0.0",
+    "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=22"
   },
   "dependencies": {
     "client-only": "^0.0.1",
