@@ -23,6 +23,7 @@
     "dev:web": "pnpm --filter mono-web dev",
     "doctor": "pnpm --filter mono-expo run doctor",
     "env:init": "npx -y @zondax/cli@latest env init",
+    "env:init:ci": "npx -y @zondax/cli@latest env init web",
     "env:init:web": "npx -y @zondax/cli@latest env init web",
     "env:init:expo": "npx -y @zondax/cli@latest env init expo",
     "env:init:ext": "npx -y @zondax/cli@latest env init ext",
