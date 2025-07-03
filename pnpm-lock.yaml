@@ -10,7 +10,7 @@ overrides:
   react-dom: 19.0.0
   '@testing-library/react>react': 19.0.0
   '@testing-library/react>react-dom': 19.0.0
-  '@expo/config-plugins': 10.0.3
+  '@expo/config-plugins': ~10.0.1
 
 importers:
 
@@ -2281,8 +2281,8 @@ packages:
   '@expo/code-signing-certificates@0.0.5':
     resolution: {integrity: sha512-BNhXkY1bblxKZpltzAx98G2Egj9g1Q+JRcvR7E99DOj862FTCX+ZPsAUtPTr7aHxwtrL7+fL3r0JSmM9kBm+Bw==}
 
-  '@expo/config-plugins@10.0.3':
-    resolution: {integrity: sha512-fjCckkde67pSDf48x7wRuPsgQVIqlDwN7NlOk9/DFgQ1hCH0L5pGqoSmikA1vtAyiA83MOTpkGl3F3wyATyUog==}
+  '@expo/config-plugins@10.0.1':
+    resolution: {integrity: sha512-JM8fmG2TVzuF02LrkywZKfCBfA8yVvOeK+3X/JnWUQqWCdUpLNf1RmCdnZ67VBeFLBD74ro+Gd1bJR1dW5aMcw==}
 
   '@expo/config-types@53.0.4':
     resolution: {integrity: sha512-0s+9vFx83WIToEr0Iwy4CcmiUXa5BgwBmEjylBB2eojX5XAMm9mJvw9KpjAb8m7zq2G0Q6bRbeufkzgbipuNQg==}
@@ -6879,6 +6879,10 @@ packages:
     resolution: {integrity: sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg==}
     engines: {node: '>=10'}
 
+  getenv@1.0.0:
+    resolution: {integrity: sha512-7yetJWqbS9sbn0vIfliPsFgoXMKn/YMF+Wuiog97x+urnSRRRZ7xB+uVkwGKzRgq9CDFfMQnE9ruL5DHv9c6Xg==}
+    engines: {node: '>=6'}
+
   getenv@2.0.0:
     resolution: {integrity: sha512-VilgtJj/ALgGY77fiLam5iD336eSWi96Q15JSAG1zi8NRBysm3LXKdGnHb4m5cuyxvOLQQKWpBZAT6ni4FI2iQ==}
     engines: {node: '>=6'}
@@ -11467,7 +11471,7 @@ snapshots:
       '@babel/runtime': 7.27.6
       '@expo/code-signing-certificates': 0.0.5
       '@expo/config': 11.0.11
-      '@expo/config-plugins': 10.0.3
+      '@expo/config-plugins': 10.0.1
       '@expo/devcert': 1.2.0
       '@expo/env': 1.0.6
       '@expo/image-utils': 0.7.5
@@ -11535,7 +11539,7 @@ snapshots:
       node-forge: 1.3.1
       nullthrows: 1.1.1
 
-  '@expo/config-plugins@10.0.3':
+  '@expo/config-plugins@10.0.1':
     dependencies:
       '@expo/config-types': 53.0.4
       '@expo/json-file': 9.1.4
@@ -11543,7 +11547,7 @@ snapshots:
       '@expo/sdk-runtime-versions': 1.0.0
       chalk: 4.1.2
       debug: 4.4.1(supports-color@5.5.0)
-      getenv: 2.0.0
+      getenv: 1.0.0
       glob: 10.4.5
       resolve-from: 5.0.0
       semver: 7.7.2
@@ -11559,7 +11563,7 @@ snapshots:
   '@expo/config@11.0.11':
     dependencies:
       '@babel/code-frame': 7.10.4
-      '@expo/config-plugins': 10.0.3
+      '@expo/config-plugins': 10.0.1
       '@expo/config-types': 53.0.4
       '@expo/json-file': 9.1.4
       deepmerge: 4.3.1
@@ -11677,7 +11681,7 @@ snapshots:
   '@expo/prebuild-config@9.0.9':
     dependencies:
       '@expo/config': 11.0.11
-      '@expo/config-plugins': 10.0.3
+      '@expo/config-plugins': 10.0.1
       '@expo/config-types': 53.0.4
       '@expo/image-utils': 0.7.5
       '@expo/json-file': 9.1.4
@@ -16583,7 +16587,7 @@ snapshots:
     dependencies:
       '@expo/code-signing-certificates': 0.0.5
       '@expo/config': 11.0.11
-      '@expo/config-plugins': 10.0.3
+      '@expo/config-plugins': 10.0.1
       '@expo/spawn-async': 1.7.2
       arg: 4.1.0
       chalk: 4.1.2
@@ -16614,7 +16618,7 @@ snapshots:
       '@babel/runtime': 7.27.6
       '@expo/cli': 0.24.17
       '@expo/config': 11.0.11
-      '@expo/config-plugins': 10.0.3
+      '@expo/config-plugins': 10.0.1
       '@expo/fingerprint': 0.13.3
       '@expo/metro-config': 0.20.16
       '@expo/vector-icons': 14.1.0(expo-font@13.3.2(expo@53.0.16(@babel/core@7.28.0)(@expo/metro-runtime@5.0.4(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.10)(react@19.0.0)))(react-native-webview@13.13.5(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.10)(react@19.0.0))(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.10)(react@19.0.0))(react@19.0.0))(react@19.0.0))(react-native@0.79.5(@babel/core@7.28.0)(@types/react@19.0.10)(react@19.0.0))(react@19.0.0)
@@ -16844,6 +16848,8 @@ snapshots:
       es-object-atoms: 1.1.1
 
   get-stream@6.0.1: {}
+
+  getenv@1.0.0: {}
 
   getenv@2.0.0: {}
 

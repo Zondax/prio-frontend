@@ -103,6 +103,35 @@ The UI system provides:
 
 ## Critical Development Patterns
 
+### HTML Structure and Accessibility
+**NEVER** nest interactive elements (buttons, links) inside other interactive elements:
+```typescript
+// ❌ Wrong - causes hydration errors and accessibility issues
+<button onClick={handleSelect}>
+  <span>Item content</span>
+  <button onClick={handleAction}>Action</button> {/* INVALID */}
+</button>
+
+// ✅ Correct - use div with proper ARIA attributes
+<div 
+  role="button" 
+  tabIndex={0}
+  onClick={handleSelect}
+  onKeyDown={(e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      handleSelect()
+    }
+  }}
+>
+  <span>Item content</span>
+  <button onClick={(e) => {
+    e.stopPropagation()
+    handleAction()
+  }}>Action</button>
+</div>
+```
+
 ### Server vs Client Components
 **NEVER** import from `@zondax/ui-common` in React Server Components:
 ```typescript
@@ -212,3 +241,7 @@ Lefthook automatically runs quality checks on commit:
 - Biome linting and formatting
 - TypeScript type checking
 - Test validation where applicable
+
+## Ongoing Development Notes
+
+- Let's put the CI large files on pause, we will continue later

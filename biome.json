@@ -50,7 +50,11 @@
           "level": "warn",
           "options": {
             "paths": {
-              "lodash": "Using lodash is not encouraged (unmaintained). Move to es-toolkit"
+              "lodash": "Using lodash is not encouraged (unmaintained). Move to es-toolkit",
+              "jest": "Jest is not used in this project. Use Vitest instead",
+              "@jest/globals": "Jest is not used in this project. Use Vitest instead",
+              "jest-dom": "Use native Vitest assertions instead of jest-dom",
+              "@testing-library/jest-dom": "Use native Vitest assertions instead of jest-dom"
             }
           }
         }

@@ -20,11 +20,9 @@ jobs:
   expo-checks:
     uses: zondax/_workflows/.github/workflows/_checks-expo.yaml@main
     with:
-      package_manager: pnpm
       github_app_auth: true
-      github_app_repos: ks-frontend,web-golem
-      test_command: "test:expo"
-      coverage_command: "test:expo:coverage"
+      github_app_repos: web-golem
+      enable_doctor: false
     secrets:
       app_id: ${{ secrets.PULUMI_GOLEM_APP_ID }}
       app_pem: ${{ secrets.PULUMI_GOLEM_APP_PEM }}

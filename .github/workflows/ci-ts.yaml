@@ -22,7 +22,9 @@ jobs:
     with:
       package_manager: pnpm
       github_app_auth: true
-      github_app_repos: ks-frontend,web-golem
+      github_app_repos: web-golem
+      gcp_wif_provider: ${{ vars.PULUMI_FRONTEND_WIF_PROVIDER }}
+      gcp_project_id: ${{ vars.PULUMI_GCP_PROJECT_ID }}
     secrets:
       app_id: ${{ secrets.PULUMI_GOLEM_APP_ID }}
       app_pem: ${{ secrets.PULUMI_GOLEM_APP_PEM }}
@@ -33,20 +35,10 @@ jobs:
     with:
       working_directory: "apps/web"
       github_app_auth: true
-      github_app_repos: ks-frontend,web-golem
+      github_app_repos: web-golem
+      autoinit_env: true
+      gcp_wif_provider: ${{ vars.PULUMI_FRONTEND_WIF_PROVIDER }}
+      gcp_project_id: ${{ vars.PULUMI_GCP_PROJECT_ID }}
     secrets:
       app_id: ${{ secrets.PULUMI_GOLEM_APP_ID }}
       app_pem: ${{ secrets.PULUMI_GOLEM_APP_PEM }}
-      env_local: |
-        # Project-specific variables
-        PROJECT="ks-frontend"
-        NAMESPACE="ks-frontend"
-
-        # API keys
-        NEXT_PUBLIC_LOCATIONIQ_TOKEN="${{ secrets.NEXT_PUBLIC_LOCATIONIQ_TOKEN }}"
-        NEXT_PUBLIC_GRPC_SERVER="${{ secrets.NEXT_PUBLIC_GRPC_SERVER }}"
-
-        # Authn
-        NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}"
-        CLERK_SECRET_KEY="${{ secrets.CLERK_SECRET_KEY }}"
-        NEXT_PUBLIC_AUTH_PROVIDER="clerk"
