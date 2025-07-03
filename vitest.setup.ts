@@ -29,6 +29,38 @@ global.ResizeObserver = class ResizeObserver {
   disconnect() {}
 }
 
+// Mock IntersectionObserver for tests  
+global.IntersectionObserver = class IntersectionObserver {
+  constructor(cb: IntersectionObserverCallback, options?: IntersectionObserverInit) {
+    this.cb = cb
+    this.options = options
+  }
+  cb: IntersectionObserverCallback
+  options?: IntersectionObserverInit
+  root: Element | null = null
+  rootMargin: string = '0px'
+  thresholds: ReadonlyArray<number> = [0]
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+  takeRecords(): IntersectionObserverEntry[] {
+    return []
+  }
+}
+
+// Mock MutationObserver for tests
+global.MutationObserver = class MutationObserver {
+  constructor(cb: MutationCallback) {
+    this.cb = cb
+  }
+  cb: MutationCallback
+  observe() {}
+  disconnect() {}
+  takeRecords(): MutationRecord[] {
+    return []
+  }
+}
+
 afterEach(() => {
   cleanup()
 })
