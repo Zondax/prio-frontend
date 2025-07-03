@@ -34,6 +34,7 @@ jobs:
       working_directory: "apps/web"
       github_app_auth: true
       github_app_repos: web-golem
+      autoinit_env: true
     secrets:
       app_id: ${{ secrets.PULUMI_GOLEM_APP_ID }}
       app_pem: ${{ secrets.PULUMI_GOLEM_APP_PEM }}
