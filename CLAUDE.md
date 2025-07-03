@@ -241,3 +241,7 @@ Lefthook automatically runs quality checks on commit:
 - Biome linting and formatting
 - TypeScript type checking
 - Test validation where applicable
+
+## Ongoing Development Notes
+
+- Let's put the CI large files on pause, we will continue later
