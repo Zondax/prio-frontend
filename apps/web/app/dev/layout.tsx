@@ -1,9 +1,9 @@
 'use client'
 
 import { LogoItem, ThemeToggleItem, TopBar, TriSection, useTopBarItem } from '@zondax/ui-common/client'
-import { DevLinkItem } from '@/components/contextual/DevLinkItem'
-import { EndpointSelectorItem } from '@/components/contextual/EndpointSelectorItem'
-import { UserButtonItem } from '@/components/contextual/UserButtonItem'
+import { DevLinkItem } from '@/components/embedded-items/DevLinkItem'
+import { EndpointSelectorItem } from '@/components/embedded-items/EndpointSelectorItem'
+import { UserButtonItem } from '@/components/embedded-items/UserButtonItem'
 
 function DevTopBarItems() {
   return (
