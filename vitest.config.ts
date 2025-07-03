@@ -7,7 +7,16 @@ const workspaceDirs = ['apps', 'libs', 'packages'] as const
 // Globs
 const testFileGlob = '**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'
 const coverageFileGlob = '**/*.{js,ts,jsx,tsx}'
-const excludeGlobs = ['**/node_modules/**', '**/dist/**', '**/build/**', '**/e2e/**', '**/.next/**', 'libs/auth-expo/**']
+const excludeGlobs = [
+  '**/node_modules/**',
+  '**/dist/**',
+  '**/build/**',
+  '**/e2e/**',
+  '**/.next/**',
+  'libs/auth-expo/**',
+  '**/storybook-static/**',
+  '**/proto/**',
+]
 
 // Map of package aliases ➜ relative source paths (from repo root)
 const aliasRoots: Record<string, string> = {
@@ -58,7 +67,17 @@ export default defineConfig({
       reporter: ['text', 'json', 'json-summary', 'html'],
       reportsDirectory: './coverage',
       include: workspaceDirs.map((dir) => `${dir}/${coverageFileGlob}`),
-      exclude: [...excludeGlobs, '**/*.config.*', '**/*.test.*', '**/*.spec.*'],
+      exclude: [
+        ...excludeGlobs,
+        '**/*.config.*',
+        '**/*.test.*',
+        '**/*.spec.*',
+        '**/storybook-static/**',
+        '**/*.stories.*',
+        '**/*_pb.js',
+        '**/*_pb.d.ts',
+        '**/proto/**',
+      ],
       thresholds: {
         lines: 0,
         statements: 0,

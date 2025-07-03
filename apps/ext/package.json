@@ -20,6 +20,7 @@
     "dev:firefox": "nodemon --config nodemon.firefox.json",
     "env:init": "../../scripts/init-env.sh ext",
     "test": "vitest run --coverage --passWithNoTests",
+    "typecheck": "tsc --project tsconfig.typecheck.json --noEmit",
     "test:watch": "vitest --watch"
   },
   "dependencies": {
