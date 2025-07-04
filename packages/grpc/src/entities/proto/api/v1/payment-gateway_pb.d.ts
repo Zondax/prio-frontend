@@ -149,12 +149,6 @@ export namespace GetCheckoutSessionStatusResponse {
 }
 
 export class CreatePortalSessionRequest extends jspb.Message {
-  getCustomerId(): string;
-  setCustomerId(value: string): CreatePortalSessionRequest;
-
-  getReturnUrl(): string;
-  setReturnUrl(value: string): CreatePortalSessionRequest;
-
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CreatePortalSessionRequest.AsObject;
   static toObject(includeInstance: boolean, msg: CreatePortalSessionRequest): CreatePortalSessionRequest.AsObject;
@@ -165,8 +159,6 @@ export class CreatePortalSessionRequest extends jspb.Message {
 
 export namespace CreatePortalSessionRequest {
   export type AsObject = {
-    customerId: string,
-    returnUrl: string,
   }
 }
 

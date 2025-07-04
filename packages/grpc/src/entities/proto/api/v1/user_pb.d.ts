@@ -66,11 +66,6 @@ export class UserPreferences extends jspb.Message {
   getAccessibilitySettingsMap(): jspb.Map<string, string>;
   clearAccessibilitySettingsMap(): UserPreferences;
 
-  getProfilePicture(): string;
-  setProfilePicture(value: string): UserPreferences;
-  hasProfilePicture(): boolean;
-  clearProfilePicture(): UserPreferences;
-
   getUpdatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
   setUpdatedAt(value?: google_protobuf_timestamp_pb.Timestamp): UserPreferences;
   hasUpdatedAt(): boolean;
@@ -92,7 +87,6 @@ export namespace UserPreferences {
     language?: string,
     timezone?: string,
     accessibilitySettingsMap: Array<[string, string]>,
-    profilePicture?: string,
     updatedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
   }
 
@@ -114,11 +108,6 @@ export namespace UserPreferences {
   export enum TimezoneCase { 
     _TIMEZONE_NOT_SET = 0,
     TIMEZONE = 5,
-  }
-
-  export enum ProfilePictureCase { 
-    _PROFILE_PICTURE_NOT_SET = 0,
-    PROFILE_PICTURE = 7,
   }
 }
 

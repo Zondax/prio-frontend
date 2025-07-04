@@ -8,7 +8,7 @@
 // versions:
 // 	protoc-gen-grpc-web v1.5.0
 // 	protoc              v5.29.1
-// source: proto/api/v1/agent.proto
+// source: proto/api/v1/chat.proto
 
 
 /* eslint-disable */
@@ -17,10 +17,10 @@
 
 import * as grpcWeb from 'grpc-web';
 
-import * as proto_api_v1_agent_pb from '../../../proto/api/v1/agent_pb'; // proto import: "proto/api/v1/agent.proto"
+import * as proto_api_v1_chat_pb from '../../../proto/api/v1/chat_pb'; // proto import: "proto/api/v1/chat.proto"
 
 
-export class AgentServiceClient {
+export class ChatServiceClient {
   client_: grpcWeb.AbstractClientBase;
   hostname_: string;
   credentials_: null | { [index: string]: string; };
@@ -39,47 +39,47 @@ export class AgentServiceClient {
     this.options_ = options;
   }
 
-  methodDescriptorProcessQuery = new grpcWeb.MethodDescriptor(
-    '/proto.api.v1.AgentService/ProcessQuery',
+  methodDescriptorSendMessage = new grpcWeb.MethodDescriptor(
+    '/proto.api.v1.ChatService/SendMessage',
     grpcWeb.MethodType.UNARY,
-    proto_api_v1_agent_pb.QueryRequest,
-    proto_api_v1_agent_pb.QueryResponse,
-    (request: proto_api_v1_agent_pb.QueryRequest) => {
+    proto_api_v1_chat_pb.ChatRequest,
+    proto_api_v1_chat_pb.ChatResponse,
+    (request: proto_api_v1_chat_pb.ChatRequest) => {
       return request.serializeBinary();
     },
-    proto_api_v1_agent_pb.QueryResponse.deserializeBinary
+    proto_api_v1_chat_pb.ChatResponse.deserializeBinary
   );
 
-  processQuery(
-    request: proto_api_v1_agent_pb.QueryRequest,
-    metadata?: grpcWeb.Metadata | null): Promise<proto_api_v1_agent_pb.QueryResponse>;
+  sendMessage(
+    request: proto_api_v1_chat_pb.ChatRequest,
+    metadata?: grpcWeb.Metadata | null): Promise<proto_api_v1_chat_pb.ChatResponse>;
 
-  processQuery(
-    request: proto_api_v1_agent_pb.QueryRequest,
+  sendMessage(
+    request: proto_api_v1_chat_pb.ChatRequest,
     metadata: grpcWeb.Metadata | null,
     callback: (err: grpcWeb.RpcError,
-               response: proto_api_v1_agent_pb.QueryResponse) => void): grpcWeb.ClientReadableStream<proto_api_v1_agent_pb.QueryResponse>;
+               response: proto_api_v1_chat_pb.ChatResponse) => void): grpcWeb.ClientReadableStream<proto_api_v1_chat_pb.ChatResponse>;
 
-  processQuery(
-    request: proto_api_v1_agent_pb.QueryRequest,
+  sendMessage(
+    request: proto_api_v1_chat_pb.ChatRequest,
     metadata?: grpcWeb.Metadata | null,
     callback?: (err: grpcWeb.RpcError,
-               response: proto_api_v1_agent_pb.QueryResponse) => void) {
+               response: proto_api_v1_chat_pb.ChatResponse) => void) {
     if (callback !== undefined) {
       return this.client_.rpcCall(
         this.hostname_ +
-          '/proto.api.v1.AgentService/ProcessQuery',
+          '/proto.api.v1.ChatService/SendMessage',
         request,
         metadata || {},
-        this.methodDescriptorProcessQuery,
+        this.methodDescriptorSendMessage,
         callback);
     }
     return this.client_.unaryCall(
     this.hostname_ +
-      '/proto.api.v1.AgentService/ProcessQuery',
+      '/proto.api.v1.ChatService/SendMessage',
     request,
     metadata || {},
-    this.methodDescriptorProcessQuery);
+    this.methodDescriptorSendMessage);
   }
 
 }
