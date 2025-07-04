@@ -1285,8 +1285,7 @@ proto.proto.api.v1.CreatePortalSessionRequest.prototype.toObject = function(opt_
  */
 proto.proto.api.v1.CreatePortalSessionRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-customerId: jspb.Message.getFieldWithDefault(msg, 1, ""),
-returnUrl: jspb.Message.getFieldWithDefault(msg, 2, "")
+
   };
 
   if (includeInstance) {
@@ -1323,14 +1322,6 @@ proto.proto.api.v1.CreatePortalSessionRequest.deserializeBinaryFromReader = func
     }
     var field = reader.getFieldNumber();
     switch (field) {
-    case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setCustomerId(value);
-      break;
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setReturnUrl(value);
-      break;
     default:
       reader.skipField();
       break;
@@ -1360,56 +1351,6 @@ proto.proto.api.v1.CreatePortalSessionRequest.prototype.serializeBinary = functi
  */
 proto.proto.api.v1.CreatePortalSessionRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getCustomerId();
-  if (f.length > 0) {
-    writer.writeString(
-      1,
-      f
-    );
-  }
-  f = message.getReturnUrl();
-  if (f.length > 0) {
-    writer.writeString(
-      2,
-      f
-    );
-  }
-};
-
-
-/**
- * optional string customer_id = 1;
- * @return {string}
- */
-proto.proto.api.v1.CreatePortalSessionRequest.prototype.getCustomerId = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.proto.api.v1.CreatePortalSessionRequest} returns this
- */
-proto.proto.api.v1.CreatePortalSessionRequest.prototype.setCustomerId = function(value) {
-  return jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-/**
- * optional string return_url = 2;
- * @return {string}
- */
-proto.proto.api.v1.CreatePortalSessionRequest.prototype.getReturnUrl = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.proto.api.v1.CreatePortalSessionRequest} returns this
- */
-proto.proto.api.v1.CreatePortalSessionRequest.prototype.setReturnUrl = function(value) {
-  return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 

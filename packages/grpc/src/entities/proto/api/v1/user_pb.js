@@ -567,7 +567,6 @@ themeMode: (f = jspb.Message.getField(msg, 3)) == null ? undefined : f,
 language: (f = jspb.Message.getField(msg, 4)) == null ? undefined : f,
 timezone: (f = jspb.Message.getField(msg, 5)) == null ? undefined : f,
 accessibilitySettingsMap: (f = msg.getAccessibilitySettingsMap()) ? f.toObject(includeInstance, undefined) : [],
-profilePicture: (f = jspb.Message.getField(msg, 7)) == null ? undefined : f,
 updatedAt: (f = msg.getUpdatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f)
   };
 
@@ -632,10 +631,6 @@ proto.proto.api.v1.UserPreferences.deserializeBinaryFromReader = function(msg, r
          });
       break;
     case 7:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setProfilePicture(value);
-      break;
-    case 8:
       var value = new google_protobuf_timestamp_pb.Timestamp;
       reader.readMessage(value,google_protobuf_timestamp_pb.Timestamp.deserializeBinaryFromReader);
       msg.setUpdatedAt(value);
@@ -708,17 +703,10 @@ proto.proto.api.v1.UserPreferences.serializeBinaryToWriter = function(message, w
   if (f && f.getLength() > 0) {
     f.serializeBinary(6, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeString);
   }
-  f = /** @type {string} */ (jspb.Message.getField(message, 7));
-  if (f != null) {
-    writer.writeString(
-      7,
-      f
-    );
-  }
   f = message.getUpdatedAt();
   if (f != null) {
     writer.writeMessage(
-      8,
+      7,
       f,
       google_protobuf_timestamp_pb.Timestamp.serializeBinaryToWriter
     );
@@ -912,48 +900,12 @@ proto.proto.api.v1.UserPreferences.prototype.clearAccessibilitySettingsMap = fun
 
 
 /**
- * optional string profile_picture = 7;
- * @return {string}
- */
-proto.proto.api.v1.UserPreferences.prototype.getProfilePicture = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.proto.api.v1.UserPreferences} returns this
- */
-proto.proto.api.v1.UserPreferences.prototype.setProfilePicture = function(value) {
-  return jspb.Message.setField(this, 7, value);
-};
-
-
-/**
- * Clears the field making it undefined.
- * @return {!proto.proto.api.v1.UserPreferences} returns this
- */
-proto.proto.api.v1.UserPreferences.prototype.clearProfilePicture = function() {
-  return jspb.Message.setField(this, 7, undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {boolean}
- */
-proto.proto.api.v1.UserPreferences.prototype.hasProfilePicture = function() {
-  return jspb.Message.getField(this, 7) != null;
-};
-
-
-/**
- * optional google.protobuf.Timestamp updated_at = 8;
+ * optional google.protobuf.Timestamp updated_at = 7;
  * @return {?proto.google.protobuf.Timestamp}
  */
 proto.proto.api.v1.UserPreferences.prototype.getUpdatedAt = function() {
   return /** @type{?proto.google.protobuf.Timestamp} */ (
-    jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 8));
+    jspb.Message.getWrapperField(this, google_protobuf_timestamp_pb.Timestamp, 7));
 };
 
 
@@ -962,7 +914,7 @@ proto.proto.api.v1.UserPreferences.prototype.getUpdatedAt = function() {
  * @return {!proto.proto.api.v1.UserPreferences} returns this
 */
 proto.proto.api.v1.UserPreferences.prototype.setUpdatedAt = function(value) {
-  return jspb.Message.setWrapperField(this, 8, value);
+  return jspb.Message.setWrapperField(this, 7, value);
 };
 
 
@@ -980,7 +932,7 @@ proto.proto.api.v1.UserPreferences.prototype.clearUpdatedAt = function() {
  * @return {boolean}
  */
 proto.proto.api.v1.UserPreferences.prototype.hasUpdatedAt = function() {
-  return jspb.Message.getField(this, 8) != null;
+  return jspb.Message.getField(this, 7) != null;
 };
 
 
