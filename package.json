@@ -37,6 +37,11 @@
     "lint:fix": "biome check --write --unsafe .",
     "fix": "pnpm run lint:fix",
     "test": "pnpm typecheck && pnpm recursive run test",
+    "test:visual": "pnpm --filter mono-storybook run test:visual",
+    "test:visual:update": "pnpm --filter mono-storybook run test:visual:update",
+    "test:styles": "pnpm --filter mono-storybook run test:styles",
+    "test:visual:install": "pnpm --filter mono-storybook run test:install",
+    "test:report": "pnpm --filter mono-storybook exec playwright show-report",
     "test:expo": "echo disabled",
     "test:expo:coverage": "echo disabled",
     "test:e2e:install": "pnpm --filter mono-web test:e2e:install",
@@ -63,7 +68,8 @@
       "react-dom": "19.0.0",
       "@testing-library/react>react": "19.0.0",
       "@testing-library/react>react-dom": "19.0.0",
-      "@expo/config-plugins": "~10.0.1"
+      "@expo/config-plugins": "~10.1.1",
+      "vite": "7.0.0"
     },
     "onlyBuiltDependencies": [
       "@biomejs/biome",
