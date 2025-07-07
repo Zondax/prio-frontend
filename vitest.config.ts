@@ -5,7 +5,7 @@ import { defineConfig } from 'vitest/config'
 const workspaceDirs = ['apps', 'libs', 'packages'] as const
 
 // Globs
-const testFileGlob = '**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'
+const testFileGlob = '**/*.test.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'
 const coverageFileGlob = '**/*.{js,ts,jsx,tsx}'
 const excludeGlobs = [
   '**/node_modules/**',

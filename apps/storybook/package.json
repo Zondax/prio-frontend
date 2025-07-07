@@ -4,8 +4,13 @@
   "private": true,
   "description": "Storybook playground for Zondax frontend components",
   "scripts": {
-    "dev": "storybook dev -p 6006",
-    "build": "storybook build"
+    "dev": "storybook dev -p 6006 --no-open",
+    "build": "storybook build",
+    "test:visual": "playwright test --config=playwright.visual.config.ts",
+    "test:visual:update": "playwright test --update-snapshots --config=playwright.visual.config.ts",
+    "test:styles": "playwright test tests/chat-input.styles.spec.ts --config=playwright.styles.config.ts",
+    "test:all": "playwright test",
+    "test:install": "playwright install"
   },
   "dependencies": {
     "@zondax/ui-common": "workspace:*",
@@ -14,8 +19,10 @@
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.53.1",
     "@storybook/addon-a11y": "^9.0.14",
     "@storybook/addon-docs": "9.0.15",
+    "@storybook/addon-essentials": "9.0.0-alpha.12",
     "@storybook/addon-links": "9.0.14",
     "@storybook/addon-onboarding": "^9.0.15",
     "@storybook/addon-themes": "9.0.15",

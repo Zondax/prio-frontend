@@ -3,3 +3,5 @@ pre-commit:
   commands:
     format:
       run: pnpm format
+    lint:
+      run: pnpm fix

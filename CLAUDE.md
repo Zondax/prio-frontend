@@ -2,6 +2,23 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Documentation Imports
+
+The following documentation should always be considered as context when working in this repository:
+
+- [ADR-000: Coding Guidelines](./docs/ADR-000-CODING-GUIDELINES.md) - Core development standards and practices
+- [ADR-001: Chat Components Refactor](./docs/ADR-001-CHAT-COMPONENTS-REFACTOR.md) - Chat architecture decisions
+- [ADR-002: Embeddable Components](./docs/ADR-002-EMBEDDABLE-COMPONENTS.md) - Embeddable component and container architecture
+- [ADR-003: Styling Architecture](./docs/ADR-003-STYLING-ARCHITECTURE.md) - CVA, Tailwind v4, and theming integration
+- [ADR-004: Layout Presets](./docs/ADR-004-LAYOUT-PRESETS.md) - Multi-layer layout preset architecture
+- [ADR-005: StoreBuilder Architecture](./docs/ADR-005-STOREBUILDER-ARCHITECTURE.md) - Type-safe state management with specialized store builders
+- [ADR-006: VCommon Virtualization](./docs/ADR-006-VCOMMON-VIRTUALIZATION.md) - Unified virtualization components for large datasets
+- [ADR-007: Testing Standards](./docs/ADR-007-TESTING.md) - Vitest-first testing architecture with comprehensive patterns
+- [ADR-008: OpenTelemetry Observability](./docs/ADR-008-OBSERVABILITY.md) - Comprehensive observability with OpenTelemetry and SigNoz
+- [ADR-009: Authentication Architecture](./docs/ADR-009-AUTHENTICATION.md) - Multi-platform authentication with auth-core and auth-web
+
+These documents contain critical architectural decisions, coding standards, and development practices that must be followed.
+
 ## ⚠️ CRITICAL: React & Expo Version Relationship
 
 **React versions are tightly coupled with Expo SDK versions. NEVER change React versions without considering Expo compatibility:**
