@@ -6,8 +6,7 @@ import { OtelProvider as BaseOtelProvider, type OtelConfig } from '@zondax/otel-
 const PRIO_CONFIG: OtelConfig = {
   serviceName: process.env.NEXT_PUBLIC_SERVICE_NAME || 'prio-web-client',
   serviceVersion: process.env.NEXT_PUBLIC_SERVICE_VERSION || '1.0.0',
-  signozEndpoint: process.env.NEXT_PUBLIC_SIGNOZ_ENDPOINT,
-  signozApiKey: process.env.NEXT_PUBLIC_SIGNOZ_API_KEY,
+  backendEndpoint: process.env.NEXT_PUBLIC_SIGNOZ_ENDPOINT,
   allowedTraceDomains: process.env.NEXT_PUBLIC_TRACE_DOMAINS?.split(',') || [
     'localhost',
     '127.0.0.1',

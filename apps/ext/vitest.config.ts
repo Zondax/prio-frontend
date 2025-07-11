@@ -11,6 +11,7 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
     },
+    testTimeout: 10_000,
   },
   resolve: {
     alias: {

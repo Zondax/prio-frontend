@@ -1,40 +1,90 @@
 'use client'
 
-import { useUser } from '@zondax/auth-web'
-import { LogoItem, ThemeToggleItem, TopBar, TriSection, useTopBarItem } from '@zondax/ui-common/client'
-import { UserButtonItem } from '../../components/embedded-items/UserButtonItem'
+import { UserButton, useUser } from '@zondax/auth-web'
+import { AppShell, BarLayoutPosition, type ChromeConfig, SidebarVariant, ThemeToggle, useTopBarItem } from '@zondax/ui-common/client'
+import Link from 'next/link'
+import { redirect } from 'next/navigation'
+import { useMemo } from 'react'
 
+// Inline AppTopBarItems component
 function AppTopBarItems() {
-  return (
-    <>
-      <LogoItem locationHook={useTopBarItem} text="Prio" section={TriSection.Left} priority={0} />
-      <ThemeToggleItem locationHook={useTopBarItem} section={TriSection.Right} priority={10} />
-      <UserButtonItem locationHook={useTopBarItem} section={TriSection.Right} priority={20} />
-    </>
+  const logoComponent = useMemo(
+    () => (
+      <Link href="/" className="flex items-center">
+        <span className="text-xl font-bold">Prio</span>
+      </Link>
+    ),
+    []
   )
+  const themeToggleComponent = useMemo(() => <ThemeToggle />, [])
+  const userButtonComponent = useMemo(() => <UserButton />, [])
+
+  useTopBarItem('logo', logoComponent, 'start', 0)
+  useTopBarItem('theme-toggle', themeToggleComponent, 'end', 10)
+  useTopBarItem('user-button', userButtonComponent, 'end', 20)
+
+  return null
 }
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-  const { isLoaded } = useUser()
+  const { isLoaded, isSignedIn } = useUser()
 
   // Show loading state while checking authentication
   if (!isLoaded) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <p className="text-lg text-muted-foreground">Loading...</p>
+          <p className="text-lg text-muted-foreground">Loading authentication...</p>
+          <p className="text-sm text-muted-foreground mt-2">If this persists, check your auth configuration</p>
         </div>
       </div>
     )
   }
 
+  // Redirect to home if user is loaded but not signed in
+  if (isLoaded && !isSignedIn) {
+    redirect('/')
+    return null
+  }
+
+  // Configure the chrome for the app
+  const chromeConfig: ChromeConfig = {
+    topBar: {
+      sticky: true,
+      layout: BarLayoutPosition.Content,
+    },
+    leftSidebar: {
+      enabled: false,
+      collapsible: true,
+      defaultOpen: false,
+      variant: SidebarVariant.Sidebar,
+      side: 'left',
+    },
+    rightSidebar: {
+      enabled: false,
+      collapsible: true,
+      defaultOpen: true,
+      variant: SidebarVariant.Sidebar,
+      side: 'right',
+    },
+    statusBar: {
+      layout: BarLayoutPosition.Wide,
+    },
+    commandPalette: {
+      enabled: true,
+    },
+  }
+
   return (
-    <div className="w-full">
+    <AppShell
+      chrome={chromeConfig}
+      responsive={{
+        mobile: 'simplified',
+        containerQueries: true,
+      }}
+    >
       <AppTopBarItems />
-      <TopBar />
-      <div className="px-4 sm:px-6 lg:px-8 xl:px-12">
-        <div className="flex-1">{children}</div>
-      </div>
-    </div>
+      {children}
+    </AppShell>
   )
 }

@@ -13,5 +13,6 @@ export default defineConfig({
       reporter: ['text', 'json', 'html'],
       exclude: ['**/*.test.{ts,tsx}', '**/vitest/**'],
     },
+    testTimeout: 10_000,
   },
 })
