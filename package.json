@@ -12,7 +12,6 @@
     "deps:flush": "find . -name 'node_modules' -type d -prune | xargs rm -rf",
     "deps:update": "pnpm --filter 'mono-*' --filter '@zondax/*' run deps:update",
     "dev": "pnpm dev:web",
-    "dev:no-release": "pnpm --filter @zondax/no-release dev",
     "dev:expo": "pnpm --filter mono-expo web",
     "dev:expo-local": "pnpm --filter mono-expo dev:local",
     "dev:expo:android": "pnpm --filter mono-expo android",
@@ -21,6 +20,7 @@
     "dev:storybook": "pnpm --filter mono-storybook dev",
     "dev:ext": "pnpm --filter mono-ext dev",
     "dev:web": "pnpm --filter mono-web dev",
+    "dev:no-release": "pnpm --filter @zondax/no-release dev",
     "doctor": "pnpm --filter mono-expo run doctor",
     "env:init": "npx -y @zondax/cli@latest env init",
     "env:init:ci": "npx -y @zondax/cli@latest env init web",
@@ -85,7 +85,7 @@
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.0.6",
+    "@biomejs/biome": "^2.1.1",
     "@testing-library/react": "^16.3.0",
     "@types/async": "^3.2.24",
     "@vitest/coverage-v8": "^3.2.4",
