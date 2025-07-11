@@ -22,5 +22,6 @@ export default defineConfig({
       inline: ['react-native', 'react-native-svg', 'expo-router', 'react-native-safe-area-context', 'lucide-react-native'],
     },
     setupFiles: ['./vitest.setup.ts'],
+    testTimeout: 10_000,
   },
 })

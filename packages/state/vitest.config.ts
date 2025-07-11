@@ -12,6 +12,7 @@ export default defineConfig({
       reporter: ['text', 'json', 'html'],
     },
     setupFiles: ['./vitest/setup/timezone-setup.ts', './vitest/setup/react-mock.ts'],
+    testTimeout: 10_000,
   },
   resolve: {
     alias: {

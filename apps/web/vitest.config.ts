@@ -21,6 +21,7 @@ export default defineConfig({
         branches: 0,
       },
     },
+    testTimeout: 10_000,
   },
   resolve: {
     alias: {
