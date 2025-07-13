@@ -45,7 +45,7 @@ export const prioRouteConfig: BreadcrumbRoute = {
   ],
 }
 
-// Home breadcrumb item  
+// Home breadcrumb item
 export const HOME_BREADCRUMB: BreadcrumbDataItem = {
   label: 'Home',
   href: '/prio',

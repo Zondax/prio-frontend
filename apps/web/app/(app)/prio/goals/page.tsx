@@ -145,7 +145,7 @@ export default function AllGoalsPage() {
       {
         id: 'icon',
         header: '',
-        cell: ({ row }) => {
+        cell: ({ row: _row }) => {
           return (
             <div className="w-6 h-6 rounded-lg bg-blue-100 flex items-center justify-center">
               <div className="w-3 h-3 bg-blue-600 rounded-full" />

@@ -21,7 +21,7 @@ function PrioPageContent({ className }: { className?: string }) {
   const activities = useMemo<SimpleActivityItem[]>(() => {
     const colorMap = {
       success: 'text-green-500',
-      info: 'text-blue-500', 
+      info: 'text-blue-500',
       warning: 'text-yellow-500',
       error: 'text-red-500',
     }

@@ -298,7 +298,7 @@ function ChatPageContentWithConfig({ config }: { config: ChatConfig }) {
           author: msg.metadata?.author,
         },
       }))
-      
+
       setMessages(transformedMockMessages)
       setInitialized(true)
     }
@@ -345,7 +345,7 @@ function ChatPageContentWithConfig({ config }: { config: ChatConfig }) {
         metadata: {},
       }
 
-      setMessages(prev => [...prev, userMessage])
+      setMessages((prev) => [...prev, userMessage])
       setInputValue('')
       setIsLoading(true)
 
@@ -365,7 +365,7 @@ function ChatPageContentWithConfig({ config }: { config: ChatConfig }) {
             processingTime: Math.floor(Math.random() * 1000 + 500),
           },
         }
-        setMessages(prev => [...prev, assistantMessage])
+        setMessages((prev) => [...prev, assistantMessage])
         setIsLoading(false)
       }, 1500)
     },
@@ -412,30 +412,27 @@ function ChatPageContentWithConfig({ config }: { config: ChatConfig }) {
   }, [])
 
   // Thread handlers
-  const _handleStartThread = useCallback(
-    (messageId: string, content?: string) => {
-      console.log('Starting thread on message:', messageId, 'with content:', content)
-      // In a real implementation, this would create a new thread
-      const newThread: ChatThread = {
-        id: `thread-${Date.now()}`,
-        parentMessageId: messageId,
-        messages: [],
-        isExpanded: false,
-        unreadCount: 0,
-        lastActivity: new Date(),
-        participants: [
-          {
-            id: userId,
-            name: 'You',
-            avatar: undefined,
-            role: 'participant' as const,
-          },
-        ],
-      }
-      setActiveThreads((prev) => [...prev, newThread])
-    },
-    [userId]
-  )
+  const _handleStartThread = useCallback((messageId: string, content?: string) => {
+    console.log('Starting thread on message:', messageId, 'with content:', content)
+    // In a real implementation, this would create a new thread
+    const newThread: ChatThread = {
+      id: `thread-${Date.now()}`,
+      parentMessageId: messageId,
+      messages: [],
+      isExpanded: false,
+      unreadCount: 0,
+      lastActivity: new Date(),
+      participants: [
+        {
+          id: userId,
+          name: 'You',
+          avatar: undefined,
+          role: 'participant' as const,
+        },
+      ],
+    }
+    setActiveThreads((prev) => [...prev, newThread])
+  }, [])
 
   const _handleViewThread = useCallback((threadId: string) => {
     console.log('Viewing thread:', threadId)

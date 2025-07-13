@@ -1,6 +1,6 @@
+import type { BreadcrumbDataItem } from '@zondax/ui-common/client'
 import { usePathname } from 'next/navigation'
 import { useMemo } from 'react'
-import type { BreadcrumbDataItem } from '@zondax/ui-common/client'
 import { HOME_BREADCRUMB, prioRouteConfig } from './breadcrumb-config'
 
 export function useBreadcrumbData(): BreadcrumbDataItem[] {
