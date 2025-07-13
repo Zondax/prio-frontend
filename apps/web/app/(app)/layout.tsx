@@ -29,23 +29,23 @@ function AppTopBarItems() {
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const { isLoaded, isSignedIn } = useUser()
 
-  // Show loading state while checking authentication
-  if (!isLoaded) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <p className="text-lg text-muted-foreground">Loading authentication...</p>
-          <p className="text-sm text-muted-foreground mt-2">If this persists, check your auth configuration</p>
-        </div>
-      </div>
-    )
-  }
+  // Show loading state while checking authentication (temporarily disabled for development)
+  // if (!isLoaded) {
+  //   return (
+  //     <div className="flex items-center justify-center min-h-screen">
+  //       <div className="text-center">
+  //         <p className="text-lg text-muted-foreground">Loading authentication...</p>
+  //         <p className="text-sm text-muted-foreground mt-2">If this persists, check your auth configuration</p>
+  //       </div>
+  //     </div>
+  //   )
+  // }
 
-  // Redirect to home if user is loaded but not signed in
-  if (isLoaded && !isSignedIn) {
-    redirect('/')
-    return null
-  }
+  // Redirect to home if user is loaded but not signed in (temporarily disabled for development)
+  // if (isLoaded && !isSignedIn) {
+  //   redirect('/')
+  //   return null
+  // }
 
   // Configure the chrome for the app
   const chromeConfig: ChromeConfig = {
@@ -54,9 +54,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       layout: BarLayoutPosition.Content,
     },
     leftSidebar: {
-      enabled: false,
+      enabled: true,
       collapsible: true,
-      defaultOpen: false,
+      defaultOpen: true,
       variant: SidebarVariant.Sidebar,
       side: 'left',
     },
@@ -71,7 +71,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       layout: BarLayoutPosition.Wide,
     },
     commandPalette: {
-      enabled: true,
+      enabled: false,
     },
   }
 
