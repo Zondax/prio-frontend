@@ -134,7 +134,6 @@ export default function NewObjectivePage() {
                     tabIndex={0}
                   >
                     <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 mt-1">{<template.icon className="w-6 h-6" />}</div>
                       <div className="flex-1 min-w-0">
                         <h3 className="font-medium text-sm mb-1">{template.name}</h3>
                         <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{template.description}</p>
@@ -324,7 +323,6 @@ export default function NewObjectivePage() {
                     <h4 className="font-medium mb-2">Preview</h4>
                     <div className="space-y-2 text-sm">
                       <div className="flex items-center gap-2">
-                        {<selectedTemplate.icon className="w-6 h-6" />}
                         <span className="font-medium">{objectiveName || 'Untitled Objective'}</span>
                         <Badge
                           className={`text-xs ${

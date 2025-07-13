@@ -1,27 +1,34 @@
 'use client'
 
-import { type ActivityItem, cn } from '@zondax/ui-common/client'
-import { AlertTriangle, CheckCircle, Info, XCircle } from 'lucide-react'
+import { cn } from '@zondax/ui-common/client'
 import { useRouter } from 'next/navigation'
 import { useMemo } from 'react'
 import { ACTIVITY_FEED } from './store/prio-mock-data'
 
+// Simple local activity item type to avoid Lucide version conflicts
+interface SimpleActivityItem {
+  id: string
+  iconColor: string
+  title: string
+  description: string
+  time: string
+}
+
 function PrioPageContent({ className }: { className?: string }) {
   const router = useRouter()
 
-  // Transform PrioActivity to ActivityItem format
-  const activities = useMemo<ActivityItem[]>(() => {
-    const iconMap = {
-      success: { icon: CheckCircle, color: 'text-green-500' },
-      info: { icon: Info, color: 'text-blue-500' },
-      warning: { icon: AlertTriangle, color: 'text-yellow-500' },
-      error: { icon: XCircle, color: 'text-red-500' },
+  // Transform PrioActivity to SimpleActivityItem format (simplified without icons)
+  const activities = useMemo<SimpleActivityItem[]>(() => {
+    const colorMap = {
+      success: 'text-green-500',
+      info: 'text-blue-500', 
+      warning: 'text-yellow-500',
+      error: 'text-red-500',
     }
 
     return ACTIVITY_FEED.map((activity) => ({
       id: activity.id,
-      icon: iconMap[activity.type].icon,
-      iconColor: iconMap[activity.type].color,
+      iconColor: colorMap[activity.type],
       title: activity.title,
       description: activity.description,
       time: activity.time,

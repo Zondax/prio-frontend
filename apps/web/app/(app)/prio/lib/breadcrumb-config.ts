@@ -1,4 +1,4 @@
-import { Home } from 'lucide-react'
+import type { BreadcrumbDataItem } from '@zondax/ui-common/client'
 import { GOALS, getChatInfo, getObjectiveDetail } from '../store/prio-mock-data'
 import type { BreadcrumbRoute } from './breadcrumb-types'
 
@@ -45,9 +45,8 @@ export const prioRouteConfig: BreadcrumbRoute = {
   ],
 }
 
-// Home breadcrumb item
-export const HOME_BREADCRUMB = {
+// Home breadcrumb item  
+export const HOME_BREADCRUMB: BreadcrumbDataItem = {
   label: 'Home',
   href: '/prio',
-  icon: Home,
 }

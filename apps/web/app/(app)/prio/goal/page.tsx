@@ -172,7 +172,6 @@ export default function NewMissionPage() {
                     tabIndex={0}
                   >
                     <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 mt-1">{<template.icon className="w-6 h-6" />}</div>
                       <div className="flex-1 min-w-0">
                         <h3 className="font-medium mb-1">{template.name}</h3>
                         <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{template.description}</p>

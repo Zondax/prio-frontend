@@ -1,0 +1,92 @@
+import { create } from 'zustand'
+import { devtools } from 'zustand/middleware'
+import type { ChatChannel } from './prio-mock-data'
+import { CHAT_CHANNELS } from './prio-mock-data'
+
+interface ChatChannelsState {
+  chatChannels: Record<string, ChatChannel>
+  getChatChannel: (id: string) => ChatChannel | undefined
+  getChatChannelsByGoal: (goalId: string) => ChatChannel[]
+  getChatChannelsByType: (type: 'ai' | 'team' | 'mixed') => ChatChannel[]
+  getActiveChatChannels: () => ChatChannel[]
+  addChatChannel: (channel: ChatChannel) => void
+  updateChatChannel: (id: string, updates: Partial<ChatChannel>) => void
+  removeChatChannel: (id: string) => void
+  updateLastActivity: (id: string, timestamp: Date) => void
+  archiveChatChannel: (id: string) => void
+}
+
+export const useChatChannelsStore = create<ChatChannelsState>()(
+  devtools(
+    (set, get) => ({
+      chatChannels: CHAT_CHANNELS,
+
+      getChatChannel: (id) => get().chatChannels[id],
+
+      getChatChannelsByGoal: (goalId) => {
+        const { chatChannels } = get()
+        return Object.values(chatChannels).filter((chat) => chat.goalId === goalId)
+      },
+
+      getChatChannelsByType: (type) => {
+        const { chatChannels } = get()
+        return Object.values(chatChannels).filter((chat) => chat.type === type)
+      },
+
+      getActiveChatChannels: () => {
+        const { chatChannels } = get()
+        return Object.values(chatChannels).filter((chat) => chat.status === 'active')
+      },
+
+      addChatChannel: (channel) =>
+        set((state) => ({
+          chatChannels: {
+            ...state.chatChannels,
+            [channel.id]: channel,
+          },
+        })),
+
+      updateChatChannel: (id, updates) =>
+        set((state) => ({
+          chatChannels: {
+            ...state.chatChannels,
+            [id]: {
+              ...state.chatChannels[id],
+              ...updates,
+            },
+          },
+        })),
+
+      removeChatChannel: (id) =>
+        set((state) => {
+          const { [id]: _removed, ...rest } = state.chatChannels
+          return { chatChannels: rest }
+        }),
+
+      updateLastActivity: (id, timestamp) =>
+        set((state) => ({
+          chatChannels: {
+            ...state.chatChannels,
+            [id]: {
+              ...state.chatChannels[id],
+              lastActivity: timestamp,
+            },
+          },
+        })),
+
+      archiveChatChannel: (id) =>
+        set((state) => ({
+          chatChannels: {
+            ...state.chatChannels,
+            [id]: {
+              ...state.chatChannels[id],
+              status: 'archived',
+            },
+          },
+        })),
+    }),
+    {
+      name: 'chat-channels-store',
+    }
+  )
+)

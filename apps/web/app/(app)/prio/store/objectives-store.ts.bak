@@ -1,0 +1,92 @@
+import { create } from 'zustand'
+import { devtools } from 'zustand/middleware'
+import type { Objective } from './prio-mock-data'
+import { OBJECTIVES } from './prio-mock-data'
+
+interface ObjectivesState {
+  objectives: Record<string, Objective>
+  getObjective: (id: string) => Objective | undefined
+  getObjectivesByGoal: (goalId: string) => Objective[]
+  getObjectivesByAssignee: (assigneeId: string) => Objective[]
+  getObjectivesByStatus: (status: 'active' | 'in-progress' | 'completed' | 'pending') => Objective[]
+  addObjective: (objective: Objective) => void
+  updateObjective: (id: string, updates: Partial<Objective>) => void
+  removeObjective: (id: string) => void
+  updateObjectiveProgress: (id: string, progress: number) => void
+  updateObjectiveStatus: (id: string, status: Objective['status']) => void
+}
+
+export const useObjectivesStore = create<ObjectivesState>()(
+  devtools(
+    (set, get) => ({
+      objectives: OBJECTIVES,
+
+      getObjective: (id) => get().objectives[id],
+
+      getObjectivesByGoal: (goalId) => {
+        const { objectives } = get()
+        return Object.values(objectives).filter((obj) => obj.goalId === goalId)
+      },
+
+      getObjectivesByAssignee: (assigneeId) => {
+        const { objectives } = get()
+        return Object.values(objectives).filter((obj) => obj.assigneeId === assigneeId)
+      },
+
+      getObjectivesByStatus: (status) => {
+        const { objectives } = get()
+        return Object.values(objectives).filter((obj) => obj.status === status)
+      },
+
+      addObjective: (objective) =>
+        set((state) => ({
+          objectives: {
+            ...state.objectives,
+            [objective.id]: objective,
+          },
+        })),
+
+      updateObjective: (id, updates) =>
+        set((state) => ({
+          objectives: {
+            ...state.objectives,
+            [id]: {
+              ...state.objectives[id],
+              ...updates,
+            },
+          },
+        })),
+
+      removeObjective: (id) =>
+        set((state) => {
+          const { [id]: _removed, ...rest } = state.objectives
+          return { objectives: rest }
+        }),
+
+      updateObjectiveProgress: (id, progress) =>
+        set((state) => ({
+          objectives: {
+            ...state.objectives,
+            [id]: {
+              ...state.objectives[id],
+              progress,
+            },
+          },
+        })),
+
+      updateObjectiveStatus: (id, status) =>
+        set((state) => ({
+          objectives: {
+            ...state.objectives,
+            [id]: {
+              ...state.objectives[id],
+              status,
+            },
+          },
+        })),
+    }),
+    {
+      name: 'objectives-store',
+    }
+  )
+)

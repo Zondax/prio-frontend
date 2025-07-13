@@ -7,7 +7,6 @@
  */
 
 import type { ListItem, TreeNode } from '@zondax/ui-common'
-import { Bot, CheckCircle, Clock, Lightbulb, MessageSquare, Package, Rocket, Sparkles, Target, Users } from 'lucide-react'
 
 // ============================================================================
 // Core Type Definitions
@@ -25,7 +24,6 @@ export interface Goal {
   startDate: Date
   targetDate: Date | null
   tags: string[]
-  icon: any
 }
 
 export interface Objective {
@@ -132,7 +130,6 @@ export const GOALS: Record<string, Goal> = {
     startDate: new Date('2024-01-01'),
     targetDate: null,
     tags: ['personal', 'learning', 'productivity'],
-    icon: Sparkles,
   },
   '00000000-0000-0000-0000-000000000101': {
     id: '00000000-0000-0000-0000-000000000101',
@@ -146,7 +143,6 @@ export const GOALS: Record<string, Goal> = {
     startDate: new Date('2024-01-15'),
     targetDate: new Date('2024-03-15'),
     tags: ['frontend', 'ui/ux', 'development'],
-    icon: Rocket,
   },
   '00000000-0000-0000-0000-000000000102': {
     id: '00000000-0000-0000-0000-000000000102',
@@ -160,7 +156,6 @@ export const GOALS: Record<string, Goal> = {
     startDate: new Date('2024-02-01'),
     targetDate: new Date('2024-05-01'),
     tags: ['research', 'design', 'innovation'],
-    icon: Lightbulb,
   },
   '00000000-0000-0000-0000-000000000103': {
     id: '00000000-0000-0000-0000-000000000103',
@@ -174,7 +169,6 @@ export const GOALS: Record<string, Goal> = {
     startDate: new Date('2023-12-01'),
     targetDate: new Date('2024-02-29'),
     tags: ['strategy', 'planning', 'optimization'],
-    icon: Package,
   },
 }
 
@@ -532,12 +526,10 @@ export const NAVIGATION_NODES: TreeNode[] = [
   {
     id: 'chats',
     label: 'Chats',
-    icon: MessageSquare,
     href: '/prio/chats',
     children: Object.values(CHAT_CHANNELS).map((chat) => ({
       id: `chat-${chat.id}`,
       label: chat.name,
-      icon: chat.type === 'ai' ? Bot : chat.type === 'mixed' ? Sparkles : Users,
       href: `/prio/chats/${chat.id}`,
       badge: chat.type === 'team' ? '●' : undefined,
     })),
@@ -545,12 +537,10 @@ export const NAVIGATION_NODES: TreeNode[] = [
   {
     id: 'goals',
     label: 'Goals',
-    icon: Target,
     href: '/prio/goals',
     children: getActiveGoals().map((goal) => ({
       id: `goal-${goal.id}`,
       label: goal.name,
-      icon: goal.icon,
       href: `/prio/goals/${goal.id}`,
       badge: goal.status === 'active' ? '●' : undefined,
     })),
@@ -558,7 +548,6 @@ export const NAVIGATION_NODES: TreeNode[] = [
   {
     id: 'objectives',
     label: 'Objectives',
-    icon: Target,
     href: '/prio/objectives',
   },
 ]
@@ -575,7 +564,6 @@ export const ACTIVITY_FEED = getRecentActivities(10).map((activity) => ({
 // Recent activity items formatted for SidebarList component
 export const RECENT_ACTIVITY_ITEMS: ListItem[] = ACTIVITY_FEED.slice(0, 4).map((activity) => ({
   id: activity.id,
-  icon: activity.type === 'success' ? CheckCircle : activity.type === 'warning' ? Clock : MessageSquare,
   iconColor:
     activity.type === 'success'
       ? 'text-green-600'
@@ -600,7 +588,6 @@ export const CHAT_TEMPLATES = [
     description: 'Creative ideation and exploration of new concepts',
     prompt: 'Help me brainstorm and explore creative ideas. Ask probing questions and suggest innovative approaches.',
     type: 'individual' as const,
-    icon: Lightbulb,
     tags: ['creative', 'ideation'],
   },
   {
@@ -609,7 +596,6 @@ export const CHAT_TEMPLATES = [
     description: 'Technical code review and best practices guidance',
     prompt: 'Review code for quality, performance, and best practices. Suggest improvements and identify potential issues.',
     type: 'individual' as const,
-    icon: Package,
     tags: ['technical', 'development'],
   },
   {
@@ -618,7 +604,6 @@ export const CHAT_TEMPLATES = [
     description: 'Daily team synchronization and progress tracking',
     prompt: 'Facilitate team standup meetings. Track progress, identify blockers, and coordinate team efforts.',
     type: 'team' as const,
-    icon: Users,
     tags: ['team', 'coordination'],
   },
   {
@@ -627,7 +612,6 @@ export const CHAT_TEMPLATES = [
     description: 'Strategic planning and decision-making support',
     prompt: 'Provide strategic insights and help evaluate different approaches. Consider long-term implications and trade-offs.',
     type: 'individual' as const,
-    icon: Target,
     tags: ['strategy', 'planning'],
     isShared: true,
   },
@@ -637,7 +621,6 @@ export const CHAT_TEMPLATES = [
     description: 'Product launch coordination and checklist management',
     prompt: 'Help coordinate product launches. Track deliverables, identify risks, and ensure all aspects are covered.',
     type: 'team' as const,
-    icon: Rocket,
     tags: ['launch', 'coordination'],
   },
   {
@@ -646,7 +629,6 @@ export const CHAT_TEMPLATES = [
     description: 'Create your own specialized AI assistant',
     prompt: '',
     type: 'individual' as const,
-    icon: Sparkles,
     tags: ['custom'],
   },
 ]
@@ -709,7 +691,6 @@ export const MISSION_TEMPLATES = [
     id: 'product-launch',
     name: 'Product Launch',
     description: 'Plan and execute a successful product launch',
-    icon: Rocket,
     type: 'team' as const,
     priority: 'high' as const,
     estimatedDuration: '3-6 months',
@@ -720,7 +701,6 @@ export const MISSION_TEMPLATES = [
     id: 'team-growth',
     name: 'Team Growth',
     description: 'Build and scale your team effectively',
-    icon: Users,
     type: 'team' as const,
     priority: 'medium' as const,
     estimatedDuration: '2-4 months',
@@ -731,7 +711,6 @@ export const MISSION_TEMPLATES = [
     id: 'technical-debt',
     name: 'Technical Debt',
     description: 'Address and reduce technical debt systematically',
-    icon: Package,
     type: 'individual' as const,
     priority: 'medium' as const,
     estimatedDuration: '1-3 months',
@@ -747,7 +726,6 @@ export const OBJECTIVE_TEMPLATES = [
     description: 'Conduct thorough research and analysis',
     estimatedHours: 40,
     priority: 'medium' as const,
-    icon: Lightbulb,
     tags: ['analysis', 'research'],
     suggestedSubtasks: ['Define research scope', 'Gather data sources', 'Analyze findings', 'Document insights'],
   },
@@ -757,7 +735,6 @@ export const OBJECTIVE_TEMPLATES = [
     description: 'Build and implement the solution',
     estimatedHours: 80,
     priority: 'high' as const,
-    icon: Package,
     tags: ['development', 'coding'],
     suggestedSubtasks: ['Design architecture', 'Develop features', 'Integration testing', 'Deployment preparation'],
   },
@@ -767,7 +744,6 @@ export const OBJECTIVE_TEMPLATES = [
     description: 'Comprehensive testing and quality assurance',
     estimatedHours: 20,
     priority: 'high' as const,
-    icon: CheckCircle,
     tags: ['testing', 'quality'],
     suggestedSubtasks: ['Unit testing', 'Integration testing', 'User acceptance testing', 'Bug fixes'],
   },
