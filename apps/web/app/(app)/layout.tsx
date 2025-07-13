@@ -3,7 +3,6 @@
 import { UserButton, useUser } from '@zondax/auth-web'
 import { AppShell, BarLayoutPosition, type ChromeConfig, SidebarVariant, ThemeToggle, useTopBarItem } from '@zondax/ui-common/client'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 import { useMemo } from 'react'
 
 // Inline AppTopBarItems component

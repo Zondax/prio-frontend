@@ -25,40 +25,33 @@ export default function PrioLayout({ children }: { children: React.ReactNode }) 
     []
   )
 
-  const sidebarContentComponent = useMemo(
-    () => {
-      // Create a Set with all node IDs to expand all nodes by default
-      const allNodeIds = new Set<string>()
-      NAVIGATION_NODES.forEach(node => {
-        allNodeIds.add(node.id)
-        if (node.children) {
-          node.children.forEach(child => allNodeIds.add(child.id))
-        }
-      })
+  const sidebarContentComponent = useMemo(() => {
+    // Create a Set with all node IDs to expand all nodes by default
+    const allNodeIds = new Set<string>()
+    NAVIGATION_NODES.forEach((node) => {
+      allNodeIds.add(node.id)
+      if (node.children) {
+        node.children.forEach((child) => allNodeIds.add(child.id))
+      }
+    })
 
-      return (
-        <div className="space-y-2">
-          {/* Navigation Tree - starts with all nodes expanded */}
-          <SidebarTree 
-            nodes={NAVIGATION_NODES} 
-            persistState={false} 
-            expandedNodes={allNodeIds}
-          />
+    return (
+      <div className="space-y-2">
+        {/* Navigation Tree - starts with all nodes expanded */}
+        <SidebarTree nodes={NAVIGATION_NODES} persistState={false} expandedNodes={allNodeIds} />
 
-          {/* Recent Activity List */}
-          <SidebarList
-            title="Recent Activity"
-            items={RECENT_ACTIVITY_ITEMS}
-            maxItems={4}
-            viewAllHref="/activity"
-            className="mt-4"
-            variant="minimal"
-          />
-        </div>
-      )
-    },
-    []
-  )
+        {/* Recent Activity List */}
+        <SidebarList
+          title="Recent Activity"
+          items={RECENT_ACTIVITY_ITEMS}
+          maxItems={4}
+          viewAllHref="/activity"
+          className="mt-4"
+          variant="minimal"
+        />
+      </div>
+    )
+  }, [])
 
   // Use the embedded sidebar system to add content to existing sidebar
   // Now using semantic section locations: start=header, middle=content, end=footer

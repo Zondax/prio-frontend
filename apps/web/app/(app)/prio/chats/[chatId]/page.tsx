@@ -1,5 +1,9 @@
 'use client'
 
+import { useChatError, useChatLoading, useChatResponse, useChatStore, useSendMessage } from '@mono-state'
+import { useEndpointStore } from '@mono-state/stores'
+import { useUser } from '@zondax/auth-web/client'
+import { useGrpcSetup } from '@zondax/auth-web/hooks'
 import {
   type ChatBookmark,
   ChatBookmarkPanel,
@@ -260,11 +264,24 @@ function getIcon(iconName: IconName): React.ReactNode {
 
 function ChatPageContentWithConfig({ config }: { config: ChatConfig }) {
   const appShell = useAppShell()
+  const { user } = useUser()
+
+  // gRPC chat integration
+  const chatStore = useChatStore()
+  const isGrpcLoading = useChatLoading()
+  const grpcError = useChatError()
+  const grpcResponse = useChatResponse()
+  const sendGrpcMessage = useSendMessage()
+
+  // Setup gRPC connection
+  const { selectedEndpoint } = useEndpointStore()
+  useGrpcSetup(chatStore.setParams, selectedEndpoint)
 
   // Simple local state for demo purposes
   const [messages, setMessages] = useState<StandardChatMessage[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  const userId = 'demo-user'
+  const [conversationId, setConversationId] = useState<string | null>(null)
+  const userId = user?.id || 'demo-user'
 
   // Local UI state
   const [inputValue, setInputValue] = useState('')
@@ -304,9 +321,57 @@ function ChatPageContentWithConfig({ config }: { config: ChatConfig }) {
     }
   }, [initialized, mockMessagesContent.length, config.mockMessages])
 
+  // Handle gRPC response
+  useEffect(() => {
+    if (grpcResponse && !isGrpcLoading) {
+      // Store conversation ID for future messages
+      setConversationId(grpcResponse.conversationId)
+      console.log('Chat response received for conversation:', grpcResponse.conversationId)
+
+      const assistantMessage: StandardChatMessage = {
+        id: `msg-${Date.now()}-assistant`,
+        role: 'assistant',
+        content: grpcResponse.response,
+        timestamp: new Date(),
+        bookmarks: [],
+        threads: [],
+        reactions: [],
+        textSelection: { highlights: [] },
+        attachments: [],
+        metadata: {
+          processingTime: Math.floor(Math.random() * 1000 + 500),
+        },
+      }
+      setMessages((prev) => [...prev, assistantMessage])
+      setIsLoading(false)
+    }
+  }, [grpcResponse, isGrpcLoading])
+
+  // Handle gRPC errors
+  useEffect(() => {
+    if (grpcError) {
+      console.error('Chat gRPC error:', grpcError)
+      const errorMessage: StandardChatMessage = {
+        id: `msg-${Date.now()}-error`,
+        role: 'assistant',
+        content: 'Sorry, I encountered an error while processing your message. Please try again.',
+        timestamp: new Date(),
+        bookmarks: [],
+        threads: [],
+        reactions: [],
+        textSelection: { highlights: [] },
+        attachments: [],
+        metadata: {},
+      }
+      setMessages((prev) => [...prev, errorMessage])
+      setIsLoading(false)
+    }
+  }, [grpcError])
+
   // Display messages with streaming support
   const displayMessages = useMemo(() => {
-    if (isLoading && messages.length > 0) {
+    const totalLoading = isLoading || isGrpcLoading
+    if (totalLoading && messages.length > 0) {
       const streamingMessage: StandardChatMessage = {
         id: 'loading',
         role: 'assistant',
@@ -324,12 +389,13 @@ function ChatPageContentWithConfig({ config }: { config: ChatConfig }) {
       return [...messages, streamingMessage]
     }
     return messages
-  }, [messages, isLoading])
+  }, [messages, isLoading, isGrpcLoading])
 
-  // Handle sending messages (simplified demo version)
+  // Handle sending messages with real gRPC integration
   const handleSendMessage = useCallback(
     (messageContent: string) => {
-      if (!messageContent.trim() || isLoading) return
+      const totalLoading = isLoading || isGrpcLoading
+      if (!messageContent.trim() || totalLoading) return
 
       // Add user message
       const userMessage: StandardChatMessage = {
@@ -349,27 +415,14 @@ function ChatPageContentWithConfig({ config }: { config: ChatConfig }) {
       setInputValue('')
       setIsLoading(true)
 
-      // Simulate assistant response after a delay
-      setTimeout(() => {
-        const assistantMessage: StandardChatMessage = {
-          id: `msg-${Date.now()}-assistant`,
-          role: 'assistant',
-          content: `Thank you for your message: "${messageContent}". This is a demo response from the ${config.name}.`,
-          timestamp: new Date(),
-          bookmarks: [],
-          threads: [],
-          reactions: [],
-          textSelection: { highlights: [] },
-          attachments: [],
-          metadata: {
-            processingTime: Math.floor(Math.random() * 1000 + 500),
-          },
-        }
-        setMessages((prev) => [...prev, assistantMessage])
-        setIsLoading(false)
-      }, 1500)
+      // Send message via gRPC (include conversation ID if available)
+      sendGrpcMessage({
+        message: messageContent,
+        userId,
+        conversationId: conversationId || undefined,
+      })
     },
-    [isLoading, config.name]
+    [isLoading, isGrpcLoading, sendGrpcMessage, userId, conversationId]
   )
 
   // Text selection and bookmark handlers
@@ -412,27 +465,30 @@ function ChatPageContentWithConfig({ config }: { config: ChatConfig }) {
   }, [])
 
   // Thread handlers
-  const _handleStartThread = useCallback((messageId: string, content?: string) => {
-    console.log('Starting thread on message:', messageId, 'with content:', content)
-    // In a real implementation, this would create a new thread
-    const newThread: ChatThread = {
-      id: `thread-${Date.now()}`,
-      parentMessageId: messageId,
-      messages: [],
-      isExpanded: false,
-      unreadCount: 0,
-      lastActivity: new Date(),
-      participants: [
-        {
-          id: userId,
-          name: 'You',
-          avatar: undefined,
-          role: 'participant' as const,
-        },
-      ],
-    }
-    setActiveThreads((prev) => [...prev, newThread])
-  }, [])
+  const _handleStartThread = useCallback(
+    (messageId: string, content?: string) => {
+      console.log('Starting thread on message:', messageId, 'with content:', content)
+      // In a real implementation, this would create a new thread
+      const newThread: ChatThread = {
+        id: `thread-${Date.now()}`,
+        parentMessageId: messageId,
+        messages: [],
+        isExpanded: false,
+        unreadCount: 0,
+        lastActivity: new Date(),
+        participants: [
+          {
+            id: userId,
+            name: 'You',
+            avatar: undefined,
+            role: 'participant' as const,
+          },
+        ],
+      }
+      setActiveThreads((prev) => [...prev, newThread])
+    },
+    [userId]
+  )
 
   const _handleViewThread = useCallback((threadId: string) => {
     console.log('Viewing thread:', threadId)
@@ -513,6 +569,7 @@ function ChatPageContentWithConfig({ config }: { config: ChatConfig }) {
                 {bookmarks.length} bookmark{bookmarks.length === 1 ? '' : 's'}
               </p>
             )}
+            {conversationId && <p className="text-xs text-muted-foreground">Session: {conversationId.substring(0, 8)}...</p>}
           </div>
           {config.type === 'team' && config.participants && (
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -580,8 +637,8 @@ function ChatPageContentWithConfig({ config }: { config: ChatConfig }) {
           onChange={setInputValue}
           onSubmit={handleSendMessage}
           placeholder={`Message ${config.name}...`}
-          isLoading={isLoading}
-          disabled={isLoading}
+          isLoading={isLoading || isGrpcLoading}
+          disabled={isLoading || isGrpcLoading}
           enableVoice={false}
           enableCommands={false}
           enableAttachments={false}
