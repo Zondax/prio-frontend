@@ -2,23 +2,12 @@
 
 import { UserButton, useUser } from '@zondax/auth-web'
 import { AppShell, BarLayoutPosition, type ChromeConfig, SidebarVariant, ThemeToggle, useTopBarItem } from '@zondax/ui-common/client'
-import Link from 'next/link'
 import { useMemo } from 'react'
 
 // Inline AppTopBarItems component
 function AppTopBarItems() {
-  const logoComponent = useMemo(
-    () => (
-      <Link href="/" className="flex items-center">
-        <span className="text-xl font-bold">Prio</span>
-      </Link>
-    ),
-    []
-  )
   const themeToggleComponent = useMemo(() => <ThemeToggle />, [])
   const userButtonComponent = useMemo(() => <UserButton />, [])
-
-  useTopBarItem('logo', logoComponent, 'start', 0)
   useTopBarItem('theme-toggle', themeToggleComponent, 'end', 10)
   useTopBarItem('user-button', userButtonComponent, 'end', 20)
 
@@ -26,7 +15,7 @@ function AppTopBarItems() {
 }
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-  const { isLoaded, isSignedIn } = useUser()
+  // const { isLoaded, isSignedIn } = useUser() // Temporarily disabled for development
 
   // Show loading state while checking authentication (temporarily disabled for development)
   // if (!isLoaded) {

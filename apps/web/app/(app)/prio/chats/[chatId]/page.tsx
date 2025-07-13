@@ -24,6 +24,7 @@ import { Bot, Code, Database, FileText, Palette, Users, Zap } from 'lucide-react
 import { notFound, useParams } from 'next/navigation'
 import type React from 'react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { getBookmarksByChatChannel, getThreadsByChatChannel } from '../../store/prio-mock-data'
 
 // Chat configuration mapping - icons are created in getIcon() to avoid JSX at module level
 const CHAT_CONFIGS = {
@@ -262,7 +263,7 @@ function getIcon(iconName: IconName): React.ReactNode {
   return icons[iconName]
 }
 
-function ChatPageContentWithConfig({ config }: { config: ChatConfig }) {
+function ChatPageContentWithConfig({ config, chatId }: { config: ChatConfig; chatId: string }) {
   const appShell = useAppShell()
   const { user } = useUser()
 
@@ -296,7 +297,7 @@ function ChatPageContentWithConfig({ config }: { config: ChatConfig }) {
     return config.mockMessages.map((msg) => ({ role: msg.role, content: msg.content }))
   }, [config.mockMessages.map]) // Only depend on length and first message
 
-  // Initialize with mock messages on first load (only for predefined chats)
+  // Initialize with mock messages, bookmarks, and threads on first load (only for predefined chats)
   useEffect(() => {
     if (!initialized && mockMessagesContent.length > 0) {
       // Transform mock messages to StandardChatMessage format
@@ -316,10 +317,40 @@ function ChatPageContentWithConfig({ config }: { config: ChatConfig }) {
         },
       }))
 
+      // Load mock bookmarks for this chat channel
+      const mockBookmarks = getBookmarksByChatChannel(chatId)
+      // Transform mock bookmarks to ChatBookmark format expected by UI
+      const transformedBookmarks: ChatBookmark[] = mockBookmarks.map((bookmark) => ({
+        id: bookmark.id,
+        messageId: bookmark.messageId,
+        type: bookmark.type,
+        title: bookmark.title,
+        content: bookmark.content,
+        timestamp: bookmark.timestamp,
+        color: bookmark.color,
+        tags: bookmark.tags,
+        note: bookmark.note,
+        position: bookmark.position,
+      }))
+
+      // Load mock threads for this chat channel
+      const mockThreads = getThreadsByChatChannel(chatId)
+      const transformedThreads: ChatThread[] = mockThreads.map((thread) => ({
+        id: thread.id,
+        parentMessageId: thread.parentMessageId,
+        messages: thread.messages,
+        isExpanded: thread.isExpanded,
+        unreadCount: thread.unreadCount,
+        lastActivity: thread.lastActivity,
+        participants: thread.participants,
+      }))
+
       setMessages(transformedMockMessages)
+      setBookmarks(transformedBookmarks)
+      setActiveThreads(transformedThreads)
       setInitialized(true)
     }
-  }, [initialized, mockMessagesContent.length, config.mockMessages])
+  }, [initialized, mockMessagesContent.length, config.mockMessages, chatId])
 
   // Handle gRPC response
   useEffect(() => {
@@ -707,7 +738,7 @@ export default function ChatPage() {
   return (
     <ToolRegistryProvider>
       <ToolRegistryInitializer />
-      <ChatPageContentWithConfig config={config} />
+      <ChatPageContentWithConfig config={config} chatId={chatIdString} />
     </ToolRegistryProvider>
   )
 }

@@ -2,7 +2,6 @@
 
 import { UserButton } from '@zondax/auth-web'
 import { Breadcrumb, SidebarList, SidebarTree, ThemeToggle, useAppShell, useLeftSidebarItem, useTopBarItem } from '@zondax/ui-common/client'
-import Link from 'next/link'
 import { useEffect, useMemo } from 'react'
 import { useBreadcrumbData } from './lib/use-breadcrumb-data'
 import { NAVIGATION_NODES, RECENT_ACTIVITY_ITEMS } from './store/prio-mock-data'
@@ -58,20 +57,10 @@ export default function PrioLayout({ children }: { children: React.ReactNode }) 
   useLeftSidebarItem('prio-header', sidebarHeaderComponent, 'start', 5)
   useLeftSidebarItem('prio-navigation', sidebarContentComponent, 'middle', 10)
 
-  // Add topbar items (ensure they're always present in prio section)
-  const logoComponent = useMemo(
-    () => (
-      <Link href="/" className="flex items-center">
-        <span className="text-xl font-bold">Prio</span>
-      </Link>
-    ),
-    []
-  )
   const breadcrumbComponent = useMemo(() => <BreadcrumbNavigation />, [])
   const themeToggleComponent = useMemo(() => <ThemeToggle />, [])
   const userButtonComponent = useMemo(() => <UserButton />, [])
 
-  useTopBarItem('logo', logoComponent, 'start', 0)
   useTopBarItem('prio-breadcrumb', breadcrumbComponent, 'start', 5)
   useTopBarItem('theme-toggle', themeToggleComponent, 'end', 10)
   useTopBarItem('user-button', userButtonComponent, 'end', 20)
