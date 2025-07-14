@@ -7,9 +7,7 @@ import { useRouter } from 'next/navigation'
 import { useCallback, useMemo, useState } from 'react'
 import { CHAT_BOOKMARKS, CHAT_CHANNELS, GOALS } from '@/app/(app)/prio/store/prio-mock-data'
 
-interface BookmarksTabProps {
-  // No props currently needed
-}
+type BookmarksTabProps = {}
 
 export default function BookmarksTab(_props: BookmarksTabProps) {
   const router = useRouter()

@@ -1,6 +1,6 @@
 'use client'
 
-import { UserButton, useUser } from '@zondax/auth-web'
+import { UserButton } from '@zondax/auth-web'
 import { AppShell, BarLayoutPosition, type ChromeConfig, SidebarVariant, ThemeToggle, useTopBarItem } from '@zondax/ui-common/client'
 import { useMemo } from 'react'
 
