@@ -5,32 +5,32 @@ import { Badge, Input, VirtualizedTable } from '@zondax/ui-common/client'
 import { Search } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useMemo, useState } from 'react'
-import { type GoalDetail, PARTICIPANTS } from '@/app/(app)/prio/store/prio-mock-data'
+import { type MissionDetail, PARTICIPANTS } from '@/app/(app)/prio/store/prio-mock-data'
 
 interface ObjectivesTabProps {
-  allGoals: GoalDetail[]
+  allMissions: MissionDetail[]
 }
 
-export default function ObjectivesTab({ allGoals }: ObjectivesTabProps) {
+export default function ObjectivesTab({ allMissions }: ObjectivesTabProps) {
   const router = useRouter()
   const [searchQuery, setSearchQuery] = useState('')
 
-  // Get all objectives across all goals
+  // Get all objectives across all missions
   const allObjectives = useMemo(() => {
-    return allGoals.flatMap((goal) =>
-      goal.objectives.map((obj) => {
+    return allMissions.flatMap((mission) =>
+      mission.objectives.map((obj) => {
         const assignee = PARTICIPANTS[obj.assigneeId]
         return {
           ...obj,
-          goalName: goal.name,
-          goalId: goal.id,
-          goalStatus: goal.status,
-          goalPriority: goal.priority,
+          missionName: mission.name,
+          missionId: mission.id,
+          missionStatus: mission.status,
+          missionPriority: mission.priority,
           assigneeName: assignee?.name || 'Unknown',
         }
       })
     )
-  }, [allGoals])
+  }, [allMissions])
 
   // Filter objectives based on search
   const filteredObjectives = useMemo(() => {
@@ -41,7 +41,7 @@ export default function ObjectivesTab({ allGoals }: ObjectivesTabProps) {
       (obj) =>
         obj.title.toLowerCase().includes(query) ||
         obj.description.toLowerCase().includes(query) ||
-        obj.goalName.toLowerCase().includes(query) ||
+        obj.missionName.toLowerCase().includes(query) ||
         obj.assigneeName.toLowerCase().includes(query)
     )
   }, [searchQuery, allObjectives])
@@ -81,10 +81,10 @@ export default function ObjectivesTab({ allGoals }: ObjectivesTabProps) {
         maxSize: 300,
       },
       {
-        id: 'goal',
-        header: 'Goal',
-        accessorKey: 'goalName',
-        cell: ({ row }) => <div className="text-sm">{row.original.goalName}</div>,
+        id: 'mission',
+        header: 'Mission',
+        accessorKey: 'missionName',
+        cell: ({ row }) => <div className="text-sm">{row.original.missionName}</div>,
         size: 180,
         minSize: 150,
         maxSize: 220,
@@ -142,7 +142,7 @@ export default function ObjectivesTab({ allGoals }: ObjectivesTabProps) {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
           <Input
-            placeholder="Search objectives, goals, or assignees..."
+            placeholder="Search objectives, missions, or assignees..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-10"
@@ -176,8 +176,8 @@ export default function ObjectivesTab({ allGoals }: ObjectivesTabProps) {
           data={filteredObjectives}
           columns={objectiveColumns as ColumnDef<any>[]}
           onRowClick={(row) => {
-            if (row?.original?.goalId) {
-              router.push(`/prio/goals/${row.original.goalId}`)
+            if (row?.original?.missionId) {
+              router.push(`/prio/missions/${row.original.missionId}`)
             }
           }}
           enableSorting

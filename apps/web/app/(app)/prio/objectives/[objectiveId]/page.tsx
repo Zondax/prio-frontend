@@ -220,8 +220,8 @@ function ObjectivePageContent({ config }: { config: ObjectiveDetail }) {
   const totalSubtasks = config.subtasks.length
 
   const handleBackToGoal = useCallback(() => {
-    router.push(`/prio/goals/${config.goalId}`)
-  }, [router, config.goalId])
+    router.push(`/prio/missions/${config.missionId}`)
+  }, [router, config.missionId])
 
   const handleEditObjective = useCallback(() => {
     // TODO: Implement edit functionality
@@ -245,7 +245,7 @@ function ObjectivePageContent({ config }: { config: ObjectiveDetail }) {
               </div>
               <p className="text-muted-foreground">{config.description}</p>
               <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                <span>Goal: {config.goalName}</span>
+                <span>Mission: {config.missionName}</span>
                 <div className="flex items-center gap-1">
                   <Users className="w-4 h-4" />
                   <span>Assigned to {config.assigneeName}</span>

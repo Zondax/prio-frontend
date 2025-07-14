@@ -52,7 +52,7 @@ function PrioPageContent({ className }: { className?: string }) {
         {/* Header */}
         <div className="space-y-2">
           <h1 className="text-3xl font-bold">Priority Dashboard</h1>
-          <p className="text-muted-foreground">Manage your personal workspace and collaborative goals</p>
+          <p className="text-muted-foreground">Manage your personal workspace and collaborative missions</p>
         </div>
 
         {/* Main Content Area */}

@@ -6,7 +6,7 @@ import { OBJECTIVES } from './prio-mock-data'
 interface ObjectivesState {
   objectives: Record<string, Objective>
   getObjective: (id: string) => Objective | undefined
-  getObjectivesByGoal: (goalId: string) => Objective[]
+  getObjectivesByMission: (missionId: string) => Objective[]
   getObjectivesByAssignee: (assigneeId: string) => Objective[]
   getObjectivesByStatus: (status: 'active' | 'in-progress' | 'completed' | 'pending') => Objective[]
   addObjective: (objective: Objective) => void
@@ -23,9 +23,9 @@ export const useObjectivesStore = create<ObjectivesState>()(
 
       getObjective: (id) => get().objectives[id],
 
-      getObjectivesByGoal: (goalId) => {
+      getObjectivesByMission: (missionId) => {
         const { objectives } = get()
-        return Object.values(objectives).filter((obj) => obj.goalId === goalId)
+        return Object.values(objectives).filter((obj) => obj.missionId === missionId)
       },
 
       getObjectivesByAssignee: (assigneeId) => {

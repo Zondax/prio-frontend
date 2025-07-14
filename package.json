@@ -103,6 +103,7 @@
   },
   "dependencies": {
     "client-only": "^0.0.1",
-    "server-only": "^0.0.1"
+    "server-only": "^0.0.1",
+    "zustand": "^5.0.6"
   }
 }

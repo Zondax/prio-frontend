@@ -5,37 +5,37 @@ import { Badge, Input, VirtualizedTable } from '@zondax/ui-common/client'
 import { Search, Target } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useMemo, useState } from 'react'
-import type { GoalDetail } from '@/app/(app)/prio/store/prio-mock-data'
+import type { MissionDetail } from '@/app/(app)/prio/store/prio-mock-data'
 
 interface TeamMembersTabProps {
-  allGoals: GoalDetail[]
+  allMissions: MissionDetail[]
 }
 
-export default function TeamMembersTab({ allGoals }: TeamMembersTabProps) {
+export default function TeamMembersTab({ allMissions }: TeamMembersTabProps) {
   const router = useRouter()
   const [searchQuery, setSearchQuery] = useState('')
 
-  // Get all team members across all goals
+  // Get all team members across all missions
   const allTeamMembers = useMemo(() => {
     const memberMap = new Map()
-    allGoals.forEach((goal) => {
-      goal.participants.forEach((participant) => {
+    for (const mission of allMissions) {
+      for (const participant of mission.participants) {
         const key = participant.id
         if (!memberMap.has(key)) {
           memberMap.set(key, {
             ...participant,
-            goalCount: 1,
-            goals: [{ id: goal.id, name: goal.name, status: goal.status }],
+            missionCount: 1,
+            missions: [{ id: mission.id, name: mission.name, status: mission.status }],
           })
         } else {
           const existing = memberMap.get(key)
-          existing.goalCount += 1
-          existing.goals.push({ id: goal.id, name: goal.name, status: goal.status })
+          existing.missionCount += 1
+          existing.missions.push({ id: mission.id, name: mission.name, status: mission.status })
         }
-      })
-    })
+      }
+    }
     return Array.from(memberMap.values())
-  }, [allGoals])
+  }, [allMissions])
 
   // Filter team members based on search
   const filteredTeamMembers = useMemo(() => {
@@ -45,7 +45,7 @@ export default function TeamMembersTab({ allGoals }: TeamMembersTabProps) {
     return allTeamMembers.filter(
       (member) =>
         member.name.toLowerCase().includes(query) ||
-        member.goals.some((goal: { name: string }) => goal.name.toLowerCase().includes(query)) ||
+        member.missions.some((mission: { name: string }) => mission.name.toLowerCase().includes(query)) ||
         member.role?.toLowerCase().includes(query)
     )
   }, [searchQuery, allTeamMembers])
@@ -73,13 +73,13 @@ export default function TeamMembersTab({ allGoals }: TeamMembersTabProps) {
         maxSize: 250,
       },
       {
-        id: 'goalCount',
-        header: 'Goals',
-        accessorKey: 'goalCount',
+        id: 'missionCount',
+        header: 'Missions',
+        accessorKey: 'missionCount',
         cell: ({ row }) => (
           <div className="flex items-center gap-1">
             <Target className="w-3 h-3 text-muted-foreground" />
-            <span className="text-sm">{row.original.goalCount}</span>
+            <span className="text-sm">{row.original.missionCount}</span>
           </div>
         ),
         size: 80,
@@ -89,28 +89,28 @@ export default function TeamMembersTab({ allGoals }: TeamMembersTabProps) {
       {
         id: 'activeGoals',
         header: 'Active',
-        accessorKey: 'goals',
+        accessorKey: 'missions',
         cell: ({ row }) => (
-          <span className="text-sm">{row.original.goals.filter((g: { status: string }) => g.status === 'active').length}</span>
+          <span className="text-sm">{row.original.missions.filter((m: { status: string }) => m.status === 'active').length}</span>
         ),
         size: 80,
         minSize: 60,
         maxSize: 100,
       },
       {
-        id: 'goals',
-        header: 'Goal List',
-        accessorKey: 'goals',
+        id: 'missions',
+        header: 'Mission List',
+        accessorKey: 'missions',
         cell: ({ row }) => (
           <div className="flex flex-wrap gap-1">
-            {row.original.goals.slice(0, 2).map((goal: { id: string; name: string }, _index: number) => (
-              <Badge key={goal.id} variant="secondary" className="text-xs">
-                {goal.name}
+            {row.original.missions.slice(0, 2).map((mission: { id: string; name: string }, _index: number) => (
+              <Badge key={mission.id} variant="secondary" className="text-xs">
+                {mission.name}
               </Badge>
             ))}
-            {row.original.goals.length > 2 && (
+            {row.original.missions.length > 2 && (
               <Badge variant="secondary" className="text-xs">
-                +{row.original.goals.length - 2}
+                +{row.original.missions.length - 2}
               </Badge>
             )}
           </div>
@@ -126,13 +126,13 @@ export default function TeamMembersTab({ allGoals }: TeamMembersTabProps) {
   const stats = useMemo(() => {
     return {
       total: filteredTeamMembers.length,
-      activeMembers: filteredTeamMembers.filter((member) => member.goals.some((g) => g.status === 'active')).length,
-      avgGoalsPerMember: Math.round(
-        filteredTeamMembers.reduce((sum, member) => sum + member.goalCount, 0) / filteredTeamMembers.length || 0
+      activeMembers: filteredTeamMembers.filter((member) => member.missions.some((m: any) => m.status === 'active')).length,
+      avgMissionsPerMember: Math.round(
+        filteredTeamMembers.reduce((sum, member) => sum + member.missionCount, 0) / filteredTeamMembers.length || 0
       ),
-      teamGoals: allGoals.filter((g) => g.type === 'team').length,
+      teamMissions: allMissions.filter((m) => m.type === 'team').length,
     }
-  }, [filteredTeamMembers, allGoals])
+  }, [filteredTeamMembers, allMissions])
 
   return (
     <div className="space-y-4">
@@ -141,7 +141,7 @@ export default function TeamMembersTab({ allGoals }: TeamMembersTabProps) {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
           <Input
-            placeholder="Search team members or goals..."
+            placeholder="Search team members or missions..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-10"
@@ -160,12 +160,12 @@ export default function TeamMembersTab({ allGoals }: TeamMembersTabProps) {
           <div className="text-sm text-muted-foreground">Active Members</div>
         </div>
         <div className="text-center">
-          <div className="text-2xl font-bold">{stats.avgGoalsPerMember}</div>
-          <div className="text-sm text-muted-foreground">Avg Goals/Member</div>
+          <div className="text-2xl font-bold">{stats.avgMissionsPerMember}</div>
+          <div className="text-sm text-muted-foreground">Avg Missions/Member</div>
         </div>
         <div className="text-center">
-          <div className="text-2xl font-bold">{stats.teamGoals}</div>
-          <div className="text-sm text-muted-foreground">Team Goals</div>
+          <div className="text-2xl font-bold">{stats.teamMissions}</div>
+          <div className="text-sm text-muted-foreground">Team Missions</div>
         </div>
       </div>
 
@@ -175,10 +175,10 @@ export default function TeamMembersTab({ allGoals }: TeamMembersTabProps) {
           data={filteredTeamMembers}
           columns={teamColumns as ColumnDef<any>[]}
           onRowClick={(row) => {
-            // Navigate to first active goal for this member
-            const activeGoal = row.original.goals.find((g) => g.status === 'active')
-            if (activeGoal) {
-              router.push(`/prio/goals/${activeGoal.id}`)
+            // Navigate to first active mission for this member
+            const activeMission = row.original.missions.find((m: any) => m.status === 'active')
+            if (activeMission) {
+              router.push(`/prio/missions/${activeMission.id}`)
             }
           }}
           enableSorting

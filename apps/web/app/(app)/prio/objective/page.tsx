@@ -15,7 +15,7 @@ import {
 import { ArrowLeft, Calendar, CheckCircle, Plus, Target, Users } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
-import { AVAILABLE_GOALS, OBJECTIVE_TEMPLATES } from '@/app/(app)/prio/store/prio-mock-data'
+import { AVAILABLE_MISSIONS, OBJECTIVE_TEMPLATES } from '@/app/(app)/prio/store/prio-mock-data'
 
 type ObjectiveTemplate = (typeof OBJECTIVE_TEMPLATES)[0]
 
@@ -24,7 +24,7 @@ export default function NewObjectivePage() {
   const [selectedTemplate, setSelectedTemplate] = useState<ObjectiveTemplate | null>(null)
   const [objectiveName, setObjectiveName] = useState('')
   const [objectiveDescription, setObjectiveDescription] = useState('')
-  const [parentGoalId, setParentGoalId] = useState('')
+  const [parentMissionId, setParentMissionId] = useState('')
   const [priority, setPriority] = useState<'low' | 'medium' | 'high'>('medium')
   const [estimatedHours, setEstimatedHours] = useState<number>(0)
   const [dueDate, setDueDate] = useState('')
@@ -57,7 +57,7 @@ export default function NewObjectivePage() {
   )
 
   const handleCreateObjective = useCallback(async () => {
-    if (!selectedTemplate || !objectiveName.trim() || !parentGoalId) return
+    if (!selectedTemplate || !objectiveName.trim() || !parentMissionId) return
 
     setIsCreating(true)
 
@@ -82,13 +82,13 @@ export default function NewObjectivePage() {
       console.error('Failed to create objective:', error)
       setIsCreating(false)
     }
-  }, [selectedTemplate, objectiveName, parentGoalId, router])
+  }, [selectedTemplate, objectiveName, parentMissionId, router])
 
   const handleCancel = useCallback(() => {
     router.push('/prio/objectives')
   }, [router])
 
-  const selectedGoal = AVAILABLE_GOALS.find((g) => g.id === parentGoalId)
+  const selectedMission = AVAILABLE_MISSIONS.find((m) => m.id === parentMissionId)
 
   return (
     <div className="h-full flex flex-col">
@@ -186,17 +186,17 @@ export default function NewObjectivePage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="parent-goal">Parent Goal</Label>
-                      <Select value={parentGoalId} onValueChange={setParentGoalId}>
-                        <SelectTrigger id="parent-goal">
-                          <SelectValue placeholder="Select parent goal" />
+                      <Label htmlFor="parent-mission">Parent Mission</Label>
+                      <Select value={parentMissionId} onValueChange={setParentMissionId}>
+                        <SelectTrigger id="parent-mission">
+                          <SelectValue placeholder="Select parent mission" />
                         </SelectTrigger>
                         <SelectContent>
-                          {AVAILABLE_GOALS.map((goal) => (
-                            <SelectItem key={goal.id} value={goal.id}>
+                          {AVAILABLE_MISSIONS.map((mission) => (
+                            <SelectItem key={mission.id} value={mission.id}>
                               <div className="flex items-center gap-2">
-                                {goal.type === 'team' ? <Users className="w-4 h-4" /> : <Target className="w-4 h-4" />}
-                                {goal.name}
+                                {mission.type === 'team' ? <Users className="w-4 h-4" /> : <Target className="w-4 h-4" />}
+                                {mission.name}
                               </div>
                             </SelectItem>
                           ))}
@@ -318,7 +318,7 @@ export default function NewObjectivePage() {
                 </div>
 
                 {/* Preview */}
-                {selectedGoal && (
+                {selectedMission && (
                   <div className="border rounded-lg p-4 bg-muted/20">
                     <h4 className="font-medium mb-2">Preview</h4>
                     <div className="space-y-2 text-sm">
@@ -337,8 +337,8 @@ export default function NewObjectivePage() {
                         </Badge>
                       </div>
                       <div className="flex items-center gap-2 text-muted-foreground">
-                        <span>Goal:</span>
-                        <span className="font-medium">{selectedGoal.name}</span>
+                        <span>Mission:</span>
+                        <span className="font-medium">{selectedMission.name}</span>
                       </div>
                       {assignee && (
                         <div className="flex items-center gap-2 text-muted-foreground">
@@ -368,7 +368,7 @@ export default function NewObjectivePage() {
               </Button>
               <Button
                 onClick={handleCreateObjective}
-                disabled={!objectiveName.trim() || !parentGoalId || isCreating}
+                disabled={!objectiveName.trim() || !parentMissionId || isCreating}
                 className="min-w-[140px]"
               >
                 {isCreating ? (

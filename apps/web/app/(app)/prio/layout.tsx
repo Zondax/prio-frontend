@@ -27,12 +27,14 @@ export default function PrioLayout({ children }: { children: React.ReactNode }) 
   const sidebarContentComponent = useMemo(() => {
     // Create a Set with all node IDs to expand all nodes by default
     const allNodeIds = new Set<string>()
-    NAVIGATION_NODES.forEach((node) => {
+    for (const node of NAVIGATION_NODES) {
       allNodeIds.add(node.id)
       if (node.children) {
-        node.children.forEach((child) => allNodeIds.add(child.id))
+        for (const child of node.children) {
+          allNodeIds.add(child.id)
+        }
       }
-    })
+    }
 
     return (
       <div className="space-y-2">

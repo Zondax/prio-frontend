@@ -1,16 +1,16 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 import { useChatChannelsStore } from './chat-channels-store'
-import { useGoalsStore } from './goals-store'
+import { useMissionsStore } from './missions-store'
 import { useObjectivesStore } from './objectives-store'
 import { useParticipantsStore } from './participants-store'
-import type { ChatChannelDetail, GoalDetail, ObjectiveDetail } from './prio-mock-data'
+import type { ChatChannelDetail, MissionDetail, ObjectiveDetail } from './prio-mock-data'
 
 interface ComposedState {
-  getGoalDetail: (goalId: string) => GoalDetail | null
+  getMissionDetail: (missionId: string) => MissionDetail | null
   getObjectiveDetail: (objectiveId: string) => ObjectiveDetail | null
   getChatChannelDetail: (channelId: string) => ChatChannelDetail | null
-  getAllGoalsWithDetails: () => GoalDetail[]
+  getAllMissionsWithDetails: () => MissionDetail[]
   getAllChatsWithDetails: () => ChatChannelDetail[]
   formatRelativeTime: (date: Date) => string
 }
@@ -31,18 +31,18 @@ export const useComposedStore = create<ComposedState>()(
         return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`
       },
 
-      getGoalDetail: (goalId: string): GoalDetail | null => {
-        const goal = useGoalsStore.getState().getGoal(goalId)
-        if (!goal) return null
+      getMissionDetail: (missionId: string): MissionDetail | null => {
+        const mission = useMissionsStore.getState().getMission(missionId)
+        if (!mission) return null
 
-        const objectives = useObjectivesStore.getState().getObjectivesByGoal(goalId)
-        const chats = useChatChannelsStore.getState().getChatChannelsByGoal(goalId)
-        const participants = useParticipantsStore.getState().getParticipantsByIds(goal.participantIds)
+        const objectives = useObjectivesStore.getState().getObjectivesByMission(missionId)
+        const chats = useChatChannelsStore.getState().getChatChannelsByMission(missionId)
+        const participants = useParticipantsStore.getState().getParticipantsByIds(mission.participantIds)
         const completedObjectives = objectives.filter((obj) => obj.status === 'completed').length
 
         return {
-          ...goal,
-          goalName: goal.name,
+          ...mission,
+          missionName: mission.name,
           participants: participants.map((p) => ({
             id: p.id,
             name: p.name,
@@ -60,7 +60,7 @@ export const useComposedStore = create<ComposedState>()(
         const objective = useObjectivesStore.getState().getObjective(objectiveId)
         if (!objective) return null
 
-        const goal = useGoalsStore.getState().getGoal(objective.goalId)
+        const mission = useMissionsStore.getState().getMission(objective.missionId)
         const assignee = useParticipantsStore.getState().getParticipant(objective.assigneeId)
 
         const mockSubtasks = [
@@ -157,7 +157,7 @@ export const useComposedStore = create<ComposedState>()(
 
         return {
           ...objective,
-          goalName: goal?.name || 'Unknown Goal',
+          missionName: mission?.name || 'Unknown Mission',
           assigneeName: assignee?.name || 'Unknown',
           subtasks: mockSubtasks,
           documents: mockDocuments,
@@ -169,7 +169,7 @@ export const useComposedStore = create<ComposedState>()(
         const chat = useChatChannelsStore.getState().getChatChannel(channelId)
         if (!chat) return null
 
-        const goal = useGoalsStore.getState().getGoal(chat.goalId)
+        const mission = useMissionsStore.getState().getMission(chat.missionId)
         const participants = useParticipantsStore.getState().getParticipantsByIds(chat.participantIds)
         const formatTime = useComposedStore.getState().formatRelativeTime
 
@@ -184,7 +184,7 @@ export const useComposedStore = create<ComposedState>()(
 
         return {
           ...chat,
-          goalName: goal?.name || 'Unknown Goal',
+          missionName: mission?.name || 'Unknown Mission',
           lastMessageTime: formatTime(chat.lastActivity),
           unreadCount: Math.floor(Math.random() * 5),
           participants: participants.map((p) => ({ id: p.id, name: p.name })),
@@ -193,13 +193,13 @@ export const useComposedStore = create<ComposedState>()(
         }
       },
 
-      getAllGoalsWithDetails: (): GoalDetail[] => {
-        const goals = useGoalsStore.getState().goals
-        const getGoalDetail = useComposedStore.getState().getGoalDetail
+      getAllMissionsWithDetails: (): MissionDetail[] => {
+        const missions = useMissionsStore.getState().missions
+        const getMissionDetail = useComposedStore.getState().getMissionDetail
 
-        return Object.values(goals)
-          .map((goal) => getGoalDetail(goal.id))
-          .filter((detail): detail is GoalDetail => detail !== null)
+        return Object.values(missions)
+          .map((mission) => getMissionDetail(mission.id))
+          .filter((detail): detail is MissionDetail => detail !== null)
       },
 
       getAllChatsWithDetails: (): ChatChannelDetail[] => {

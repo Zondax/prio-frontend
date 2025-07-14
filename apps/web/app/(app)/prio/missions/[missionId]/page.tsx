@@ -5,10 +5,10 @@ import { Badge, Button, useAppShell, VirtualizedTable } from '@zondax/ui-common/
 import { Calendar, Clock, MessageSquare, MoreHorizontal, Settings, Target, Users } from 'lucide-react'
 import { notFound, useParams, useRouter } from 'next/navigation'
 import { useCallback, useMemo, useState } from 'react'
-import { type ChatChannel, type GoalDetail, getGoalDetail, type Objective } from '@/app/(app)/prio/store/prio-mock-data'
+import { type ChatChannel, getMissionDetail, type MissionDetail, type Objective } from '@/app/(app)/prio/store/prio-mock-data'
 import { useAppAuthorization } from '@/lib/authorization/useAppAuthorization'
 
-function GoalPageContent({ config }: { config: GoalDetail }) {
+function MissionPageContent({ config }: { config: MissionDetail }) {
   const _appShell = useAppShell()
   const auth = useAppAuthorization()
   const router = useRouter()
@@ -182,6 +182,7 @@ function GoalPageContent({ config }: { config: GoalDetail }) {
         <div className="px-6 pt-2">
           <div className="flex gap-1">
             <button
+              type="button"
               onClick={() => setActiveTab('objectives')}
               className={`px-4 py-2 text-sm font-medium rounded-t-lg border border-b-0 transition-all relative ${
                 activeTab === 'objectives'
@@ -193,6 +194,7 @@ function GoalPageContent({ config }: { config: GoalDetail }) {
               Objectives
             </button>
             <button
+              type="button"
               onClick={() => setActiveTab('chat-channels')}
               className={`px-4 py-2 text-sm font-medium rounded-t-lg border border-b-0 transition-all relative ${
                 activeTab === 'chat-channels'
@@ -205,6 +207,7 @@ function GoalPageContent({ config }: { config: GoalDetail }) {
             </button>
             {config.type === 'team' && (
               <button
+                type="button"
                 onClick={() => setActiveTab('team-members')}
                 className={`px-4 py-2 text-sm font-medium rounded-t-lg border border-b-0 transition-all relative ${
                   activeTab === 'team-members'
@@ -275,7 +278,7 @@ function GoalPageContent({ config }: { config: GoalDetail }) {
 
           {/* Tags */}
           <div className="flex flex-wrap gap-2">
-            {config.tags.map((tag) => (
+            {config.tags.map((tag: string) => (
               <Badge key={tag} variant="secondary" className="text-xs">
                 {tag}
               </Badge>
@@ -338,7 +341,7 @@ function GoalPageContent({ config }: { config: GoalDetail }) {
                 <p className="text-sm text-muted-foreground">Collaborate with your team on this mission</p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {config.participants.map((participant) => (
+                {config.participants.map((participant: { id: string; name: string; role?: string }) => (
                   <div key={participant.id} className="flex items-center gap-3 p-3 border rounded-lg">
                     <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
                       <span className="text-sm font-medium text-blue-600">{participant.name.charAt(0).toUpperCase()}</span>
@@ -358,16 +361,16 @@ function GoalPageContent({ config }: { config: GoalDetail }) {
   )
 }
 
-export default function GoalPage() {
-  const { goalId } = useParams()
-  const goalIdString = goalId as string
+export default function MissionPage() {
+  const { missionId } = useParams()
+  const _missionIdString = missionId as string
 
-  // Get goal from centralized mock data
-  const goal = getGoalDetail(goalIdString)
+  // Get mission from centralized mock data
+  const _mission = getMissionDetail(_missionIdString)
 
-  if (!goal) {
+  if (!_mission) {
     notFound()
   }
 
-  return <GoalPageContent config={goal} />
+  return <MissionPageContent config={_mission} />
 }

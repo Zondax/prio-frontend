@@ -5,16 +5,16 @@ import { Badge, Button, Input, Progress, VirtualizedTable } from '@zondax/ui-com
 import { Calendar, CheckCircle, Clock, Filter, Plus, Search, Target, TrendingUp, Users } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useMemo, useState } from 'react'
-import { ALL_OBJECTIVES, GOALS, PARTICIPANTS } from '@/app/(app)/prio/store/prio-mock-data'
+import { ALL_OBJECTIVES, MISSIONS, PARTICIPANTS } from '@/app/(app)/prio/store/prio-mock-data'
 
-// Extended objectives data with goal names
-const getObjectivesWithGoalNames = () => {
+// Extended objectives data with mission names
+const getObjectivesWithMissionNames = () => {
   return ALL_OBJECTIVES.map((obj) => {
-    const goal = GOALS[obj.goalId]
+    const mission = MISSIONS[obj.missionId]
     const assignee = PARTICIPANTS[obj.assigneeId]
     return {
       ...obj,
-      goalName: goal?.name || 'Unknown Goal',
+      missionName: mission?.name || 'Unknown Mission',
       assigneeName: assignee?.name || 'Unknown',
     }
   })
@@ -167,7 +167,7 @@ const _EXTENDED_OBJECTIVES = [
   },
 ]
 
-type EnrichedObjective = ReturnType<typeof getObjectivesWithGoalNames>[0]
+type EnrichedObjective = ReturnType<typeof getObjectivesWithMissionNames>[0]
 type ObjectiveItem = EnrichedObjective
 
 // Column definitions for VirtualizedTable
@@ -198,9 +198,9 @@ const columns: ColumnDef<ObjectiveItem>[] = [
     },
   },
   {
-    accessorKey: 'goalName',
+    accessorKey: 'missionName',
     header: 'Goal',
-    cell: ({ row }) => <span className="text-sm">{row.original.goalName}</span>,
+    cell: ({ row }) => <span className="text-sm">{row.original.missionName}</span>,
   },
   {
     accessorKey: 'assigneeName',
@@ -301,20 +301,20 @@ export default function AllObjectivesPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedStatus, setSelectedStatus] = useState<'all' | 'active' | 'in-progress' | 'completed' | 'pending'>('all')
   const [selectedPriority, setSelectedPriority] = useState<'all' | 'low' | 'medium' | 'high'>('all')
-  const [selectedGoal, setSelectedGoal] = useState<'all' | string>('all')
+  const [selectedMission, setSelectedMission] = useState<'all' | string>('all')
 
-  // Get enriched objectives with goal names
-  const enrichedObjectives = useMemo(() => getObjectivesWithGoalNames(), [])
+  // Get enriched objectives with mission names
+  const enrichedObjectives = useMemo(() => getObjectivesWithMissionNames(), [])
 
-  // Get unique goals for filter
-  const availableGoals = useMemo(() => {
-    const goals = new Map()
+  // Get unique missions for filter
+  const availableMissions = useMemo(() => {
+    const missions = new Map()
     for (const obj of enrichedObjectives) {
-      if (!goals.has(obj.goalId)) {
-        goals.set(obj.goalId, obj.goalName)
+      if (!missions.has(obj.missionId)) {
+        missions.set(obj.missionId, obj.missionName)
       }
     }
-    return Array.from(goals.entries()).map(([id, name]) => ({ id, name }))
+    return Array.from(missions.entries()).map(([id, name]) => ({ id, name }))
   }, [enrichedObjectives])
 
   // Filter and search objectives
@@ -331,9 +331,9 @@ export default function AllObjectivesPage() {
       filtered = filtered.filter((obj) => obj.priority === selectedPriority)
     }
 
-    // Filter by goal
-    if (selectedGoal !== 'all') {
-      filtered = filtered.filter((obj) => obj.goalId === selectedGoal)
+    // Filter by mission
+    if (selectedMission !== 'all') {
+      filtered = filtered.filter((obj) => obj.missionId === selectedMission)
     }
 
     // Search filter
@@ -344,7 +344,7 @@ export default function AllObjectivesPage() {
           obj.title.toLowerCase().includes(query) ||
           obj.description.toLowerCase().includes(query) ||
           obj.assigneeName.toLowerCase().includes(query) ||
-          obj.goalName.toLowerCase().includes(query) ||
+          obj.missionName.toLowerCase().includes(query) ||
           obj.tags.some((tag) => tag.toLowerCase().includes(query))
       )
     }
@@ -364,7 +364,7 @@ export default function AllObjectivesPage() {
       if (!a.dueDate && b.dueDate) return 1
       return 0
     })
-  }, [searchQuery, selectedStatus, selectedPriority, selectedGoal, enrichedObjectives])
+  }, [searchQuery, selectedStatus, selectedPriority, selectedMission, enrichedObjectives])
 
   // Statistics
   const stats = useMemo(() => {
@@ -398,7 +398,7 @@ export default function AllObjectivesPage() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold">All Objectives</h1>
-              <p className="text-muted-foreground">Track and manage objectives across all goals</p>
+              <p className="text-muted-foreground">Track and manage objectives across all missions</p>
             </div>
             <Button onClick={handleCreateObjective}>
               <Plus className="w-4 h-4 mr-2" />
@@ -450,7 +450,7 @@ export default function AllObjectivesPage() {
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
               <Input
-                placeholder="Search objectives, assignees, or goals..."
+                placeholder="Search objectives, assignees, or missions..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10"
@@ -479,14 +479,14 @@ export default function AllObjectivesPage() {
                 <option value="low">Low</option>
               </select>
               <select
-                value={selectedGoal}
-                onChange={(e) => setSelectedGoal(e.target.value)}
+                value={selectedMission}
+                onChange={(e) => setSelectedMission(e.target.value)}
                 className="px-3 py-2 border rounded-md text-sm min-w-[180px]"
               >
                 <option value="all">All Goals</option>
-                {availableGoals.map((goal) => (
-                  <option key={goal.id} value={goal.id}>
-                    {goal.name}
+                {availableMissions.map((mission) => (
+                  <option key={mission.id} value={mission.id}>
+                    {mission.name}
                   </option>
                 ))}
               </select>

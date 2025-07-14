@@ -1,5 +1,5 @@
 import type { BreadcrumbDataItem } from '@zondax/ui-common/client'
-import { GOALS, getChatInfo, getObjectiveDetail } from '../store/prio-mock-data'
+import { getChatInfo, getObjectiveDetail, MISSIONS } from '../store/prio-mock-data'
 import type { BreadcrumbRoute } from './breadcrumb-types'
 
 // Route configuration for Prio application
@@ -7,11 +7,11 @@ export const prioRouteConfig: BreadcrumbRoute = {
   basePath: '/prio',
   segments: [
     {
-      segment: 'goals',
-      label: 'Goals',
+      segment: 'missions',
+      label: 'Missions',
       resolver: (id: string) => {
-        const goal = GOALS[id]
-        return goal ? { label: goal.name, href: `/prio/goals/${id}` } : null
+        const mission = MISSIONS[id]
+        return mission ? { label: mission.name, href: `/prio/missions/${id}` } : null
       },
     },
     {
@@ -23,7 +23,7 @@ export const prioRouteConfig: BreadcrumbRoute = {
       },
       parentResolver: (id: string) => {
         const objective = getObjectiveDetail(id)
-        return objective ? { label: objective.goalName, href: `/prio/goals/${objective.goalId}` } : null
+        return objective ? { label: objective.missionName, href: `/prio/missions/${objective.missionId}` } : null
       },
     },
     {
@@ -35,7 +35,7 @@ export const prioRouteConfig: BreadcrumbRoute = {
       },
       parentResolver: (id: string) => {
         const chat = getChatInfo(id)
-        return chat ? { label: chat.goalName, href: `/prio/goals/${chat.goalId}` } : null
+        return chat ? { label: chat.missionName, href: `/prio/missions/${chat.missionId}` } : null
       },
     },
     {

@@ -21,7 +21,7 @@ export function useBreadcrumbData(): BreadcrumbDataItem[] {
       if (!routeConfig) continue
 
       if (nextSegment && routeConfig.resolver) {
-        // Entity-specific page (e.g., /goals/123)
+        // Entity-specific page (e.g., /missions/123)
         const entityItem = routeConfig.resolver(nextSegment)
         if (entityItem) {
           // Add parent context if available
@@ -42,7 +42,7 @@ export function useBreadcrumbData(): BreadcrumbDataItem[] {
           })
         }
       } else {
-        // Category page (e.g., /goals)
+        // Category page (e.g., /missions)
         items.push({
           label: routeConfig.label,
           href: `${prioRouteConfig.basePath}/${segment}`,

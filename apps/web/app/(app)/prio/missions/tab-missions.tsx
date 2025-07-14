@@ -5,49 +5,49 @@ import { Badge, Input, VirtualizedTable } from '@zondax/ui-common/client'
 import { MoreHorizontal, Search, Target, Users } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useMemo, useState } from 'react'
-import type { GoalDetail } from '@/app/(app)/prio/store/prio-mock-data'
+import type { MissionDetail } from '@/app/(app)/prio/store/prio-mock-data'
 
-type GoalItem = GoalDetail
+type MissionItem = MissionDetail
 
-interface GoalsTabProps {
-  allGoals: GoalItem[]
+interface MissionsTabProps {
+  allMissions: MissionItem[]
 }
 
-export default function GoalsTab({ allGoals }: GoalsTabProps) {
+export default function MissionsTab({ allMissions }: MissionsTabProps) {
   const router = useRouter()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedType, setSelectedType] = useState<'all' | 'individual' | 'team'>('all')
   const [selectedStatus, setSelectedStatus] = useState<'all' | 'active' | 'planning' | 'completed'>('all')
   const [selectedPriority, setSelectedPriority] = useState<'all' | 'high' | 'medium' | 'low'>('all')
 
-  // Filter and search goals
-  const filteredGoals = useMemo(() => {
-    let filtered = allGoals
+  // Filter and search missions
+  const filteredMissions = useMemo(() => {
+    let filtered = allMissions
 
     // Filter by type
     if (selectedType !== 'all') {
-      filtered = filtered.filter((goal) => goal.type === selectedType)
+      filtered = filtered.filter((mission) => mission.type === selectedType)
     }
 
     // Filter by status
     if (selectedStatus !== 'all') {
-      filtered = filtered.filter((goal) => goal.status === selectedStatus)
+      filtered = filtered.filter((mission) => mission.status === selectedStatus)
     }
 
     // Filter by priority
     if (selectedPriority !== 'all') {
-      filtered = filtered.filter((goal) => goal.priority === selectedPriority)
+      filtered = filtered.filter((mission) => mission.priority === selectedPriority)
     }
 
     // Search filter
     if (searchQuery) {
       const query = searchQuery.toLowerCase()
       filtered = filtered.filter(
-        (goal) =>
-          goal.name.toLowerCase().includes(query) ||
-          goal.description.toLowerCase().includes(query) ||
-          goal.tags.some((tag) => tag.toLowerCase().includes(query)) ||
-          goal.participants.some((participant) => participant.name.toLowerCase().includes(query))
+        (mission) =>
+          mission.name.toLowerCase().includes(query) ||
+          mission.description.toLowerCase().includes(query) ||
+          mission.tags.some((tag) => tag.toLowerCase().includes(query)) ||
+          mission.participants.some((participant) => participant.name.toLowerCase().includes(query))
       )
     }
 
@@ -65,11 +65,11 @@ export default function GoalsTab({ allGoals }: GoalsTabProps) {
       // Finally by progress (higher progress first)
       return b.progress - a.progress
     })
-  }, [searchQuery, selectedType, selectedStatus, selectedPriority, allGoals])
+  }, [searchQuery, selectedType, selectedStatus, selectedPriority, allMissions])
 
-  const handleGoalClick = useCallback(
-    (goal: GoalItem) => {
-      router.push(`/prio/goals/${goal.id}`)
+  const handleMissionClick = useCallback(
+    (mission: MissionItem) => {
+      router.push(`/prio/missions/${mission.id}`)
     },
     [router]
   )
@@ -106,8 +106,8 @@ export default function GoalsTab({ allGoals }: GoalsTabProps) {
     return 'bg-blue-500'
   }, [])
 
-  // Define columns for the goals table
-  const goalColumns = useMemo<ColumnDef<GoalItem>[]>(
+  // Define columns for the missions table
+  const missionColumns = useMemo<ColumnDef<MissionItem>[]>(
     () => [
       {
         id: 'icon',
@@ -125,7 +125,7 @@ export default function GoalsTab({ allGoals }: GoalsTabProps) {
       },
       {
         id: 'name',
-        header: 'Goal',
+        header: 'Mission',
         accessorKey: 'name',
         cell: ({ row }) => (
           <div className="min-w-0">
@@ -231,7 +231,7 @@ export default function GoalsTab({ allGoals }: GoalsTabProps) {
         header: '',
         accessorKey: 'id',
         cell: () => (
-          <button className="h-6 w-6 p-0 rounded-md hover:bg-gray-100 flex items-center justify-center">
+          <button type="button" className="h-6 w-6 p-0 rounded-md hover:bg-gray-100 flex items-center justify-center">
             <MoreHorizontal className="w-3 h-3" />
           </button>
         ),
@@ -244,18 +244,18 @@ export default function GoalsTab({ allGoals }: GoalsTabProps) {
   )
 
   const stats = useMemo(() => {
-    const activeGoals = filteredGoals.filter((g) => g.status === 'active')
-    const totalObjectives = filteredGoals.reduce((sum, g) => sum + g.objectiveCount, 0)
-    const completedObjectives = filteredGoals.reduce((sum, g) => sum + g.completedObjectives, 0)
+    const activeMissions = filteredMissions.filter((m) => m.status === 'active')
+    const totalObjectives = filteredMissions.reduce((sum, m) => sum + m.objectiveCount, 0)
+    const completedObjectives = filteredMissions.reduce((sum, m) => sum + m.completedObjectives, 0)
 
     return {
-      total: filteredGoals.length,
-      active: activeGoals.length,
+      total: filteredMissions.length,
+      active: activeMissions.length,
       totalObjectives,
       completedObjectives,
-      avgProgress: filteredGoals.reduce((sum, g) => sum + g.progress, 0) / filteredGoals.length || 0,
+      avgProgress: filteredMissions.reduce((sum, m) => sum + m.progress, 0) / filteredMissions.length || 0,
     }
-  }, [filteredGoals])
+  }, [filteredMissions])
 
   return (
     <div className="space-y-4">
@@ -264,7 +264,7 @@ export default function GoalsTab({ allGoals }: GoalsTabProps) {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
           <Input
-            placeholder="Search goals, participants, or tags..."
+            placeholder="Search missions, participants, or tags..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-10"
@@ -325,15 +325,15 @@ export default function GoalsTab({ allGoals }: GoalsTabProps) {
         </div>
       </div>
 
-      {/* Goals Table */}
+      {/* Missions Table */}
       <div className="h-[600px] border rounded-lg flex flex-col">
         <VirtualizedTable
-          data={filteredGoals}
-          columns={goalColumns as ColumnDef<any>[]}
-          onRowClick={(row) => handleGoalClick(row.original)}
+          data={filteredMissions}
+          columns={missionColumns as ColumnDef<any>[]}
+          onRowClick={(row) => handleMissionClick(row.original)}
           enableSorting
           enableColumnResizing
-          emptyContent="No goals found. Try adjusting your search or filters."
+          emptyContent="No missions found. Try adjusting your search or filters."
         />
       </div>
     </div>

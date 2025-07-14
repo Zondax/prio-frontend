@@ -1,6 +1,6 @@
 /**
  * Centralized mock data for the Priority (Prio) section
- * This file consolidates all mock data for goals, objectives, chats, and activities
+ * This file consolidates all mock data for missions, objectives, chats, and activities
  *
  * Data is normalized with separate collections and relationships via IDs
  * Computed data and UI views are derived from base collections
@@ -12,7 +12,7 @@ import type { ListItem, TreeNode } from '@zondax/ui-common'
 // Core Type Definitions
 // ============================================================================
 
-export interface Goal {
+export interface Mission {
   id: string
   name: string
   description: string
@@ -34,7 +34,7 @@ export interface Objective {
   priority: 'high' | 'medium' | 'low'
   progress: number
   assigneeId: string
-  goalId: string
+  missionId: string
   dueDate: Date | null
   startDate: Date
   estimatedHours: number | null
@@ -46,7 +46,7 @@ export interface ChatChannel {
   id: string
   name: string
   description: string
-  goalId: string
+  missionId: string
   lastActivity: Date
   participantIds: string[]
   type: 'ai' | 'team' | 'mixed'
@@ -70,7 +70,7 @@ export interface Activity {
   description: string
   timestamp: Date
   userId?: string
-  entityType?: 'goal' | 'objective' | 'chat' | 'document'
+  entityType?: 'mission' | 'objective' | 'chat' | 'document'
   entityId?: string
 }
 
@@ -117,7 +117,7 @@ export const PARTICIPANTS: Record<string, Participant> = {
   },
 }
 
-export const GOALS: Record<string, Goal> = {
+export const MISSIONS: Record<string, Mission> = {
   '00000000-0000-0000-0000-000000000100': {
     id: '00000000-0000-0000-0000-000000000100',
     name: 'Next Holidays',
@@ -171,7 +171,7 @@ export const OBJECTIVES: Record<string, Objective> = {
     priority: 'high',
     progress: 75,
     assigneeId: 'user-you',
-    goalId: '00000000-0000-0000-0000-000000000100',
+    missionId: '00000000-0000-0000-0000-000000000100',
     dueDate: new Date('2024-02-20'),
     startDate: new Date('2024-01-15'),
     estimatedHours: 12,
@@ -186,7 +186,7 @@ export const OBJECTIVES: Record<string, Objective> = {
     priority: 'medium',
     progress: 45,
     assigneeId: 'user-sarah',
-    goalId: '00000000-0000-0000-0000-000000000100',
+    missionId: '00000000-0000-0000-0000-000000000100',
     dueDate: new Date('2024-02-25'),
     startDate: new Date('2024-01-20'),
     estimatedHours: 8,
@@ -201,7 +201,7 @@ export const OBJECTIVES: Record<string, Objective> = {
     priority: 'low',
     progress: 10,
     assigneeId: 'user-you',
-    goalId: '00000000-0000-0000-0000-000000000100',
+    missionId: '00000000-0000-0000-0000-000000000100',
     dueDate: new Date('2024-02-28'),
     startDate: new Date('2024-02-15'),
     estimatedHours: 4,
@@ -217,7 +217,7 @@ export const OBJECTIVES: Record<string, Objective> = {
     priority: 'high',
     progress: 100,
     assigneeId: 'user-emma',
-    goalId: '00000000-0000-0000-0000-000000000101',
+    missionId: '00000000-0000-0000-0000-000000000101',
     dueDate: new Date('2024-02-01'),
     startDate: new Date('2023-12-01'),
     estimatedHours: 60,
@@ -232,7 +232,7 @@ export const OBJECTIVES: Record<string, Objective> = {
     priority: 'high',
     progress: 100,
     assigneeId: 'user-alex',
-    goalId: '00000000-0000-0000-0000-000000000101',
+    missionId: '00000000-0000-0000-0000-000000000101',
     dueDate: new Date('2024-02-15'),
     startDate: new Date('2024-01-15'),
     estimatedHours: 40,
@@ -247,7 +247,7 @@ export const OBJECTIVES: Record<string, Objective> = {
     priority: 'high',
     progress: 80,
     assigneeId: 'user-john',
-    goalId: '00000000-0000-0000-0000-000000000101',
+    missionId: '00000000-0000-0000-0000-000000000101',
     dueDate: new Date('2024-03-15'),
     startDate: new Date('2024-02-01'),
     estimatedHours: 120,
@@ -262,7 +262,7 @@ export const OBJECTIVES: Record<string, Objective> = {
     priority: 'medium',
     progress: 35,
     assigneeId: 'user-sarah',
-    goalId: '00000000-0000-0000-0000-000000000101',
+    missionId: '00000000-0000-0000-0000-000000000101',
     dueDate: new Date('2024-04-01'),
     startDate: new Date('2024-03-01'),
     estimatedHours: 35,
@@ -278,7 +278,7 @@ export const OBJECTIVES: Record<string, Objective> = {
     priority: 'high',
     progress: 100,
     assigneeId: 'user-emma',
-    goalId: '00000000-0000-0000-0000-000000000102',
+    missionId: '00000000-0000-0000-0000-000000000102',
     dueDate: new Date('2024-02-15'),
     startDate: new Date('2024-01-01'),
     estimatedHours: 50,
@@ -293,7 +293,7 @@ export const OBJECTIVES: Record<string, Objective> = {
     priority: 'high',
     progress: 60,
     assigneeId: 'user-mike',
-    goalId: '00000000-0000-0000-0000-000000000102',
+    missionId: '00000000-0000-0000-0000-000000000102',
     dueDate: new Date('2024-03-30'),
     startDate: new Date('2024-02-01'),
     estimatedHours: 45,
@@ -308,7 +308,7 @@ export const OBJECTIVES: Record<string, Objective> = {
     priority: 'high',
     progress: 70,
     assigneeId: 'user-alex',
-    goalId: '00000000-0000-0000-0000-000000000102',
+    missionId: '00000000-0000-0000-0000-000000000102',
     dueDate: new Date('2024-04-15'),
     startDate: new Date('2024-02-15'),
     estimatedHours: 30,
@@ -323,7 +323,7 @@ export const OBJECTIVES: Record<string, Objective> = {
     priority: 'medium',
     progress: 15,
     assigneeId: 'user-alex',
-    goalId: '00000000-0000-0000-0000-000000000102',
+    missionId: '00000000-0000-0000-0000-000000000102',
     dueDate: new Date('2024-04-30'),
     startDate: new Date('2024-03-15'),
     estimatedHours: 25,
@@ -333,12 +333,12 @@ export const OBJECTIVES: Record<string, Objective> = {
 }
 
 export const CHAT_CHANNELS: Record<string, ChatChannel> = {
-  // Next Holidays Goal - Travel planning chats
+  // Next Holidays Mission - Travel planning chats
   '00000000-0000-0000-0000-000000000000': {
     id: '00000000-0000-0000-0000-000000000000',
     name: 'Travel Planning Assistant',
     description: 'AI helper for destination research, itinerary planning, and travel tips',
-    goalId: '00000000-0000-0000-0000-000000000100',
+    missionId: '00000000-0000-0000-0000-000000000100',
     lastActivity: new Date(Date.now() - 1000 * 60 * 15), // 15 minutes ago
     participantIds: ['user-you'],
     type: 'ai',
@@ -350,7 +350,7 @@ export const CHAT_CHANNELS: Record<string, ChatChannel> = {
     id: '00000000-0000-0000-0000-000000000001',
     name: 'Budget & Expense Tracker',
     description: 'Financial planning and expense tracking for your holiday',
-    goalId: '00000000-0000-0000-0000-000000000100',
+    missionId: '00000000-0000-0000-0000-000000000100',
     lastActivity: new Date(Date.now() - 1000 * 60 * 60 * 2), // 2 hours ago
     participantIds: ['user-you'],
     type: 'ai',
@@ -362,7 +362,7 @@ export const CHAT_CHANNELS: Record<string, ChatChannel> = {
     id: '00000000-0000-0000-0000-000000000002',
     name: 'Family Holiday Planning',
     description: 'Collaborative space for family members to plan together',
-    goalId: '00000000-0000-0000-0000-000000000100',
+    missionId: '00000000-0000-0000-0000-000000000100',
     lastActivity: new Date(Date.now() - 1000 * 60 * 45), // 45 minutes ago
     participantIds: ['user-you', 'user-sarah', 'user-alex'],
     type: 'team',
@@ -371,12 +371,12 @@ export const CHAT_CHANNELS: Record<string, ChatChannel> = {
     isShared: true,
   },
 
-  // New Product Goal - AI productivity tool development
+  // New Product Mission - AI productivity tool development
   '00000000-0000-0000-0000-000000000003': {
     id: '00000000-0000-0000-0000-000000000003',
     name: 'Product Strategy & Research',
     description: 'Market analysis, user research, and competitive intelligence for the new AI tool',
-    goalId: '00000000-0000-0000-0000-000000000101',
+    missionId: '00000000-0000-0000-0000-000000000101',
     lastActivity: new Date(Date.now() - 1000 * 60 * 30), // 30 minutes ago
     participantIds: ['user-emma', 'user-alex'],
     type: 'team',
@@ -388,7 +388,7 @@ export const CHAT_CHANNELS: Record<string, ChatChannel> = {
     id: '00000000-0000-0000-0000-000000000004',
     name: 'Development Team',
     description: 'Technical discussions, code reviews, and sprint planning for MVP development',
-    goalId: '00000000-0000-0000-0000-000000000101',
+    missionId: '00000000-0000-0000-0000-000000000101',
     lastActivity: new Date(Date.now() - 1000 * 60 * 10), // 10 minutes ago
     participantIds: ['user-john', 'user-mike', 'user-sarah'],
     type: 'team',
@@ -400,7 +400,7 @@ export const CHAT_CHANNELS: Record<string, ChatChannel> = {
     id: '00000000-0000-0000-0000-000000000005',
     name: 'AI Architecture Assistant',
     description: 'Technical guidance for AI model integration and system architecture',
-    goalId: '00000000-0000-0000-0000-000000000101',
+    missionId: '00000000-0000-0000-0000-000000000101',
     lastActivity: new Date(Date.now() - 1000 * 60 * 60 * 1), // 1 hour ago
     participantIds: ['user-mike'],
     type: 'ai',
@@ -412,7 +412,7 @@ export const CHAT_CHANNELS: Record<string, ChatChannel> = {
     id: '00000000-0000-0000-0000-000000000006',
     name: 'Go-to-Market Planning',
     description: 'Launch strategy, marketing campaigns, and customer acquisition planning',
-    goalId: '00000000-0000-0000-0000-000000000101',
+    missionId: '00000000-0000-0000-0000-000000000101',
     lastActivity: new Date(Date.now() - 1000 * 60 * 60 * 3), // 3 hours ago
     participantIds: ['user-emma', 'user-sarah'],
     type: 'team',
@@ -421,12 +421,12 @@ export const CHAT_CHANNELS: Record<string, ChatChannel> = {
     isShared: true,
   },
 
-  // Strategy 2026 Goal - Strategic planning and vision
+  // Strategy 2026 Mission - Strategic planning and vision
   '00000000-0000-0000-0000-000000000007': {
     id: '00000000-0000-0000-0000-000000000007',
     name: 'Executive Strategy Council',
     description: 'High-level strategic discussions and decision making for 2026 roadmap',
-    goalId: '00000000-0000-0000-0000-000000000102',
+    missionId: '00000000-0000-0000-0000-000000000102',
     lastActivity: new Date(Date.now() - 1000 * 60 * 60 * 4), // 4 hours ago
     participantIds: ['user-alex', 'user-emma', 'user-mike'],
     type: 'team',
@@ -438,7 +438,7 @@ export const CHAT_CHANNELS: Record<string, ChatChannel> = {
     id: '00000000-0000-0000-0000-000000000008',
     name: 'Market Intelligence AI',
     description: 'AI assistant for market trends analysis, competitive intelligence, and industry insights',
-    goalId: '00000000-0000-0000-0000-000000000102',
+    missionId: '00000000-0000-0000-0000-000000000102',
     lastActivity: new Date(Date.now() - 1000 * 60 * 60 * 6), // 6 hours ago
     participantIds: ['user-emma'],
     type: 'ai',
@@ -450,7 +450,7 @@ export const CHAT_CHANNELS: Record<string, ChatChannel> = {
     id: '00000000-0000-0000-0000-000000000009',
     name: 'Technology & Innovation Hub',
     description: 'Technical roadmap planning, innovation projects, and technology investment decisions',
-    goalId: '00000000-0000-0000-0000-000000000102',
+    missionId: '00000000-0000-0000-0000-000000000102',
     lastActivity: new Date(Date.now() - 1000 * 60 * 60 * 8), // 8 hours ago
     participantIds: ['user-mike', 'user-john'],
     type: 'team',
@@ -462,7 +462,7 @@ export const CHAT_CHANNELS: Record<string, ChatChannel> = {
     id: '00000000-0000-0000-0000-000000000010',
     name: 'Financial Planning Advisor',
     description: 'AI assistant for financial projections, investment planning, and business modeling',
-    goalId: '00000000-0000-0000-0000-000000000102',
+    missionId: '00000000-0000-0000-0000-000000000102',
     lastActivity: new Date(Date.now() - 1000 * 60 * 60 * 12), // 12 hours ago
     participantIds: ['user-alex'],
     type: 'ai',
@@ -1018,7 +1018,7 @@ export const ACTIVITIES: Record<string, Activity> = {
     title: 'Deadline Approaching',
     description: 'Beta release in 2 days',
     timestamp: new Date(Date.now() - 1000 * 60 * 60),
-    entityType: 'goal',
+    entityType: 'mission',
     entityId: '00000000-0000-0000-0000-000000000102',
   },
   'activity-004': {
@@ -1028,7 +1028,7 @@ export const ACTIVITIES: Record<string, Activity> = {
     description: 'Sarah joined Project Alpha',
     timestamp: new Date(Date.now() - 1000 * 60 * 60 * 3),
     userId: 'user-sarah',
-    entityType: 'goal',
+    entityType: 'mission',
     entityId: '00000000-0000-0000-0000-000000000101',
   },
   'activity-005': {
@@ -1068,14 +1068,14 @@ export function getRecentActivities(limit = 10): Activity[] {
     .slice(0, limit)
 }
 
-// Get objectives for a specific goal
-export function getObjectivesByGoal(goalId: string): Objective[] {
-  return Object.values(OBJECTIVES).filter((obj) => obj.goalId === goalId)
+// Get objectives for a specific mission
+export function getObjectivesByMission(missionId: string): Objective[] {
+  return Object.values(OBJECTIVES).filter((obj) => obj.missionId === missionId)
 }
 
-// Get chat channels for a specific goal
-export function getChatChannelsByGoal(goalId: string): ChatChannel[] {
-  return Object.values(CHAT_CHANNELS).filter((chat) => chat.goalId === goalId)
+// Get chat channels for a specific mission
+export function getChatChannelsByMission(missionId: string): ChatChannel[] {
+  return Object.values(CHAT_CHANNELS).filter((chat) => chat.missionId === missionId)
 }
 
 // Get bookmarks for a specific chat channel
@@ -1083,10 +1083,10 @@ export function getBookmarksByChatChannel(chatChannelId: string): ChatBookmark[]
   return Object.values(CHAT_BOOKMARKS).filter((bookmark) => bookmark.chatChannelId === chatChannelId)
 }
 
-// Get all bookmarks for a specific goal (across all its chat channels)
-export function getBookmarksByGoal(goalId: string): ChatBookmark[] {
-  const goalChatChannels = getChatChannelsByGoal(goalId)
-  const chatChannelIds = goalChatChannels.map((chat) => chat.id)
+// Get all bookmarks for a specific mission (across all its chat channels)
+export function getBookmarksByMission(missionId: string): ChatBookmark[] {
+  const missionChatChannels = getChatChannelsByMission(missionId)
+  const chatChannelIds = missionChatChannels.map((chat) => chat.id)
   return Object.values(CHAT_BOOKMARKS).filter((bookmark) => chatChannelIds.includes(bookmark.chatChannelId))
 }
 
@@ -1095,10 +1095,10 @@ export function getThreadsByChatChannel(chatChannelId: string): ChatThread[] {
   return Object.values(CHAT_THREADS).filter((thread) => thread.chatChannelId === chatChannelId)
 }
 
-// Get all threads for a specific goal (across all its chat channels)
-export function getThreadsByGoal(goalId: string): ChatThread[] {
-  const goalChatChannels = getChatChannelsByGoal(goalId)
-  const chatChannelIds = goalChatChannels.map((chat) => chat.id)
+// Get all threads for a specific mission (across all its chat channels)
+export function getThreadsByMission(missionId: string): ChatThread[] {
+  const missionChatChannels = getChatChannelsByMission(missionId)
+  const chatChannelIds = missionChatChannels.map((chat) => chat.id)
   return Object.values(CHAT_THREADS).filter((thread) => chatChannelIds.includes(thread.chatChannelId))
 }
 
@@ -1108,26 +1108,26 @@ export function getThreadWithContext(threadId: string) {
   if (!thread) return null
 
   const chatChannel = CHAT_CHANNELS[thread.chatChannelId]
-  const goal = chatChannel ? GOALS[chatChannel.goalId] : null
+  const mission = chatChannel ? MISSIONS[chatChannel.missionId] : null
 
   return {
     ...thread,
     chatChannelName: chatChannel?.name || 'Unknown Chat',
-    goalName: goal?.name || 'Unknown Goal',
+    missionName: mission?.name || 'Unknown Mission',
   }
 }
 
-// Get active goals only
-export function getActiveGoals(): Goal[] {
-  return Object.values(GOALS).filter((goal) => goal.status === 'active')
+// Get active missions only
+export function getActiveMissions(): Mission[] {
+  return Object.values(MISSIONS).filter((mission) => mission.status === 'active')
 }
 
-// Get objective details with goal information
+// Get objective details with mission information
 export function getObjectiveDetail(id: string): ObjectiveDetail | null {
   const objective = OBJECTIVES[id]
   if (!objective) return null
 
-  const goal = GOALS[objective.goalId]
+  const mission = MISSIONS[objective.missionId]
   const assignee = PARTICIPANTS[objective.assigneeId]
 
   // Generate mock subtasks based on objective
@@ -1203,8 +1203,8 @@ export function getObjectiveDetail(id: string): ObjectiveDetail | null {
 
   return {
     ...objective,
-    goalId: objective.goalId,
-    goalName: goal?.name || 'Unknown Goal',
+    missionId: objective.missionId,
+    missionName: mission?.name || 'Unknown Mission',
     assigneeName: assignee?.name || 'Unknown',
     subtasks: mockSubtasks,
     documents: mockDocuments,
@@ -1212,16 +1212,16 @@ export function getObjectiveDetail(id: string): ObjectiveDetail | null {
   }
 }
 
-// Get chat info with goal information
+// Get chat info with mission information
 export function getChatInfo(id: string) {
   const chat = CHAT_CHANNELS[id]
   if (!chat) return null
 
-  const goal = GOALS[chat.goalId]
+  const mission = MISSIONS[chat.missionId]
 
   return {
     ...chat,
-    goalName: goal?.name || 'Unknown Goal',
+    missionName: mission?.name || 'Unknown Mission',
   }
 }
 
@@ -1243,14 +1243,14 @@ export const NAVIGATION_NODES: TreeNode[] = [
     })),
   },
   {
-    id: 'goals',
-    label: 'Goals',
-    href: '/prio/goals',
-    children: getActiveGoals().map((goal) => ({
-      id: `goal-${goal.id}`,
-      label: goal.name,
-      href: `/prio/goals/${goal.id}`,
-      badge: goal.status === 'active' ? '●' : undefined,
+    id: 'missions',
+    label: 'Missions',
+    href: '/prio/missions',
+    children: getActiveMissions().map((mission) => ({
+      id: `mission-${mission.id}`,
+      label: mission.name,
+      href: `/prio/missions/${mission.id}`,
+      badge: mission.status === 'active' ? '●' : undefined,
     })),
   },
   {
@@ -1346,7 +1346,7 @@ export const CHAT_TEMPLATES = [
 // ============================================================================
 
 // Export individual collections for direct access
-export const ALL_GOALS = Object.values(GOALS)
+export const ALL_MISSIONS = Object.values(MISSIONS)
 export const ALL_OBJECTIVES = Object.values(OBJECTIVES)
 export const ALL_CHAT_CHANNELS = Object.values(CHAT_CHANNELS)
 export const ALL_PARTICIPANTS = Object.values(PARTICIPANTS)
@@ -1357,8 +1357,8 @@ export const ALL_ACTIVITIES = Object.values(ACTIVITIES)
 // ============================================================================
 
 // Extended types for UI views
-export interface GoalDetail extends Goal {
-  goalName: string
+export interface MissionDetail extends Mission {
+  missionName: string
   participants: { id: string; name: string; role?: string }[]
   objectives: Objective[]
   chats: ChatChannel[]
@@ -1369,7 +1369,7 @@ export interface GoalDetail extends Goal {
 
 export interface ObjectiveDetail extends Objective {
   assigneeName: string
-  goalName: string
+  missionName: string
   subtasks: { id: string; text: string; title: string; completed: boolean; assigneeId: string }[]
   documents: {
     id: string
@@ -1385,7 +1385,7 @@ export interface ObjectiveDetail extends Objective {
 }
 
 export interface ChatChannelDetail extends ChatChannel {
-  goalName: string
+  missionName: string
   lastMessageTime: string
   unreadCount: number
   participants: { id: string; name: string }[]
@@ -1457,22 +1457,22 @@ export const OBJECTIVE_TEMPLATES = [
   },
 ]
 
-export const AVAILABLE_GOALS = ALL_GOALS.map((goal) => ({
-  id: goal.id,
-  name: goal.name,
-  type: goal.type,
+export const AVAILABLE_MISSIONS = ALL_MISSIONS.map((mission) => ({
+  id: mission.id,
+  name: mission.name,
+  type: mission.type,
 }))
 
 // Helper functions for getting detailed views
-export function getGoalsWithDetails(): GoalDetail[] {
-  return ALL_GOALS.map((goal) => {
-    const chats = ALL_CHAT_CHANNELS.filter((chat) => chat.goalId === goal.id)
-    const objectives = ALL_OBJECTIVES.filter((obj) => obj.goalId === goal.id)
+export function getMissionsWithDetails(): MissionDetail[] {
+  return ALL_MISSIONS.map((mission) => {
+    const chats = ALL_CHAT_CHANNELS.filter((chat) => chat.missionId === mission.id)
+    const objectives = ALL_OBJECTIVES.filter((obj) => obj.missionId === mission.id)
     const completedObjectives = objectives.filter((obj) => obj.status === 'completed').length
     return {
-      ...goal,
-      goalName: goal.name,
-      participants: goal.participantIds.map((id) => ({
+      ...mission,
+      missionName: mission.name,
+      participants: mission.participantIds.map((id) => ({
         id,
         name: PARTICIPANTS[id]?.name || 'Unknown',
         role: PARTICIPANTS[id]?.role,
@@ -1486,17 +1486,17 @@ export function getGoalsWithDetails(): GoalDetail[] {
   })
 }
 
-export function getGoalDetail(goalId: string): GoalDetail | null {
-  const goal = GOALS[goalId]
-  if (!goal) return null
+export function getMissionDetail(missionId: string): MissionDetail | null {
+  const mission = MISSIONS[missionId]
+  if (!mission) return null
 
-  const chats = ALL_CHAT_CHANNELS.filter((chat) => chat.goalId === goalId)
-  const objectives = ALL_OBJECTIVES.filter((obj) => obj.goalId === goalId)
+  const chats = ALL_CHAT_CHANNELS.filter((chat) => chat.missionId === missionId)
+  const objectives = ALL_OBJECTIVES.filter((obj) => obj.missionId === missionId)
   const completedObjectives = objectives.filter((obj) => obj.status === 'completed').length
   return {
-    ...goal,
-    goalName: goal.name,
-    participants: goal.participantIds.map((id) => ({
+    ...mission,
+    missionName: mission.name,
+    participants: mission.participantIds.map((id) => ({
       id,
       name: PARTICIPANTS[id]?.name || 'Unknown',
       role: PARTICIPANTS[id]?.role,
@@ -1521,7 +1521,7 @@ export function getAllChatsWithDetails(): ChatChannelDetail[] {
 
   return ALL_CHAT_CHANNELS.map((chat, index) => ({
     ...chat,
-    goalName: GOALS[chat.goalId]?.name || 'Unknown Goal',
+    missionName: MISSIONS[chat.missionId]?.name || 'Unknown Mission',
     lastMessageTime: formatRelativeTime(chat.lastActivity),
     unreadCount: Math.floor(Math.random() * 5), // Mock unread count
     participants: chat.participantIds.map((id) => ({

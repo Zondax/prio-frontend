@@ -6,7 +6,7 @@ import { CHAT_CHANNELS } from './prio-mock-data'
 interface ChatChannelsState {
   chatChannels: Record<string, ChatChannel>
   getChatChannel: (id: string) => ChatChannel | undefined
-  getChatChannelsByGoal: (goalId: string) => ChatChannel[]
+  getChatChannelsByMission: (missionId: string) => ChatChannel[]
   getChatChannelsByType: (type: 'ai' | 'team' | 'mixed') => ChatChannel[]
   getActiveChatChannels: () => ChatChannel[]
   addChatChannel: (channel: ChatChannel) => void
@@ -23,9 +23,9 @@ export const useChatChannelsStore = create<ChatChannelsState>()(
 
       getChatChannel: (id) => get().chatChannels[id],
 
-      getChatChannelsByGoal: (goalId) => {
+      getChatChannelsByMission: (missionId) => {
         const { chatChannels } = get()
-        return Object.values(chatChannels).filter((chat) => chat.goalId === goalId)
+        return Object.values(chatChannels).filter((chat) => chat.missionId === missionId)
       },
 
       getChatChannelsByType: (type) => {

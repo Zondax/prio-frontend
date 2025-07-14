@@ -5,7 +5,7 @@ import { devtools } from 'zustand/middleware'
 import { useActivitiesStore } from './activities-store'
 import { useChatChannelsStore } from './chat-channels-store'
 import { useComposedStore } from './composed-stores'
-import { useGoalsStore } from './goals-store'
+import { useMissionsStore } from './missions-store'
 
 interface NavigationState {
   getNavigationNodes: () => TreeNode[]
@@ -31,7 +31,7 @@ export const useNavigationStore = create<NavigationState>()(
     () => ({
       getNavigationNodes: (): TreeNode[] => {
         const chatChannels = useChatChannelsStore.getState().getActiveChatChannels()
-        const activeGoals = useGoalsStore.getState().getActiveGoals()
+        const activeMissions = useMissionsStore.getState().getActiveMissions()
 
         return [
           {
@@ -48,16 +48,16 @@ export const useNavigationStore = create<NavigationState>()(
             })),
           },
           {
-            id: 'goals',
-            label: 'Goals',
+            id: 'missions',
+            label: 'Missions',
             icon: Target,
-            href: '/prio/goals',
-            children: activeGoals.map((goal) => ({
-              id: `goal-${goal.id}`,
-              label: goal.name,
-              icon: goal.icon,
-              href: `/prio/goals/${goal.id}`,
-              badge: goal.status === 'active' ? '●' : undefined,
+            href: '/prio/missions',
+            children: activeMissions.map((mission) => ({
+              id: `mission-${mission.id}`,
+              label: mission.name,
+              icon: Target,
+              href: `/prio/missions/${mission.id}`,
+              badge: mission.status === 'active' ? '●' : undefined,
             })),
           },
           {

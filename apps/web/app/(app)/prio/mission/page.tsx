@@ -23,8 +23,8 @@ export default function NewMissionPage() {
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState(1)
   const [selectedTemplate, setSelectedTemplate] = useState<MissionTemplate | null>(null)
-  const [goalName, setGoalName] = useState('')
-  const [goalDescription, setMissionDescription] = useState('')
+  const [missionName, setMissionName] = useState('')
+  const [missionDescription, setMissionDescription] = useState('')
   const [missionType, setMissionType] = useState<'individual' | 'team'>('team')
   const [priority, setPriority] = useState<'low' | 'medium' | 'high'>('medium')
   const [targetDate, setTargetDate] = useState('')
@@ -34,7 +34,7 @@ export default function NewMissionPage() {
 
   const handleTemplateSelect = useCallback((template: MissionTemplate) => {
     setSelectedTemplate(template)
-    setGoalName(template.name)
+    setMissionName(template.name)
     setMissionDescription(template.description)
     setMissionType(template.type)
     setPriority(template.priority)
@@ -57,13 +57,13 @@ export default function NewMissionPage() {
   )
 
   const handleCreateMission = useCallback(async () => {
-    if (!selectedTemplate || !goalName.trim()) return
+    if (!selectedTemplate || !missionName.trim()) return
 
     setIsCreating(true)
 
     try {
-      // Generate a new UUID for the goal
-      const newGoalId = `00000000-0000-0000-0000-${Math.floor(Math.random() * 1000000000000)
+      // Generate a new UUID for the mission
+      const newMissionId = `00000000-0000-0000-0000-${Math.floor(Math.random() * 1000000000000)
         .toString()
         .padStart(12, '0')}`
 
@@ -76,19 +76,19 @@ export default function NewMissionPage() {
       // For now, simulate creation delay and redirect
       await new Promise((resolve) => setTimeout(resolve, 1500))
 
-      // Navigate to the new goal
-      router.push(`/prio/goals/${newGoalId}`)
+      // Navigate to the new mission
+      router.push(`/prio/missions/${newMissionId}`)
     } catch (error) {
-      console.error('Failed to create goal:', error)
+      console.error('Failed to create mission:', error)
       setIsCreating(false)
     }
-  }, [selectedTemplate, goalName, router])
+  }, [selectedTemplate, missionName, router])
 
   const handleBack = useCallback(() => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1)
     } else {
-      router.push('/prio/goals')
+      router.push('/prio/missions')
     }
   }, [currentStep, router])
 
@@ -99,7 +99,7 @@ export default function NewMissionPage() {
   }, [currentStep])
 
   const _canProceedToStep2 = selectedTemplate !== null
-  const canProceedToStep3 = goalName.trim().length > 0 && goalDescription.trim().length > 0
+  const canProceedToStep3 = missionName.trim().length > 0 && missionDescription.trim().length > 0
   const canCreateMission = objectives.length > 0
 
   return (
@@ -152,7 +152,7 @@ export default function NewMissionPage() {
             <div className="space-y-4">
               <div className="space-y-2">
                 <h2 className="text-xl font-semibold">Choose a Mission Template</h2>
-                <p className="text-muted-foreground">Select a template that best matches your mission type and goals</p>
+                <p className="text-muted-foreground">Select a template that best matches your mission type and objectives</p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {MISSION_TEMPLATES.map((template) => (
@@ -217,8 +217,8 @@ export default function NewMissionPage() {
                       <Label htmlFor="mission-name">Mission Name</Label>
                       <Input
                         id="mission-name"
-                        value={goalName}
-                        onChange={(e) => setGoalName(e.target.value)}
+                        value={missionName}
+                        onChange={(e) => setMissionName(e.target.value)}
                         placeholder="Enter mission name"
                       />
                     </div>
@@ -261,9 +261,9 @@ export default function NewMissionPage() {
                       <Label htmlFor="mission-description">Description</Label>
                       <Textarea
                         id="mission-description"
-                        value={goalDescription}
+                        value={missionDescription}
                         onChange={(e) => setMissionDescription(e.target.value)}
-                        placeholder="Describe the mission goals and scope"
+                        placeholder="Describe the mission objectives and scope"
                         className="min-h-[120px]"
                       />
                     </div>

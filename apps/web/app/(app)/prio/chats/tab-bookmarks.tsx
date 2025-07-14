@@ -5,9 +5,9 @@ import { Button, Input, VirtualizedTable } from '@zondax/ui-common/client'
 import { Eye, Search } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useMemo, useState } from 'react'
-import { CHAT_BOOKMARKS, CHAT_CHANNELS, GOALS } from '@/app/(app)/prio/store/prio-mock-data'
+import { CHAT_BOOKMARKS, CHAT_CHANNELS, MISSIONS } from '@/app/(app)/prio/store/prio-mock-data'
 
-type BookmarksTabProps = {}
+type BookmarksTabProps = Record<string, never>
 
 export default function BookmarksTab(_props: BookmarksTabProps) {
   const router = useRouter()
@@ -18,11 +18,11 @@ export default function BookmarksTab(_props: BookmarksTabProps) {
     return Object.values(CHAT_BOOKMARKS)
       .map((bookmark) => {
         const chatChannel = CHAT_CHANNELS[bookmark.chatChannelId]
-        const goal = chatChannel ? GOALS[chatChannel.goalId] : null
+        const mission = chatChannel ? MISSIONS[chatChannel.missionId] : null
         return {
           ...bookmark,
           chatChannelName: chatChannel?.name || 'Unknown Chat',
-          goalName: goal?.name || 'Unknown Goal',
+          missionName: mission?.name || 'Unknown Mission',
         }
       })
       .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
@@ -40,7 +40,7 @@ export default function BookmarksTab(_props: BookmarksTabProps) {
           bookmark.title.toLowerCase().includes(query) ||
           bookmark.content.toLowerCase().includes(query) ||
           bookmark.chatChannelName.toLowerCase().includes(query) ||
-          bookmark.goalName.toLowerCase().includes(query)
+          bookmark.missionName.toLowerCase().includes(query)
       )
     }
 
@@ -103,10 +103,10 @@ export default function BookmarksTab(_props: BookmarksTabProps) {
         maxSize: 220,
       },
       {
-        id: 'goal',
+        id: 'mission',
         header: 'Goal',
-        accessorKey: 'goalName',
-        cell: ({ row }) => <div className="text-sm text-muted-foreground">{row.original.goalName}</div>,
+        accessorKey: 'missionName',
+        cell: ({ row }) => <div className="text-sm text-muted-foreground">{row.original.missionName}</div>,
         size: 150,
         minSize: 120,
         maxSize: 180,
@@ -154,7 +154,7 @@ export default function BookmarksTab(_props: BookmarksTabProps) {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
           <Input
-            placeholder="Search bookmarks, chats, or goals..."
+            placeholder="Search bookmarks, chats, or missions..."
             value={bookmarkSearchQuery}
             onChange={(e) => setBookmarkSearchQuery(e.target.value)}
             className="pl-10"
@@ -166,7 +166,7 @@ export default function BookmarksTab(_props: BookmarksTabProps) {
       <div className="flex gap-4 text-sm text-muted-foreground">
         <span>{filteredBookmarks.length} bookmarks</span>
         <span>•</span>
-        <span>{new Set(filteredBookmarks.map((b) => b.goalName)).size} goals</span>
+        <span>{new Set(filteredBookmarks.map((b) => b.missionName)).size} missions</span>
         <span>•</span>
         <span>{new Set(filteredBookmarks.map((b) => b.chatChannelName)).size} chats</span>
       </div>

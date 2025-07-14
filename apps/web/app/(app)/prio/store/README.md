@@ -6,7 +6,7 @@ This directory contains Zustand stores that wrap the mock data from `prio-mock-d
 
 ### Individual Entity Stores
 - `useParticipantsStore` - Manages participants/users
-- `useGoalsStore` - Manages goals
+- `useMissionsStore` - Manages missions
 - `useObjectivesStore` - Manages objectives
 - `useChatChannelsStore` - Manages chat channels
 - `useActivitiesStore` - Manages activity feed items
@@ -21,16 +21,16 @@ This directory contains Zustand stores that wrap the mock data from `prio-mock-d
 ### Accessing Data
 
 ```typescript
-import { useGoalsStore, useObjectivesStore, useComposedStore } from '@/app/(app)/prio/store'
+import { useMissionsStore, useObjectivesStore, useComposedStore } from '@/app/(app)/prio/store'
 
-// Get all active goals
-const activeGoals = useGoalsStore(state => state.getActiveGoals())
+// Get all active missions
+const activeMissions = useMissionsStore(state => state.getActiveMissions())
 
-// Get objectives for a specific goal
-const objectives = useObjectivesStore(state => state.getObjectivesByGoal(goalId))
+// Get objectives for a specific mission
+const objectives = useObjectivesStore(state => state.getObjectivesByMission(missionId))
 
-// Get detailed goal information with relationships
-const goalDetail = useComposedStore(state => state.getGoalDetail(goalId))
+// Get detailed mission information with relationships
+const missionDetail = useComposedStore(state => state.getMissionDetail(missionId))
 
 // Get navigation nodes for sidebar
 const navNodes = useNavigationStore(state => state.getNavigationNodes())
@@ -39,8 +39,8 @@ const navNodes = useNavigationStore(state => state.getNavigationNodes())
 ### Updating Data
 
 ```typescript
-// Update goal progress
-useGoalsStore.getState().updateGoalProgress(goalId, 75)
+// Update mission progress
+useMissionsStore.getState().updateMissionProgress(missionId, 75)
 
 // Update objective status
 useObjectivesStore.getState().updateObjectiveStatus(objectiveId, 'completed')
@@ -67,29 +67,29 @@ Replace static imports from mock data with store hooks:
 
 ```typescript
 // Before
-import { GOALS, getGoalDetail } from './prio-mock-data'
-const goals = Object.values(GOALS)
-const detail = getGoalDetail(id)
+import { MISSIONS, getMissionDetail } from './prio-mock-data'
+const missions = Object.values(MISSIONS)
+const detail = getMissionDetail(id)
 
 // After
-import { useGoalsStore, useComposedStore } from '../store'
-const goals = useGoalsStore(state => Object.values(state.goals))
-const detail = useComposedStore(state => state.getGoalDetail(id))
+import { useMissionsStore, useComposedStore } from '../store'
+const missions = useMissionsStore(state => Object.values(state.missions))
+const detail = useComposedStore(state => state.getMissionDetail(id))
 ```
 
 ### React Component Usage
 
 ```typescript
-function GoalsList() {
-  const activeGoals = useGoalsStore(state => state.getActiveGoals())
-  const updateProgress = useGoalsStore(state => state.updateGoalProgress)
+function MissionsList() {
+  const activeMissions = useMissionsStore(state => state.getActiveMissions())
+  const updateProgress = useMissionsStore(state => state.updateMissionProgress)
 
   return (
     <div>
-      {activeGoals.map(goal => (
-        <div key={goal.id}>
-          <h3>{goal.name}</h3>
-          <button onClick={() => updateProgress(goal.id, goal.progress + 10)}>
+      {activeMissions.map(mission => (
+        <div key={mission.id}>
+          <h3>{mission.name}</h3>
+          <button onClick={() => updateProgress(mission.id, mission.progress + 10)}>
             Increase Progress
           </button>
         </div>
@@ -116,4 +116,4 @@ Each store provides standard CRUD operations plus domain-specific queries:
 - `add[Entity]` - Add new entity
 - `update[Entity]` - Update existing entity
 - `remove[Entity]` - Remove entity
-- Domain-specific methods (e.g., `updateGoalProgress`, `archiveChatChannel`)
+- Domain-specific methods (e.g., `updateMissionProgress`, `archiveChatChannel`)
