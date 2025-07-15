@@ -5,7 +5,7 @@ import { Badge, Input, VirtualizedTable } from '@zondax/ui-common/client'
 import { Search } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useMemo, useState } from 'react'
-import { type MissionDetail, PARTICIPANTS } from '@/app/(app)/prio/store/prio-mock-data'
+import { type MissionDetail, PARTICIPANTS } from '@/app/(app)/demo/store/prio-mock-data'
 
 interface ObjectivesTabProps {
   allMissions: MissionDetail[]

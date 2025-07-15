@@ -15,7 +15,7 @@ import {
 import { ArrowLeft, Calendar, CheckCircle, Plus, Target, Users } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
-import { AVAILABLE_MISSIONS, OBJECTIVE_TEMPLATES } from '@/app/(app)/prio/store/prio-mock-data'
+import { AVAILABLE_MISSIONS, OBJECTIVE_TEMPLATES } from '@/app/(app)/demo/store/prio-mock-data'
 
 type ObjectiveTemplate = (typeof OBJECTIVE_TEMPLATES)[0]
 

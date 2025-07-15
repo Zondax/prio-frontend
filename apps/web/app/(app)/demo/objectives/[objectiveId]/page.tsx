@@ -4,7 +4,7 @@ import { Badge, BlockNoteEditorComponent, Button, Progress, Tabs, TabsContent, T
 import { ArrowLeft, Calendar, CheckCircle, Edit, FileText, MessageSquare, MoreHorizontal, Users } from 'lucide-react'
 import { notFound, useParams, useRouter } from 'next/navigation'
 import { useCallback } from 'react'
-import { getObjectiveDetail, type ObjectiveDetail } from '@/app/(app)/prio/store/prio-mock-data'
+import { getObjectiveDetail, type ObjectiveDetail } from '@/app/(app)/demo/store/prio-mock-data'
 import { useAppAuthorization } from '@/lib/authorization/useAppAuthorization'
 
 // Legacy objective configurations for backward compatibility (non-UUID format)

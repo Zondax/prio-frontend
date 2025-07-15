@@ -5,7 +5,7 @@ import { Badge, Button, Input, VirtualizedTable } from '@zondax/ui-common/client
 import { Eye, Key, MessageSquare, Search, Share2, Users } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useMemo, useState } from 'react'
-import type { ChatChannelDetail } from '@/app/(app)/prio/store/prio-mock-data'
+import type { ChatChannelDetail } from '@/app/(app)/demo/store/prio-mock-data'
 
 interface ChatsTabProps {
   allChats: ChatChannelDetail[]

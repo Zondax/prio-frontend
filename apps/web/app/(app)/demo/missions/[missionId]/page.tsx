@@ -5,7 +5,7 @@ import { Badge, Button, useAppShell, VirtualizedTable } from '@zondax/ui-common/
 import { Calendar, Clock, MessageSquare, MoreHorizontal, Settings, Target, Users } from 'lucide-react'
 import { notFound, useParams, useRouter } from 'next/navigation'
 import { useCallback, useMemo, useState } from 'react'
-import { type ChatChannel, getMissionDetail, type MissionDetail, type Objective } from '@/app/(app)/prio/store/prio-mock-data'
+import { type ChatChannel, getMissionDetail, type MissionDetail, type Objective } from '@/app/(app)/demo/store/prio-mock-data'
 import { useAppAuthorization } from '@/lib/authorization/useAppAuthorization'
 
 // Utility to format dates consistently across server and client

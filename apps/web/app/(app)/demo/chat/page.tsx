@@ -15,7 +15,7 @@ import {
 import { MessageSquare, Plus } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
-import { CHAT_TEMPLATES } from '@/app/(app)/prio/store/prio-mock-data'
+import { CHAT_TEMPLATES } from '@/app/(app)/demo/store/prio-mock-data'
 
 type ChatTemplate = (typeof CHAT_TEMPLATES)[0]
 

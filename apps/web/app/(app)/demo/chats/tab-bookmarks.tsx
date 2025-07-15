@@ -5,7 +5,7 @@ import { Button, Input, VirtualizedTable } from '@zondax/ui-common/client'
 import { Eye, Search } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useMemo, useState } from 'react'
-import { CHAT_BOOKMARKS, CHAT_CHANNELS, MISSIONS } from '@/app/(app)/prio/store/prio-mock-data'
+import { CHAT_BOOKMARKS, CHAT_CHANNELS, MISSIONS } from '@/app/(app)/demo/store/prio-mock-data'
 
 type BookmarksTabProps = Record<string, never>
 

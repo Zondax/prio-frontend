@@ -4,7 +4,7 @@ import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@zondax/ui-com
 import { Plus, Target, TrendingUp, Users } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useMemo } from 'react'
-import { getMissionsWithDetails } from '@/app/(app)/prio/store/prio-mock-data'
+import { getMissionsWithDetails } from '@/app/(app)/demo/store/prio-mock-data'
 import MissionsTab from './tab-missions'
 import ObjectivesTab from './tab-objectives'
 import TeamMembersTab from './tab-team-members'

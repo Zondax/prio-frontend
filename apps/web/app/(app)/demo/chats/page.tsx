@@ -4,7 +4,7 @@ import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@zondax/ui-com
 import { Bookmark, MessageSquare } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useMemo } from 'react'
-import { CHAT_BOOKMARKS, getAllChatsWithDetails } from '@/app/(app)/prio/store/prio-mock-data'
+import { CHAT_BOOKMARKS, getAllChatsWithDetails } from '@/app/(app)/demo/store/prio-mock-data'
 import BookmarksTab from './tab-bookmarks'
 import ChatsTab from './tab-chats'
 

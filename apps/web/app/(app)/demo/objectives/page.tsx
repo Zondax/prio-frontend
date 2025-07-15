@@ -5,7 +5,7 @@ import { Badge, Button, Input, Progress, VirtualizedTable } from '@zondax/ui-com
 import { Calendar, CheckCircle, Clock, Filter, Plus, Search, Target, TrendingUp, Users } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useMemo, useState } from 'react'
-import { ALL_OBJECTIVES, MISSIONS, PARTICIPANTS } from '@/app/(app)/prio/store/prio-mock-data'
+import { ALL_OBJECTIVES, MISSIONS, PARTICIPANTS } from '@/app/(app)/demo/store/prio-mock-data'
 
 // Extended objectives data with mission names
 const getObjectivesWithMissionNames = () => {

@@ -1,11 +1,11 @@
 'use client'
 
+import { UserButton } from '@zondax/auth-web'
 import { AppShell, BarLayoutPosition, type ChromeConfig, ThemeToggle, useTopBarItem } from '@zondax/ui-common/client'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { DevLinkItem } from '@/components/embedded-items/DevLinkItem'
 import { EndpointSelectorItem } from '@/components/embedded-items/EndpointSelectorItem'
-import { UserButtonItem } from '@/components/embedded-items/UserButtonItem'
 
 function DevTopBarItems() {
   const logoComponent = useMemo(
@@ -19,7 +19,7 @@ function DevTopBarItems() {
   const devLinkComponent = useMemo(() => <DevLinkItem />, [])
   const endpointComponent = useMemo(() => <EndpointSelectorItem showWhenAuthenticated={true} />, [])
   const themeToggleComponent = useMemo(() => <ThemeToggle />, [])
-  const userButtonComponent = useMemo(() => <UserButtonItem />, [])
+  const userButtonComponent = useMemo(() => <UserButton />, [])
 
   useTopBarItem('logo', logoComponent, 'start', 0)
   useTopBarItem('dev-link', devLinkComponent, 'start', 10)

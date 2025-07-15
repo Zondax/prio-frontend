@@ -5,7 +5,7 @@ import { Badge, Input, VirtualizedTable } from '@zondax/ui-common/client'
 import { MoreHorizontal, Search, Target, Users } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useMemo, useState } from 'react'
-import type { MissionDetail } from '@/app/(app)/prio/store/prio-mock-data'
+import type { MissionDetail } from '@/app/(app)/demo/store/prio-mock-data'
 
 type MissionItem = MissionDetail
 
