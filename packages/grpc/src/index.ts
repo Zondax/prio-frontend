@@ -19,6 +19,15 @@ export {
   ChatServiceClientPb as ChatService,
 }
 
+// Export individual user types for authorization module
+export {
+  ProductPermissionList,
+  SubscriptionPlan,
+  SubscriptionStatus,
+  UserPublicMetadata,
+  UserSubscription,
+} from './entities/proto/api/v1/user_pb'
+
 export const GRPC_URLS = {
   prod: 'https://prio-api.zondax.ch',
   dev: 'https://prio-api.zondax.io',

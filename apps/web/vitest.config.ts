@@ -27,6 +27,16 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, './'),
+      '@/site': resolve(__dirname, './site'),
+      '@/app': resolve(__dirname, './app'),
+      '@mono-grpc': resolve(__dirname, '../../packages/grpc/src'),
+      '@mono-state': resolve(__dirname, '../../packages/state/src'),
+      '@mono-ui': resolve(__dirname, '../../packages/ui/src'),
+      '@zondax/auth-core': resolve(__dirname, '../../libs/auth-core/src'),
+      '@zondax/auth-web': resolve(__dirname, '../../libs/auth-web/src'),
+      '@zondax/ui-common': resolve(__dirname, '../../libs/ui-common/src'),
+      '@zondax/ui-common/server': resolve(__dirname, '../../libs/ui-common/src/server'),
+      '@zondax/ui-common/client': resolve(__dirname, '../../libs/ui-common/src/client'),
     },
   },
 })

@@ -1,7 +1,6 @@
 'use client'
 
-import { useChatError, useChatLoading, useChatResponse, useChatStore, useSendMessage } from '@mono-state'
-import { useEndpointStore } from '@mono-state/stores'
+import { useChatError, useChatLoading, useChatResponse, useChatStore, useEndpointStore, useSendMessage } from '@mono-state'
 import { useUser } from '@zondax/auth-web/client'
 import { useGrpcSetup } from '@zondax/auth-web/hooks'
 import {

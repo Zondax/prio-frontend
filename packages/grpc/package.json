@@ -9,6 +9,11 @@
   ],
   "license": "UNLICENSED",
   "author": "Zondax AG <hello@zondax.ch>",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./utils": "./src/utils/index.ts"
+  },
   "scripts": {
     "deps:check": "echo 'nothing to check'",
     "deps:fix": "echo 'nothing to fix'",
