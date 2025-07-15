@@ -1,7 +1,7 @@
 'use client'
 
 import { UserButton } from '@zondax/auth-web'
-import { AppShell, BarLayoutPosition, type ChromeConfig, SidebarVariant, ThemeToggle, useTopBarItem } from '@zondax/ui-common/client'
+import { AppShell, BarLayoutPosition, BarLocation, type ChromeConfig, SidebarVariant, ThemeToggle, useTopBarItem } from '@zondax/ui-common/client'
 import { useMemo } from 'react'
 
 // Inline AppTopBarItems component
@@ -46,14 +46,14 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       collapsible: true,
       defaultOpen: true,
       variant: SidebarVariant.Sidebar,
-      side: 'left',
+      side: BarLocation.Left,
     },
     rightSidebar: {
       enabled: false,
       collapsible: true,
       defaultOpen: true,
       variant: SidebarVariant.Sidebar,
-      side: 'right',
+      side: BarLocation.Right,
     },
     statusBar: {
       layout: BarLayoutPosition.Wide,
