@@ -8,6 +8,23 @@ import { useCallback, useMemo, useState } from 'react'
 import { type ChatChannel, getMissionDetail, type MissionDetail, type Objective } from '@/app/(app)/prio/store/prio-mock-data'
 import { useAppAuthorization } from '@/lib/authorization/useAppAuthorization'
 
+// Utility to format dates consistently across server and client
+const formatDate = (date: Date): string => {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  })
+}
+
+const formatTime = (date: Date): string => {
+  return date.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  })
+}
+
 function MissionPageContent({ config }: { config: MissionDetail }) {
   const _appShell = useAppShell()
   const auth = useAppAuthorization()
@@ -100,7 +117,7 @@ function MissionPageContent({ config }: { config: MissionDetail }) {
           row.original.dueDate ? (
             <div className="flex items-center gap-1">
               <Clock className="w-4 h-4" />
-              <span>{row.original.dueDate.toLocaleDateString()}</span>
+              <span>{formatDate(row.original.dueDate)}</span>
             </div>
           ) : (
             <span className="text-muted-foreground">No deadline</span>
@@ -145,7 +162,7 @@ function MissionPageContent({ config }: { config: MissionDetail }) {
         cell: ({ row }) => (
           <div className="space-y-1">
             <div className="font-medium">{row.original.name}</div>
-            <div className="text-sm text-muted-foreground">Last activity: {row.original.lastActivity.toLocaleTimeString()}</div>
+            <div className="text-sm text-muted-foreground">Last activity: {formatTime(row.original.lastActivity)}</div>
           </div>
         ),
         minSize: 200,
@@ -245,7 +262,7 @@ function MissionPageContent({ config }: { config: MissionDetail }) {
                 {config.targetDate && (
                   <div className="flex items-center gap-1">
                     <Calendar className="w-4 h-4" />
-                    <span>Due {config.targetDate.toLocaleDateString()}</span>
+                    <span>Due {formatDate(config.targetDate)}</span>
                   </div>
                 )}
                 <div className="flex items-center gap-1">
