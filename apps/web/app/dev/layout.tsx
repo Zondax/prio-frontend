@@ -4,8 +4,8 @@ import { UserButton } from '@zondax/auth-web'
 import { AppShell, BarLayoutPosition, type ChromeConfig, ThemeToggle, useTopBarItem } from '@zondax/ui-common/client'
 import Link from 'next/link'
 import { useMemo } from 'react'
-import { DevLinkItem } from '@/components/embedded-items/DevLinkItem'
-import { EndpointSelectorItem } from '@/components/embedded-items/EndpointSelectorItem'
+import { DevLinkItem } from '@/components/DevLinkItem'
+import { EndpointSelectorItem } from '@/components/EndpointSelectorItem'
 
 function DevTopBarItems() {
   const logoComponent = useMemo(

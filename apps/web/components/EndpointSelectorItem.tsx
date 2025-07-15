@@ -1,11 +1,10 @@
 'use client'
 
 import { useEndpointStore } from '@mono-state'
-
+import { useUser } from '@zondax/auth-web'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@zondax/ui-common/client'
 
-// Extracted EndpointSelector component
-export default function EndpointSelector() {
+function EndpointSelector() {
   const { endpoints, selectedEndpoint, setSelectedEndpoint } = useEndpointStore()
 
   return (
@@ -13,7 +12,7 @@ export default function EndpointSelector() {
       <SelectTrigger className="truncate">
         <SelectValue placeholder="Select endpoint" />
       </SelectTrigger>
-      <SelectContent className="">
+      <SelectContent>
         {endpoints.map((url) => (
           <SelectItem key={url} value={url}>
             {url}
@@ -22,4 +21,12 @@ export default function EndpointSelector() {
       </SelectContent>
     </Select>
   )
+}
+
+export default function EndpointSelectorItem({ showWhenAuthenticated = true }: { showWhenAuthenticated?: boolean }) {
+  const { user, isLoaded } = useUser()
+
+  if (showWhenAuthenticated && (!isLoaded || !user)) return null
+
+  return <EndpointSelector />
 }
