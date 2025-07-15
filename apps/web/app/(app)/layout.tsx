@@ -1,7 +1,15 @@
 'use client'
 
 import { UserButton } from '@zondax/auth-web'
-import { AppShell, BarLayoutPosition, BarLocation, type ChromeConfig, SidebarVariant, ThemeToggle, useTopBarItem } from '@zondax/ui-common/client'
+import {
+  AppShell,
+  BarLayoutPosition,
+  BarLocation,
+  type ChromeConfig,
+  SidebarVariant,
+  ThemeToggle,
+  useTopBarItem,
+} from '@zondax/ui-common/client'
 import { useMemo } from 'react'
 
 // Inline AppTopBarItems component
