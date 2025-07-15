@@ -483,7 +483,7 @@ export default function AllObjectivesPage() {
                 onChange={(e) => setSelectedMission(e.target.value)}
                 className="px-3 py-2 border rounded-md text-sm min-w-[180px]"
               >
-                <option value="all">All Goals</option>
+                <option value="all">All Missions</option>
                 {availableMissions.map((mission) => (
                   <option key={mission.id} value={mission.id}>
                     {mission.name}

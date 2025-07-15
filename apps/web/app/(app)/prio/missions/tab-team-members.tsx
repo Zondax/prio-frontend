@@ -87,7 +87,7 @@ export default function TeamMembersTab({ allMissions }: TeamMembersTabProps) {
         maxSize: 100,
       },
       {
-        id: 'activeGoals',
+        id: 'activeMissions',
         header: 'Active',
         accessorKey: 'missions',
         cell: ({ row }) => (
