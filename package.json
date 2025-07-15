@@ -74,6 +74,7 @@
     "onlyBuiltDependencies": [
       "@biomejs/biome",
       "@clerk/shared",
+      "@swc/core",
       "@tailwindcss/oxide",
       "@vercel/speed-insights",
       "core-js",
@@ -103,6 +104,7 @@
   },
   "dependencies": {
     "client-only": "^0.0.1",
-    "server-only": "^0.0.1"
+    "server-only": "^0.0.1",
+    "zustand": "^5.0.6"
   }
 }

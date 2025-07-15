@@ -1,6 +1,7 @@
 'use client'
 
-import { Breadcrumb, SidebarList, SidebarTree, useAppShell, useLeftSidebarItem, useTopBarItem } from '@zondax/ui-common/client'
+import { UserButton } from '@zondax/auth-web'
+import { Breadcrumb, SidebarList, SidebarTree, ThemeToggle, useAppShell, useLeftSidebarItem, useTopBarItem } from '@zondax/ui-common/client'
 import { useEffect, useMemo } from 'react'
 import { useBreadcrumbData } from './lib/use-breadcrumb-data'
 import { NAVIGATION_NODES, RECENT_ACTIVITY_ITEMS } from './store/prio-mock-data'
@@ -23,11 +24,22 @@ export default function PrioLayout({ children }: { children: React.ReactNode }) 
     []
   )
 
-  const sidebarContentComponent = useMemo(
-    () => (
+  const sidebarContentComponent = useMemo(() => {
+    // Create a Set with all node IDs to expand all nodes by default
+    const allNodeIds = new Set<string>()
+    for (const node of NAVIGATION_NODES) {
+      allNodeIds.add(node.id)
+      if (node.children) {
+        for (const child of node.children) {
+          allNodeIds.add(child.id)
+        }
+      }
+    }
+
+    return (
       <div className="space-y-2">
-        {/* Navigation Tree - handles its own state internally */}
-        <SidebarTree nodes={NAVIGATION_NODES} persistState={false} />
+        {/* Navigation Tree - starts with all nodes expanded */}
+        <SidebarTree nodes={NAVIGATION_NODES} persistState={false} expandedNodes={allNodeIds} />
 
         {/* Recent Activity List */}
         <SidebarList
@@ -39,18 +51,21 @@ export default function PrioLayout({ children }: { children: React.ReactNode }) 
           variant="minimal"
         />
       </div>
-    ),
-    []
-  )
+    )
+  }, [])
 
   // Use the embedded sidebar system to add content to existing sidebar
   // Now using semantic section locations: start=header, middle=content, end=footer
   useLeftSidebarItem('prio-header', sidebarHeaderComponent, 'start', 5)
   useLeftSidebarItem('prio-navigation', sidebarContentComponent, 'middle', 10)
 
-  // Add breadcrumb to topbar (left side)
   const breadcrumbComponent = useMemo(() => <BreadcrumbNavigation />, [])
+  const themeToggleComponent = useMemo(() => <ThemeToggle />, [])
+  const userButtonComponent = useMemo(() => <UserButton />, [])
+
   useTopBarItem('prio-breadcrumb', breadcrumbComponent, 'start', 5)
+  useTopBarItem('theme-toggle', themeToggleComponent, 'end', 10)
+  useTopBarItem('user-button', userButtonComponent, 'end', 20)
 
   // Setup AppShell to show both sidebars
   useEffect(() => {

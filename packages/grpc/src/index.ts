@@ -1,3 +1,5 @@
+import * as ChatServiceClientPb from './entities/proto/api/v1/ChatServiceClientPb'
+import * as ChatPb from './entities/proto/api/v1/chat_pb'
 import * as CommonPb from './entities/proto/api/v1/common_pb'
 import * as PaymentGatewayServiceClientPb from './entities/proto/api/v1/Payment-gatewayServiceClientPb'
 import * as PaymentGatewayPb from './entities/proto/api/v1/payment-gateway_pb'
@@ -13,7 +15,18 @@ export {
   UserServiceClientPb as UserService,
   PaymentGatewayPb as PaymentGateway,
   PaymentGatewayServiceClientPb as PaymentGatewayService,
+  ChatPb as Chat,
+  ChatServiceClientPb as ChatService,
 }
+
+// Export individual user types for authorization module
+export {
+  ProductPermissionList,
+  SubscriptionPlan,
+  SubscriptionStatus,
+  UserPublicMetadata,
+  UserSubscription,
+} from './entities/proto/api/v1/user_pb'
 
 export const GRPC_URLS = {
   prod: 'https://prio-api.zondax.ch',

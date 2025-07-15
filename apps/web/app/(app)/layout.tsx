@@ -1,25 +1,21 @@
 'use client'
 
-import { UserButton, useUser } from '@zondax/auth-web'
-import { AppShell, BarLayoutPosition, type ChromeConfig, SidebarVariant, ThemeToggle, useTopBarItem } from '@zondax/ui-common/client'
-import Link from 'next/link'
-import { redirect } from 'next/navigation'
+import { UserButton } from '@zondax/auth-web'
+import {
+  AppShell,
+  BarLayoutPosition,
+  BarLocation,
+  type ChromeConfig,
+  SidebarVariant,
+  ThemeToggle,
+  useTopBarItem,
+} from '@zondax/ui-common/client'
 import { useMemo } from 'react'
 
 // Inline AppTopBarItems component
 function AppTopBarItems() {
-  const logoComponent = useMemo(
-    () => (
-      <Link href="/" className="flex items-center">
-        <span className="text-xl font-bold">Prio</span>
-      </Link>
-    ),
-    []
-  )
   const themeToggleComponent = useMemo(() => <ThemeToggle />, [])
   const userButtonComponent = useMemo(() => <UserButton />, [])
-
-  useTopBarItem('logo', logoComponent, 'start', 0)
   useTopBarItem('theme-toggle', themeToggleComponent, 'end', 10)
   useTopBarItem('user-button', userButtonComponent, 'end', 20)
 
@@ -27,25 +23,25 @@ function AppTopBarItems() {
 }
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-  const { isLoaded, isSignedIn } = useUser()
+  // const { isLoaded, isSignedIn } = useUser() // Temporarily disabled for development
 
-  // Show loading state while checking authentication
-  if (!isLoaded) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <p className="text-lg text-muted-foreground">Loading authentication...</p>
-          <p className="text-sm text-muted-foreground mt-2">If this persists, check your auth configuration</p>
-        </div>
-      </div>
-    )
-  }
+  // Show loading state while checking authentication (temporarily disabled for development)
+  // if (!isLoaded) {
+  //   return (
+  //     <div className="flex items-center justify-center min-h-screen">
+  //       <div className="text-center">
+  //         <p className="text-lg text-muted-foreground">Loading authentication...</p>
+  //         <p className="text-sm text-muted-foreground mt-2">If this persists, check your auth configuration</p>
+  //       </div>
+  //     </div>
+  //   )
+  // }
 
-  // Redirect to home if user is loaded but not signed in
-  if (isLoaded && !isSignedIn) {
-    redirect('/')
-    return null
-  }
+  // Redirect to home if user is loaded but not signed in (temporarily disabled for development)
+  // if (isLoaded && !isSignedIn) {
+  //   redirect('/')
+  //   return null
+  // }
 
   // Configure the chrome for the app
   const chromeConfig: ChromeConfig = {
@@ -54,24 +50,24 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       layout: BarLayoutPosition.Content,
     },
     leftSidebar: {
-      enabled: false,
+      enabled: true,
       collapsible: true,
-      defaultOpen: false,
+      defaultOpen: true,
       variant: SidebarVariant.Sidebar,
-      side: 'left',
+      side: BarLocation.Left,
     },
     rightSidebar: {
       enabled: false,
       collapsible: true,
       defaultOpen: true,
       variant: SidebarVariant.Sidebar,
-      side: 'right',
+      side: BarLocation.Right,
     },
     statusBar: {
       layout: BarLayoutPosition.Wide,
     },
     commandPalette: {
-      enabled: true,
+      enabled: false,
     },
   }
 

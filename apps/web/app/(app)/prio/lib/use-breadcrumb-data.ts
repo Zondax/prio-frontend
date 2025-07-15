@@ -1,14 +1,14 @@
+import type { BreadcrumbDataItem } from '@zondax/ui-common/client'
 import { usePathname } from 'next/navigation'
 import { useMemo } from 'react'
 import { HOME_BREADCRUMB, prioRouteConfig } from './breadcrumb-config'
-import type { BreadcrumbItem } from './breadcrumb-types'
 
-export function useBreadcrumbData(): BreadcrumbItem[] {
+export function useBreadcrumbData(): BreadcrumbDataItem[] {
   const pathname = usePathname()
 
   return useMemo(() => {
     const pathSegments = pathname.split('/').filter(Boolean)
-    const items: BreadcrumbItem[] = [HOME_BREADCRUMB]
+    const items: BreadcrumbDataItem[] = [HOME_BREADCRUMB]
 
     // Skip base path segment and process the rest
     for (let i = 1; i < pathSegments.length; i++) {
@@ -21,7 +21,7 @@ export function useBreadcrumbData(): BreadcrumbItem[] {
       if (!routeConfig) continue
 
       if (nextSegment && routeConfig.resolver) {
-        // Entity-specific page (e.g., /goals/123)
+        // Entity-specific page (e.g., /missions/123)
         const entityItem = routeConfig.resolver(nextSegment)
         if (entityItem) {
           // Add parent context if available
@@ -39,15 +39,13 @@ export function useBreadcrumbData(): BreadcrumbItem[] {
           items.push({
             label: routeConfig.label,
             href: `${prioRouteConfig.basePath}/${segment}`,
-            icon: routeConfig.icon,
           })
         }
       } else {
-        // Category page (e.g., /goals)
+        // Category page (e.g., /missions)
         items.push({
           label: routeConfig.label,
           href: `${prioRouteConfig.basePath}/${segment}`,
-          icon: routeConfig.icon,
         })
       }
     }

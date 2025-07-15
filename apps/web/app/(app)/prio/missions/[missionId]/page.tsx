@@ -1,17 +1,18 @@
 'use client'
 
 import type { ColumnDef } from '@tanstack/react-table'
-import { Badge, Button, Tabs, TabsContent, TabsList, TabsTrigger, useAppShell, VirtualizedTable } from '@zondax/ui-common/client'
+import { Badge, Button, useAppShell, VirtualizedTable } from '@zondax/ui-common/client'
 import { Calendar, Clock, MessageSquare, MoreHorizontal, Settings, Target, Users } from 'lucide-react'
 import { notFound, useParams, useRouter } from 'next/navigation'
-import { useCallback, useMemo } from 'react'
-import { type ChatChannel, type GoalDetail, getGoalDetail, type Objective } from '@/app/(app)/prio/store/prio-mock-data'
+import { useCallback, useMemo, useState } from 'react'
+import { type ChatChannel, getMissionDetail, type MissionDetail, type Objective } from '@/app/(app)/prio/store/prio-mock-data'
 import { useAppAuthorization } from '@/lib/authorization/useAppAuthorization'
 
-function GoalPageContent({ config }: { config: GoalDetail }) {
+function MissionPageContent({ config }: { config: MissionDetail }) {
   const _appShell = useAppShell()
   const auth = useAppAuthorization()
   const router = useRouter()
+  const [activeTab, setActiveTab] = useState<'objectives' | 'chat-channels' | 'team-members'>('objectives')
 
   // Get user ID from auth claims
   const _userId = auth.claims?.sub || 'anonymous-user'
@@ -176,6 +177,53 @@ function GoalPageContent({ config }: { config: GoalDetail }) {
 
   return (
     <div className="h-full flex flex-col">
+      {/* Tabs */}
+      <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="px-6 pt-2">
+          <div className="flex gap-1">
+            <button
+              type="button"
+              onClick={() => setActiveTab('objectives')}
+              className={`px-4 py-2 text-sm font-medium rounded-t-lg border border-b-0 transition-all relative ${
+                activeTab === 'objectives'
+                  ? 'bg-background border-border text-foreground shadow-sm -mb-px z-10'
+                  : 'bg-muted/50 border-transparent text-muted-foreground hover:bg-muted hover:text-foreground'
+              }`}
+            >
+              <Target className="w-4 h-4 mr-2 inline" />
+              Objectives
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('chat-channels')}
+              className={`px-4 py-2 text-sm font-medium rounded-t-lg border border-b-0 transition-all relative ${
+                activeTab === 'chat-channels'
+                  ? 'bg-background border-border text-foreground shadow-sm -mb-px z-10'
+                  : 'bg-muted/50 border-transparent text-muted-foreground hover:bg-muted hover:text-foreground'
+              }`}
+            >
+              <MessageSquare className="w-4 h-4 mr-2 inline" />
+              Chat Channels
+            </button>
+            {config.type === 'team' && (
+              <button
+                type="button"
+                onClick={() => setActiveTab('team-members')}
+                className={`px-4 py-2 text-sm font-medium rounded-t-lg border border-b-0 transition-all relative ${
+                  activeTab === 'team-members'
+                    ? 'bg-background border-border text-foreground shadow-sm -mb-px z-10'
+                    : 'bg-muted/50 border-transparent text-muted-foreground hover:bg-muted hover:text-foreground'
+                }`}
+              >
+                <Users className="w-4 h-4 mr-2 inline" />
+                Team Members
+              </button>
+            )}
+          </div>
+        </div>
+        <div className="border-b border-border" />
+      </div>
+
       {/* Goal Header */}
       <div className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="p-6 space-y-4">
@@ -230,7 +278,7 @@ function GoalPageContent({ config }: { config: GoalDetail }) {
 
           {/* Tags */}
           <div className="flex flex-wrap gap-2">
-            {config.tags.map((tag) => (
+            {config.tags.map((tag: string) => (
               <Badge key={tag} variant="secondary" className="text-xs">
                 {tag}
               </Badge>
@@ -242,25 +290,8 @@ function GoalPageContent({ config }: { config: GoalDetail }) {
       {/* Goal Content */}
       <div className="flex-1 overflow-auto p-6">
         <div className="max-w-6xl mx-auto">
-          <Tabs defaultValue="objectives" className="w-full">
-            <TabsList className={`grid w-full ${config.type === 'team' ? 'grid-cols-3' : 'grid-cols-2'}`}>
-              <TabsTrigger value="objectives" className="flex items-center gap-2">
-                <Target className="w-4 h-4" />
-                Objectives
-              </TabsTrigger>
-              <TabsTrigger value="chat-channels" className="flex items-center gap-2">
-                <MessageSquare className="w-4 h-4" />
-                Chat Channels
-              </TabsTrigger>
-              {config.type === 'team' && (
-                <TabsTrigger value="team-members" className="flex items-center gap-2">
-                  <Users className="w-4 h-4" />
-                  Team Members
-                </TabsTrigger>
-              )}
-            </TabsList>
-
-            <TabsContent value="objectives" className="space-y-4 mt-6">
+          {activeTab === 'objectives' && (
+            <div className="space-y-4">
               <div className="space-y-2">
                 <h3 className="text-lg font-semibold">Objectives</h3>
                 <p className="text-sm text-muted-foreground">Track progress on key deliverables and milestones</p>
@@ -278,9 +309,11 @@ function GoalPageContent({ config }: { config: GoalDetail }) {
                   enableColumnResizing
                 />
               </div>
-            </TabsContent>
+            </div>
+          )}
 
-            <TabsContent value="chat-channels" className="space-y-4 mt-6">
+          {activeTab === 'chat-channels' && (
+            <div className="space-y-4">
               <div className="space-y-2">
                 <h3 className="text-lg font-semibold">Chat Channels</h3>
                 <p className="text-sm text-muted-foreground">Active discussions and collaboration spaces</p>
@@ -298,46 +331,46 @@ function GoalPageContent({ config }: { config: GoalDetail }) {
                   enableColumnResizing
                 />
               </div>
-            </TabsContent>
+            </div>
+          )}
 
-            {config.type === 'team' && (
-              <TabsContent value="team-members" className="space-y-4 mt-6">
-                <div className="space-y-2">
-                  <h3 className="text-lg font-semibold">Team Members</h3>
-                  <p className="text-sm text-muted-foreground">Collaborate with your team on this mission</p>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {config.participants.map((participant) => (
-                    <div key={participant.id} className="flex items-center gap-3 p-3 border rounded-lg">
-                      <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                        <span className="text-sm font-medium text-blue-600">{participant.name.charAt(0).toUpperCase()}</span>
-                      </div>
-                      <div>
-                        <h4 className="font-medium">{participant.name}</h4>
-                        <p className="text-xs text-muted-foreground">{participant.role || 'Team Member'}</p>
-                      </div>
+          {activeTab === 'team-members' && config.type === 'team' && (
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <h3 className="text-lg font-semibold">Team Members</h3>
+                <p className="text-sm text-muted-foreground">Collaborate with your team on this mission</p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {config.participants.map((participant: { id: string; name: string; role?: string }) => (
+                  <div key={participant.id} className="flex items-center gap-3 p-3 border rounded-lg">
+                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                      <span className="text-sm font-medium text-blue-600">{participant.name.charAt(0).toUpperCase()}</span>
                     </div>
-                  ))}
-                </div>
-              </TabsContent>
-            )}
-          </Tabs>
+                    <div>
+                      <h4 className="font-medium">{participant.name}</h4>
+                      <p className="text-xs text-muted-foreground">{participant.role || 'Team Member'}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
   )
 }
 
-export default function GoalPage() {
-  const { goalId } = useParams()
-  const goalIdString = goalId as string
+export default function MissionPage() {
+  const { missionId } = useParams()
+  const _missionIdString = missionId as string
 
-  // Get goal from centralized mock data
-  const goal = getGoalDetail(goalIdString)
+  // Get mission from centralized mock data
+  const _mission = getMissionDetail(_missionIdString)
 
-  if (!goal) {
+  if (!_mission) {
     notFound()
   }
 
-  return <GoalPageContent config={goal} />
+  return <MissionPageContent config={_mission} />
 }

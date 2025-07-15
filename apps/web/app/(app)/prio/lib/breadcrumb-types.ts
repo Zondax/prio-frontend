@@ -1,3 +1,4 @@
+import type { BreadcrumbDataItem } from '@zondax/ui-common/client'
 import type { LucideIcon } from 'lucide-react'
 
 export interface BreadcrumbItem {
@@ -12,8 +13,8 @@ export interface RouteConfig {
   icon?: LucideIcon
   pattern?: RegExp
   isParam?: boolean
-  resolver?: (id: string) => BreadcrumbItem | null
-  parentResolver?: (id: string) => BreadcrumbItem | null
+  resolver?: (id: string) => BreadcrumbDataItem | null
+  parentResolver?: (id: string) => BreadcrumbDataItem | null
 }
 
 export interface BreadcrumbRoute {
