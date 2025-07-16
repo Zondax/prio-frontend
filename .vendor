@@ -1,0 +1,11 @@
+# Vendor configuration file
+# This file contains configuration for the vendor-grpc.sh script
+
+# Repository URL to clone from
+REPO_URL="https://github.com/zondax/prio-backend.git"
+
+# Source path within the cloned repository
+GRPC_SOURCE_PATH="proto-generated/ts"
+
+# Target path in the current project
+GRPC_TARGET_PATH="packages/grpc/src/entities"
