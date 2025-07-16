@@ -82,10 +82,9 @@ const nextConfig = {
   images: { unoptimized: true },
   devIndicators: false,
   async headers() {
-    if (isDevelopment) {
-      return developmentHeaders
-    }
-    return productionHeaders
+    const headers = isDevelopment ? developmentHeaders : productionHeaders
+    console.log('Next.js Config - Using headers:', isDevelopment ? 'DEVELOPMENT' : 'PRODUCTION')
+    return headers
   },
   async redirects() {
     return []
