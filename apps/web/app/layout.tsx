@@ -2,7 +2,7 @@ import { AuthProvider } from '@zondax/auth-web'
 import { cn } from '@zondax/ui-common/server'
 import type { Metadata } from 'next'
 import { Figtree, Inter as FontSans, Parkinsans } from 'next/font/google'
-import OtelProvider from '@/app/telemetry/OtelProvider'
+import TurnstileOtelProvider from '@/app/telemetry/TurnstileOtelProvider'
 import ClientProviders from './client-providers'
 
 import '@/styles/globals.css'
@@ -48,16 +48,16 @@ export const viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <AuthProvider>
-      <OtelProvider>
-        <html lang="en" suppressHydrationWarning className="overflow-x-hidden">
-          <body className={cn('bg-background font-body antialiased', fontSans.variable, fontBody.variable, fontHeading.variable)}>
-            <div className="flex flex-col min-h-screen w-full mx-auto">
-              <ClientProviders>{children}</ClientProviders>
-            </div>
-          </body>
-        </html>
-      </OtelProvider>
-    </AuthProvider>
+    <html lang="en" suppressHydrationWarning className="overflow-x-hidden">
+      <body className={cn('bg-background font-body antialiased', fontSans.variable, fontBody.variable, fontHeading.variable)}>
+        <div className="flex flex-col min-h-screen w-full mx-auto">
+          <ClientProviders>
+            <AuthProvider>
+              <TurnstileOtelProvider>{children}</TurnstileOtelProvider>
+            </AuthProvider>
+          </ClientProviders>
+        </div>
+      </body>
+    </html>
   )
 }
