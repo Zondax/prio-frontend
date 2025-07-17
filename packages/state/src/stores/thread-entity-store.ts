@@ -28,10 +28,14 @@ const extendedStore = Object.assign(threadStore, {
       const optimisticThread: Thread = {
         id: tempId,
         title: data.title,
-        description: data.description,
-        status: 'active',
-        participantCount: 0,
+        content: data.content,
+        chatChannelId: '',
+        authorId: 'user-you',
         messageCount: 0,
+        lastMessageAt: new Date(),
+        isLocked: false,
+        isPinned: data.isPinned || false,
+        tags: data.tags || [],
         createdAt: new Date(),
         updatedAt: new Date(),
       }
@@ -154,17 +158,15 @@ export const useThreadStore = extendedStore
 // Clean convenience hooks
 export const useThread = (threadId: string) => {
   const thread = useThreadStore((state: EntityStore<Thread>) => state.getEntity(threadId))
-  const loading = useThreadStore((state: EntityStore<Thread>) =>
-    'loadingStates' in state ? state.loadingStates?.get?.(threadId) || false : false
-  )
-  const error = useThreadStore((state: EntityStore<Thread>) => ('errors' in state ? state.errors?.get?.(threadId) : undefined))
+  const loading = useThreadStore((state: EntityStore<Thread>) => state.isLoading('get'))
+  const error = useThreadStore((state: EntityStore<Thread>) => state.getError('get'))
 
   return { thread, loading, error }
 }
 
 export const useCreateThread = () => {
-  const loading = useThreadStore((state: EntityStore<Thread>) => ('loadingStates' in state ? state.loadingStates?.create || false : false))
-  const error = useThreadStore((state: EntityStore<Thread>) => ('errors' in state ? state.errors?.create : undefined))
+  const loading = useThreadStore((state: EntityStore<Thread>) => state.isLoading('create'))
+  const error = useThreadStore((state: EntityStore<Thread>) => state.getError('create'))
 
   return {
     loading,
@@ -174,8 +176,8 @@ export const useCreateThread = () => {
 }
 
 export const useUpdateThread = (threadId: string) => {
-  const loading = useThreadStore((state: EntityStore<Thread>) => ('loadingStates' in state ? state.loadingStates?.update || false : false))
-  const error = useThreadStore((state: EntityStore<Thread>) => ('errors' in state ? state.errors?.update : undefined))
+  const loading = useThreadStore((state: EntityStore<Thread>) => state.isLoading('update'))
+  const error = useThreadStore((state: EntityStore<Thread>) => state.getError('update'))
 
   return {
     loading,
@@ -185,8 +187,8 @@ export const useUpdateThread = (threadId: string) => {
 }
 
 export const useDeleteThread = (threadId: string) => {
-  const loading = useThreadStore((state: EntityStore<Thread>) => ('loadingStates' in state ? state.loadingStates?.delete || false : false))
-  const error = useThreadStore((state: EntityStore<Thread>) => ('errors' in state ? state.errors?.delete : undefined))
+  const loading = useThreadStore((state: EntityStore<Thread>) => state.isLoading('delete'))
+  const error = useThreadStore((state: EntityStore<Thread>) => state.getError('delete'))
 
   return {
     loading,
@@ -215,6 +217,6 @@ export const threadSelectors = {
   // Get thread count
   getCount: () => useThreadStore.getState().getEntityCount(),
 
-  // Get threads by status
-  getByStatus: (status: string) => useThreadStore.getState().findEntities((t) => t.status === status),
+  // Get threads by lock status
+  getByLockStatus: (isLocked: boolean) => useThreadStore.getState().findEntities((t) => t.isLocked === isLocked),
 }

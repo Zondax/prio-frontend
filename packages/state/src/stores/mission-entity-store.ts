@@ -195,19 +195,15 @@ export const useMissionStore = extendedStore
 // Clean convenience hooks
 export const useMission = (missionId: string) => {
   const mission = useMissionStore((state: EntityStore<Mission>) => state.getEntity(missionId))
-  const loading = useMissionStore((state: EntityStore<Mission>) =>
-    'loadingStates' in state ? state.loadingStates?.get?.(missionId) || false : false
-  )
-  const error = useMissionStore((state: EntityStore<Mission>) => ('errors' in state ? state.errors?.get?.(missionId) : undefined))
+  const loading = useMissionStore((state: EntityStore<Mission>) => state.isLoading('get'))
+  const error = useMissionStore((state: EntityStore<Mission>) => state.getError('get'))
 
   return { mission, loading, error }
 }
 
 export const useMissionDetails = (missionId: string) => {
-  const loading = useMissionStore((state: EntityStore<Mission>) =>
-    'loadingStates' in state ? state.loadingStates?.getDetails || false : false
-  )
-  const error = useMissionStore((state: EntityStore<Mission>) => ('errors' in state ? state.errors?.getDetails : undefined))
+  const loading = useMissionStore((state: EntityStore<Mission>) => state.isLoading('getDetails'))
+  const error = useMissionStore((state: EntityStore<Mission>) => state.getError('getDetails'))
 
   return {
     loading,
@@ -217,10 +213,8 @@ export const useMissionDetails = (missionId: string) => {
 }
 
 export const useUpdateMission = (missionId: string) => {
-  const loading = useMissionStore((state: EntityStore<Mission>) =>
-    'loadingStates' in state ? state.loadingStates?.update || false : false
-  )
-  const error = useMissionStore((state: EntityStore<Mission>) => ('errors' in state ? state.errors?.update : undefined))
+  const loading = useMissionStore((state: EntityStore<Mission>) => state.isLoading('update'))
+  const error = useMissionStore((state: EntityStore<Mission>) => state.getError('update'))
 
   return {
     loading,

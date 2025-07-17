@@ -114,21 +114,15 @@ export const useParticipantStore = extendedStore
 // Clean convenience hooks
 export const useParticipant = (participantId: string) => {
   const participant = useParticipantStore((state: EntityStore<Participant>) => state.getEntity(participantId))
-  const loading = useParticipantStore((state: EntityStore<Participant>) =>
-    'loadingStates' in state ? state.loadingStates?.get?.(participantId) || false : false
-  )
-  const error = useParticipantStore((state: EntityStore<Participant>) =>
-    'errors' in state ? state.errors?.get?.(participantId) : undefined
-  )
+  const loading = useParticipantStore((state: EntityStore<Participant>) => state.isLoading('get'))
+  const error = useParticipantStore((state: EntityStore<Participant>) => state.getError('get'))
 
   return { participant, loading, error }
 }
 
 export const useUpdateParticipant = (participantId: string) => {
-  const loading = useParticipantStore((state: EntityStore<Participant>) =>
-    'loadingStates' in state ? state.loadingStates?.update || false : false
-  )
-  const error = useParticipantStore((state: EntityStore<Participant>) => ('errors' in state ? state.errors?.update : undefined))
+  const loading = useParticipantStore((state: EntityStore<Participant>) => state.isLoading('update'))
+  const error = useParticipantStore((state: EntityStore<Participant>) => state.getError('update'))
 
   return {
     loading,
@@ -138,10 +132,8 @@ export const useUpdateParticipant = (participantId: string) => {
 }
 
 export const useDeleteParticipant = (participantId: string) => {
-  const loading = useParticipantStore((state: EntityStore<Participant>) =>
-    'loadingStates' in state ? state.loadingStates?.delete || false : false
-  )
-  const error = useParticipantStore((state: EntityStore<Participant>) => ('errors' in state ? state.errors?.delete : undefined))
+  const loading = useParticipantStore((state: EntityStore<Participant>) => state.isLoading('delete'))
+  const error = useParticipantStore((state: EntityStore<Participant>) => state.getError('delete'))
 
   return {
     loading,

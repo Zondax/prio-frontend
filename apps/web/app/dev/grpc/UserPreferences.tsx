@@ -8,7 +8,7 @@ import { RefreshCcw } from 'lucide-react'
 import { useId } from 'react'
 
 export default function UserPreferencesPage() {
-  const { isLoading, error, setParams, refresh, getData, write } = usePreferencesStore()
+  const { setParams, refresh, getData, write, isLoading, getError } = usePreferencesStore()
 
   const { selectedEndpoint } = useEndpointStore()
   useGrpcSetup(setParams, selectedEndpoint)
@@ -40,7 +40,7 @@ export default function UserPreferencesPage() {
         </button>
       </div>
 
-      {error && <div className="mt-4 text-red-500">{error.message || String(error)}</div>}
+      {getError('read') && <div className="mt-4 text-red-500">{getError('read')?.message || String(getError('read'))}</div>}
 
       {isLoading('read') ? (
         <div className="mt-4">
@@ -65,8 +65,8 @@ export default function UserPreferencesPage() {
                       <code>
                         {JSON.stringify(
                           {
-                            isLoading,
-                            error,
+                            isLoading: isLoading('read'),
+                            error: getError('read'),
                             lastUpdated: data ? 'Available' : 'None',
                           },
                           null,

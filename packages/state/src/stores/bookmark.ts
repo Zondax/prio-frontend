@@ -179,21 +179,15 @@ export const useBookmarkStore = extendedStore
 // Clean convenience hooks
 export const useBookmark = (bookmarkId: string) => {
   const bookmark = useBookmarkStore((state: EntityStore<ConversationBookmark>) => state.getEntity(bookmarkId))
-  const loading = useBookmarkStore((state: EntityStore<ConversationBookmark>) =>
-    'loadingStates' in state ? state.loadingStates?.get?.(bookmarkId) || false : false
-  )
-  const error = useBookmarkStore((state: EntityStore<ConversationBookmark>) =>
-    'errors' in state ? state.errors?.get?.(bookmarkId) : undefined
-  )
+  const loading = useBookmarkStore((state: EntityStore<ConversationBookmark>) => state.isLoading('get'))
+  const error = useBookmarkStore((state: EntityStore<ConversationBookmark>) => state.getError('get'))
 
   return { bookmark, loading, error }
 }
 
 export const useCreateBookmark = () => {
-  const loading = useBookmarkStore((state: EntityStore<ConversationBookmark>) =>
-    'loadingStates' in state ? state.loadingStates?.create || false : false
-  )
-  const error = useBookmarkStore((state: EntityStore<ConversationBookmark>) => ('errors' in state ? state.errors?.create : undefined))
+  const loading = useBookmarkStore((state: EntityStore<ConversationBookmark>) => state.isLoading('create'))
+  const error = useBookmarkStore((state: EntityStore<ConversationBookmark>) => state.getError('create'))
 
   return {
     loading,
@@ -203,10 +197,8 @@ export const useCreateBookmark = () => {
 }
 
 export const useUpdateBookmark = (bookmarkId: string) => {
-  const loading = useBookmarkStore((state: EntityStore<ConversationBookmark>) =>
-    'loadingStates' in state ? state.loadingStates?.update || false : false
-  )
-  const error = useBookmarkStore((state: EntityStore<ConversationBookmark>) => ('errors' in state ? state.errors?.update : undefined))
+  const loading = useBookmarkStore((state: EntityStore<ConversationBookmark>) => state.isLoading('update'))
+  const error = useBookmarkStore((state: EntityStore<ConversationBookmark>) => state.getError('update'))
 
   return {
     loading,
@@ -216,10 +208,8 @@ export const useUpdateBookmark = (bookmarkId: string) => {
 }
 
 export const useDeleteBookmark = (bookmarkId: string) => {
-  const loading = useBookmarkStore((state: EntityStore<ConversationBookmark>) =>
-    'loadingStates' in state ? state.loadingStates?.delete || false : false
-  )
-  const error = useBookmarkStore((state: EntityStore<ConversationBookmark>) => ('errors' in state ? state.errors?.delete : undefined))
+  const loading = useBookmarkStore((state: EntityStore<ConversationBookmark>) => state.isLoading('delete'))
+  const error = useBookmarkStore((state: EntityStore<ConversationBookmark>) => state.getError('delete'))
 
   return {
     loading,

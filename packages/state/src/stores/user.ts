@@ -14,8 +14,8 @@ export const usePreferencesStore = createGrpcOptimisticStore<GrpcConfig, User.Us
 export const usePreferencesLoading = () => usePreferencesStore().isLoading
 
 // Hook to access the write loading state
-export const usePreferencesWriting = () => usePreferencesStore().isWriting
+export const usePreferencesWriting = () => usePreferencesStore().legacyIsWriting
 
 // Hook to access the error states
-export const usePreferencesError = () => usePreferencesStore().error
-export const usePreferencesWriteError = () => usePreferencesStore().writeError
+export const usePreferencesError = () => usePreferencesStore().legacyError
+export const usePreferencesWriteError = () => usePreferencesStore().legacyWriteError
