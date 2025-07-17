@@ -259,6 +259,85 @@ Lefthook automatically runs quality checks on commit:
 - TypeScript type checking
 - Test validation where applicable
 
+## Development Tool Preferences
+
+### Package Management
+- **ALWAYS** use `pnpm` over `npm` (especially in monorepos)
+- Use `bun` with care for specific performance needs
+- Never use `npm` in this project
+
+### Code Quality Tools
+- **Biome v2** for linting and formatting (not ESLint/Prettier)
+- **es-toolkit** instead of lodash for utilities
+- **Tailwind CSS v4** for styling (stable, not beta)
+
+### Search and File Tools
+- **ripgrep (`rg`)** instead of `grep` for searching
+- **fd** instead of `find` for file discovery
+- **semgrep** for advanced code refactoring and pattern-based changes
+
+### React Import Best Practices
+**ALWAYS** use namespace imports for React:
+```typescript
+// ✅ Correct - namespace import
+import * as React from 'react'
+
+// ❌ Wrong - default import
+import React from 'react'
+```
+
+Benefits:
+- Better ES modules compatibility with React 19
+- No need to update imports when adding/removing hooks
+- Better TypeScript compatibility without `esModuleInterop`
+- Consistent with modern React patterns
+
+### Command Output Management
+For verbose commands, redirect output to `/tmp` files:
+```bash
+# Pattern for verbose commands
+pnpm test > /tmp/test-output.log 2>&1
+pnpm lint > /tmp/lint-output.log 2>&1
+
+# Filter for relevant information
+rg 'FAIL|✗|error|fail' /tmp/test-output.log
+rg 'TS[0-9]+|error|warning' /tmp/lint-output.log
+
+# Use bat for syntax highlighting
+bat /tmp/output.log
+```
+
+### Debugging Tools
+- **MCP Playwright** for web application debugging
+- Provides browser automation, console logs, network requests
+- Use for testing and debugging web interfaces
+
+## API/Store Architecture Patterns
+
+### File Structure Convention
+Each API entity follows this pattern:
+- `entity.types.ts` - TypeScript type definitions
+- `entity.mocks.ts` - Mock data for development/testing
+- `entity.ts` - API implementation
+- `stores/entity.ts` - Store implementation
+
+### Store Types
+- **Individual entities**: Use `createGrpcSingleMethodStore`
+- **Collections/Lists**: Use `createPageableStore` for infinite scroll
+- **Pagination**: Implement `TPageableResponse<T, U>` pattern
+
+### Mock Data Strategy
+- Separate mock implementations in `.mocks.ts` files
+- Simulate realistic API delays and error conditions
+- Maintain consistent relationships between entities
+- Easy to replace with real gRPC later
+
+### gRPC Integration
+- Always use proper request creators
+- Support optimistic updates and rollback mechanisms
+- Implement request cancellation and cleanup
+- Type-safe protobuf message handling
+
 ## Ongoing Development Notes
 
 - Let's put the CI large files on pause, we will continue later

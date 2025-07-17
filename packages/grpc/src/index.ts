@@ -1,3 +1,5 @@
+import * as BookmarkServiceClientPb from './entities/proto/api/v1/BookmarkServiceClientPb'
+import * as BookmarkPb from './entities/proto/api/v1/bookmark_pb'
 import * as ChatServiceClientPb from './entities/proto/api/v1/ChatServiceClientPb'
 import * as ChatPb from './entities/proto/api/v1/chat_pb'
 import * as CommonPb from './entities/proto/api/v1/common_pb'
@@ -10,6 +12,8 @@ export { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb'
 export * from './grpc'
 
 export {
+  BookmarkPb as Bookmark,
+  BookmarkServiceClientPb as BookmarkService,
   CommonPb as Common,
   UserPreferencesPb as User,
   UserServiceClientPb as UserService,

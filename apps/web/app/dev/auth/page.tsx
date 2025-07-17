@@ -7,6 +7,7 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
+  CopyButton,
   EmptyState,
   Label,
   Separator,
@@ -19,7 +20,6 @@ import {
 import { format } from 'date-fns'
 import { Clock, KeyRound, Shield, User, UserCheck } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
-import { CopyButton } from '@/components/copy-button'
 
 interface TokenInfo {
   token: string
