@@ -8,7 +8,7 @@ import { RefreshCcw } from 'lucide-react'
 import { useId } from 'react'
 
 export default function UserPreferencesPage() {
-  const { internal, isLoading, error, setParams, clientReady, forceRefresh, getData, getConfirmedData, write } = usePreferencesStore()
+  const { isLoading, error, setParams, refresh, getData, write } = usePreferencesStore()
 
   const { selectedEndpoint } = useEndpointStore()
   useGrpcSetup(setParams, selectedEndpoint)
@@ -19,7 +19,7 @@ export default function UserPreferencesPage() {
     if (!write) return
 
     const oldData = getData()
-    if (oldData === undefined) return
+    if (oldData === undefined || oldData === null) return
 
     const tmp = oldData.clone()
     tmp.setDisplayName(newDisplayName)
@@ -31,28 +31,26 @@ export default function UserPreferencesPage() {
       <div className="flex items-center gap-4">
         <button
           type="button"
-          onClick={forceRefresh}
+          onClick={refresh}
           className="rounded-lg border p-2 w-full sm:w-32 flex items-center justify-center gap-2 hover:bg-accent disabled:cursor-not-allowed disabled:opacity-50 mb-2"
-          disabled={isLoading || !clientReady()}
+          disabled={isLoading('read')}
         >
           Refresh
-          <RefreshCcw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
+          <RefreshCcw className={`h-4 w-4 ${isLoading('read') ? 'animate-spin' : ''}`} />
         </button>
       </div>
 
-      {error && <div className="mt-4 text-red-500">{error}</div>}
+      {error && <div className="mt-4 text-red-500">{error.message || String(error)}</div>}
 
-      {isLoading ? (
+      {isLoading('read') ? (
         <div className="mt-4">
           <Skeleton className="h-4 w-full sm:w-[200px]" />
         </div>
       ) : (
         (() => {
           const data = getData()
-          const confirmedData = getConfirmedData()
           return (
-            data &&
-            confirmedData && (
+            data && (
               <>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="rounded-lg bg-muted p-3 sm:p-4 overflow-auto">
@@ -62,24 +60,15 @@ export default function UserPreferencesPage() {
                     </pre>
                   </div>
                   <div className="rounded-lg bg-muted p-3 sm:p-4 overflow-auto">
-                    <h3 className="mb-2 text-sm font-semibold">Internal State</h3>
+                    <h3 className="mb-2 text-sm font-semibold">Store State</h3>
                     <pre className="text-xs sm:text-sm overflow-x-auto">
                       <code>
                         {JSON.stringify(
-                          Object.fromEntries(
-                            Object.entries(internal)
-                              .map(([key, value]) => {
-                                if (key === 'currentTransaction') {
-                                  const transaction = value as { optimisticData?: { toObject: () => any } }
-                                  return [key, transaction?.optimisticData?.toObject()]
-                                }
-                                if (key === 'latestWriteData') return [key, '{...}']
-                                if (key === 'data') return [key, '{...}']
-                                if (key === 'params') return [key, '{...}']
-                                return [key, value]
-                              })
-                              .filter(([_, value]) => value !== undefined)
-                          ),
+                          {
+                            isLoading,
+                            error,
+                            lastUpdated: data ? 'Available' : 'None',
+                          },
                           null,
                           2
                         )}
@@ -95,13 +84,6 @@ export default function UserPreferencesPage() {
                     onChange={(e) => handleDisplayNameChange(e.target.value)}
                     className="w-full max-w-[400px]"
                   />
-                </div>
-
-                <div className="mt-4 space-y-2">
-                  1: <Label htmlFor="displayName1">{confirmedData.toObject().displayName}</Label>
-                </div>
-                <div className="mt-4 space-y-2">
-                  2: <Label htmlFor="displayName2">{data.toObject().displayName}</Label>
                 </div>
               </>
             )

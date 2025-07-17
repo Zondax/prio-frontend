@@ -1,13 +1,4 @@
-// Re-export types from mock data for convenience
-
-// Zustand stores for state management
-export { useActivitiesStore } from './activities-store'
-export { useChatChannelsStore } from './chat-channels-store'
-export { useComposedStore } from './composed-stores'
-export { useMissionsStore } from './missions-store'
-export { useNavigationStore } from './navigation-store'
-export { useObjectivesStore } from './objectives-store'
-export { useParticipantsStore } from './participants-store'
+// Re-export types and data from mock data for demo pages
 export type {
   Activity,
   ChatChannel,
@@ -18,4 +9,21 @@ export type {
   ObjectiveDetail,
   Participant,
 } from './prio-mock-data'
-export { useTemplatesStore } from './templates-store'
+
+export {
+  ALL_OBJECTIVES,
+  AVAILABLE_MISSIONS,
+  CHAT_BOOKMARKS,
+  CHAT_CHANNELS,
+  CHAT_TEMPLATES,
+  getAllChatsWithDetails,
+  getMissionDetail,
+  getMissionsWithDetails,
+  getObjectiveDetail,
+  MISSION_TEMPLATES,
+  MISSIONS,
+  NAVIGATION_NODES,
+  OBJECTIVE_TEMPLATES,
+  PARTICIPANTS,
+  RECENT_ACTIVITY_ITEMS,
+} from './prio-mock-data'

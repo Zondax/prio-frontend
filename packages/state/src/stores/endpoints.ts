@@ -61,5 +61,5 @@ export const useEndpointStore = create<EndpointStore>((set, get) => ({
 }))
 
 // Simplified hooks for accessing store values
-export const useSelectedEndpoint = () => useEndpointStore((state) => state.selectedEndpoint)
-export const useEndpoints = () => useEndpointStore((state) => state.endpoints)
+export const useSelectedEndpoint = () => useEndpointStore((state: EndpointStore) => state.selectedEndpoint)
+export const useEndpoints = () => useEndpointStore((state: EndpointStore) => state.endpoints)

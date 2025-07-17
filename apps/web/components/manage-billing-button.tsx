@@ -43,10 +43,10 @@ export function ManageBillingButton({ variant = 'outline', size = 'default', cla
     }
   }, [portalStore.data])
 
-  const isLoading = portalStore.isLoading
+  const isLoading = portalStore.isAnyLoading()
   const _hasError = !!portalStore.error
 
-  const isButtonDisabled = isLoading || portalStore.isInitializing || !hasActiveBilling
+  const isButtonDisabled = isLoading || portalStore.data === null || !hasActiveBilling
 
   return (
     <div className="inline-flex flex-col">

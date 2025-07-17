@@ -5,7 +5,7 @@ import { AppShell, BarLayoutPosition, type ChromeConfig, ThemeToggle, useTopBarI
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { DevLinkItem } from '@/components/DevLinkItem'
-import { EndpointSelectorItem } from '@/components/EndpointSelectorItem'
+import EndpointSelectorItem from '@/components/EndpointSelectorItem'
 
 function DevTopBarItems() {
   const logoComponent = useMemo(

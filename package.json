@@ -51,7 +51,7 @@
     "typecheck": "pnpm --filter mono-web typecheck && pnpm --filter mono-ext typecheck",
     "typecheck:web": "pnpm --filter mono-web typecheck",
     "typecheck:ext": "pnpm --filter mono-ext typecheck",
-    "vendor:grpc": "rm -rf packages/grpc && cp -r external/backend/ts/grpc packages/grpc",
+    "vendor:grpc": "./scripts/vendor-grpc.sh",
     "shadcn": "pnpm --filter mono-web shadcn",
     "ci:check": "pnpm install && pnpm fix && pnpm build:web && pnpm build:ext",
     "build:check": "pnpm install && pnpm fix && pnpm build:web && pnpm build:ext && pnpm build:expo",

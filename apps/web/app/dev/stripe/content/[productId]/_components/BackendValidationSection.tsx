@@ -43,12 +43,12 @@ export default function BackendValidationSection({ productId }: Props) {
     <div className="space-y-4">
       {/* Access Status */}
       <div className="flex items-center justify-between">
-        <Badge variant={hasAccess ? 'default' : error ? 'destructive' : isLoading ? 'secondary' : 'outline'}>
+        <Badge variant={hasAccess ? 'default' : error ? 'destructive' : isLoading('execute') ? 'secondary' : 'outline'}>
           <Database className="h-3 w-3 mr-1" />
           {hasAccess && 'Database Verified'}
           {error && 'Access Denied'}
-          {isLoading && 'Validating...'}
-          {!content && !error && !isLoading && 'Not Validated'}
+          {isLoading('execute') && 'Validating...'}
+          {!content && !error && !isLoading('execute') && 'Not Validated'}
         </Badge>
         {hasAccess && (
           <Button onClick={forceRefresh} variant="outline" size="sm">
@@ -82,20 +82,20 @@ export default function BackendValidationSection({ productId }: Props) {
         <div className="flex justify-between">
           <span>Status:</span>
           <Badge variant={hasAccess ? 'default' : error ? 'destructive' : 'outline'} className="text-xs">
-            {error ? 'Error' : content ? 'Success' : isLoading ? 'Loading' : 'Idle'}
+            {error ? 'Error' : content ? 'Success' : isLoading('execute') ? 'Loading' : 'Idle'}
           </Badge>
         </div>
       </div>
 
       {/* Action Button */}
-      {!content && !isLoading && (
+      {!content && !isLoading('execute') && (
         <Button onClick={validateWithBackend} className="w-full">
           <Server className="h-4 w-4 mr-2" />
           Validate with Backend
         </Button>
       )}
 
-      {isLoading && (
+      {isLoading('execute') && (
         <Button disabled className="w-full">
           <Loader2 className="h-4 w-4 mr-2 animate-spin" />
           Checking Database...
@@ -121,7 +121,7 @@ export default function BackendValidationSection({ productId }: Props) {
         <Alert variant="destructive">
           <Lock className="h-4 w-4" />
           <AlertDescription className="text-xs">
-            {error || 'Backend validation failed - access denied or purchase required'}
+            {error?.message || String(error) || 'Backend validation failed - access denied or purchase required'}
           </AlertDescription>
         </Alert>
       )}

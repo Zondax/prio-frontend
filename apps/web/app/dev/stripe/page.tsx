@@ -379,11 +379,11 @@ export default function StripePage() {
   const productGridItems = transformProductsToGridItems(
     productsList,
     handleBuyProduct,
-    checkoutStore.isLoading,
-    !checkoutStore.isInitializing
+    checkoutStore.isAnyLoading(),
+    checkoutStore.data !== null
   )
 
-  const planGridItems = transformPlansToGridItems(plansList, handleBuyProduct, checkoutStore.isLoading, !checkoutStore.isInitializing)
+  const planGridItems = transformPlansToGridItems(plansList, handleBuyProduct, checkoutStore.isAnyLoading(), checkoutStore.data !== null)
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -420,8 +420,8 @@ export default function StripePage() {
           <TabsContent value="products" className="mt-6">
             <VirtualizedGrid
               items={productGridItems}
-              isLoading={productsStore.isLoading}
-              hasEverLoaded={!!productsStore.lastUpdated}
+              isLoading={productsStore.isAnyLoading()}
+              hasEverLoaded={!!productsStore.data}
               renderSkeleton={() => <ProductSkeleton />}
               emptyComponent={
                 <EmptyState
@@ -447,8 +447,8 @@ export default function StripePage() {
           <TabsContent value="plans" className="mt-6">
             <VirtualizedGrid
               items={planGridItems}
-              isLoading={plansStore.isLoading}
-              hasEverLoaded={!!plansStore.lastUpdated}
+              isLoading={plansStore.isAnyLoading()}
+              hasEverLoaded={!!plansStore.data}
               renderSkeleton={() => <ProductSkeleton />}
               emptyComponent={
                 <EmptyState

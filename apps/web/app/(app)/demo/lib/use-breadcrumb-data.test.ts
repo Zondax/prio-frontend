@@ -9,7 +9,7 @@ vi.mock('next/navigation', () => ({
 }))
 
 // Mock data functions
-vi.mock('@/app/(app)/prio/store/prio-mock-data', () => ({
+vi.mock('@/app/(app)/demo/store/prio-mock-data', () => ({
   MISSIONS: {
     'mission-1': { name: 'Test Mission 1' },
     'mission-2': { name: 'Test Mission 2' },
