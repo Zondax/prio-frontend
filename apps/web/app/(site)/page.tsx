@@ -26,7 +26,7 @@ export default function SitePage() {
             <div className="inline-flex items-center px-6 py-3 text-lg font-medium text-white bg-gray-400 rounded-lg">Loading...</div>
           ) : (
             <Link
-              href="/prio"
+              href="/dashboard"
               className="inline-flex items-center px-6 py-3 text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
             >
               {isSignedIn ? 'Enter Prio' : 'Sign In'}
