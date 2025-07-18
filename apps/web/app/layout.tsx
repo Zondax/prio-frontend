@@ -1,4 +1,5 @@
 import { AuthProvider } from '@zondax/auth-web'
+import { KsBody } from '@zondax/ui-common'
 import type { Metadata } from 'next'
 import { Figtree, Inter as FontSans, Parkinsans } from 'next/font/google'
 import TurnstileOtelProvider from '@/app/telemetry/TurnstileOtelProvider'
@@ -48,13 +49,13 @@ export const viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning className="overflow-x-hidden">
-      <body className={`${fontSans.variable} ${fontBody.variable} ${fontHeading.variable}`}>
+      <KsBody fontClasses={[fontSans.variable, fontBody.variable, fontHeading.variable]}>
         <ClientProviders>
           <AuthProvider>
             <TurnstileOtelProvider>{children}</TurnstileOtelProvider>
           </AuthProvider>
         </ClientProviders>
-      </body>
+      </KsBody>
     </html>
   )
 }
