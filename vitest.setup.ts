@@ -1,10 +1,11 @@
 /**
  * Root vitest setup for prio-frontend
  * Migrated from jest-dom to native Vitest assertions (2025-01)
+ * Enhanced with additional mocks from kedge-frontend (2025-01)
  */
 import { EventEmitter as NodeEventEmitter } from 'node:events'
 import { cleanup } from '@testing-library/react'
-import { afterEach } from 'vitest'
+import { afterEach, beforeEach, vi } from 'vitest'
 
 // Ensure DOM is cleaned after each test when using the monorepo-level runner
 // Provide a minimal global expo object for expo-modules-core expectations
@@ -19,47 +20,49 @@ if (typeof (globalThis as any).__DEV__ === 'undefined') {
 }
 
 // Mock ResizeObserver for tests
-global.ResizeObserver = class ResizeObserver {
-  constructor(cb: ResizeObserverCallback) {
-    this.cb = cb
-  }
-  cb: ResizeObserverCallback
-  observe() {}
-  unobserve() {}
-  disconnect() {}
-}
+global.ResizeObserver = vi.fn().mockImplementation(() => ({
+  observe: vi.fn(),
+  unobserve: vi.fn(),
+  disconnect: vi.fn(),
+}))
 
 // Mock IntersectionObserver for tests
-global.IntersectionObserver = class IntersectionObserver {
-  constructor(cb: IntersectionObserverCallback, options?: IntersectionObserverInit) {
-    this.cb = cb
-    this.options = options
-  }
-  cb: IntersectionObserverCallback
-  options?: IntersectionObserverInit
-  root: Element | null = null
-  rootMargin = '0px'
-  thresholds: ReadonlyArray<number> = [0]
-  observe() {}
-  unobserve() {}
-  disconnect() {}
-  takeRecords(): IntersectionObserverEntry[] {
-    return []
-  }
-}
+global.IntersectionObserver = vi.fn().mockImplementation(() => ({
+  observe: vi.fn(),
+  unobserve: vi.fn(),
+  disconnect: vi.fn(),
+  takeRecords: vi.fn(() => []),
+}))
 
 // Mock MutationObserver for tests
-global.MutationObserver = class MutationObserver {
-  constructor(cb: MutationCallback) {
-    this.cb = cb
-  }
-  cb: MutationCallback
-  observe() {}
-  disconnect() {}
-  takeRecords(): MutationRecord[] {
-    return []
-  }
-}
+global.MutationObserver = vi.fn().mockImplementation(() => ({
+  observe: vi.fn(),
+  disconnect: vi.fn(),
+  takeRecords: vi.fn(() => []),
+}))
+
+// Mock matchMedia which is used by responsive components
+const mockMatchMedia = vi.fn().mockImplementation((query) => ({
+  matches: false,
+  media: query,
+  onchange: null,
+  addListener: vi.fn(), // Deprecated
+  removeListener: vi.fn(), // Deprecated
+  addEventListener: vi.fn(),
+  removeEventListener: vi.fn(),
+  dispatchEvent: vi.fn(),
+}))
+
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: mockMatchMedia,
+})
+
+// Also mock as global function for environments that don't have window
+global.matchMedia = mockMatchMedia
+
+// Mock scrollIntoView which is not available in jsdom
+Element.prototype.scrollIntoView = vi.fn()
 
 // Create a reusable fonts mock singleton
 const fontsMock = {
@@ -79,6 +82,26 @@ const setupDocumentFonts = () => {
 
 // Set up initially
 setupDocumentFonts()
+
+// Mock Next.js router for components that use it
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    replace: vi.fn(),
+    prefetch: vi.fn(),
+    back: vi.fn(),
+    forward: vi.fn(),
+    refresh: vi.fn(),
+  }),
+  usePathname: () => '/',
+  useSearchParams: () => new URLSearchParams(),
+}))
+
+// Global test setup
+beforeEach(() => {
+  // Reset all mocks before each test
+  vi.clearAllMocks()
+})
 
 afterEach(() => {
   cleanup()
