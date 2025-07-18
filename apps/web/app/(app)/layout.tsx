@@ -1,6 +1,5 @@
 'use client'
 
-import { UserButton } from '@zondax/auth-web'
 import {
   AppShell,
   BarLayoutPosition,
@@ -11,11 +10,12 @@ import {
   useTopBarItem,
 } from '@zondax/ui-common/client'
 import { useMemo } from 'react'
+import { TeamUserButton } from '@/components/teams/TeamUserButton'
 
 // Inline AppTopBarItems component
 function AppTopBarItems() {
   const themeToggleComponent = useMemo(() => <ThemeToggle />, [])
-  const userButtonComponent = useMemo(() => <UserButton />, [])
+  const userButtonComponent = useMemo(() => <TeamUserButton />, [])
   useTopBarItem('theme-toggle', themeToggleComponent, 'end', 10)
   useTopBarItem('user-button', userButtonComponent, 'end', 20)
 

@@ -1,25 +1,22 @@
 import { sha256 } from '@noble/hashes/sha2'
 import { bytesToHex } from '@noble/hashes/utils'
 import { format, formatDistanceToNow, isToday, isYesterday } from 'date-fns'
+import { isString, omit, pick } from 'es-toolkit'
 
 /**
  * Extract UTM parameters from search params
  * Works with both server components (via props.searchParams) and client components (via useSearchParams())
  */
 export function getUtmParams(searchParams: { [key: string]: string | string[] | undefined } | undefined | null) {
-  const resolvedParams = searchParams
-
-  if (!resolvedParams) {
+  if (!searchParams || Object.keys(searchParams).length === 0) {
     return {}
   }
 
-  return {
-    utm_source: typeof resolvedParams?.utm_source === 'string' ? resolvedParams.utm_source : undefined,
-    utm_medium: typeof resolvedParams?.utm_medium === 'string' ? resolvedParams.utm_medium : undefined,
-    utm_campaign: typeof resolvedParams?.utm_campaign === 'string' ? resolvedParams.utm_campaign : undefined,
-    utm_term: typeof resolvedParams?.utm_term === 'string' ? resolvedParams.utm_term : undefined,
-    utm_content: typeof resolvedParams?.utm_content === 'string' ? resolvedParams.utm_content : undefined,
-  }
+  const utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'] as const
+  const pickedParams = pick(searchParams as Record<string, string | string[] | undefined>, utmKeys)
+
+  // Filter to only include string values (exclude arrays and undefined)
+  return Object.fromEntries(Object.entries(pickedParams).filter(([_, value]) => isString(value))) as Record<string, string>
 }
 
 /**
@@ -91,4 +88,21 @@ export const hashString = (str: string): string => {
   const messageBytes = new TextEncoder().encode(str) // Convert string to Uint8Array
   const hashBytes = sha256(messageBytes) // Perform SHA256 hash
   return bytesToHex(hashBytes) // Convert hash bytes to a hex string
+}
+
+/**
+ * Remove sensitive parameters from an object (useful for logging/analytics)
+ */
+export function sanitizeParams<T extends Record<string, any>>(
+  params: T,
+  sensitiveKeys: string[] = ['password', 'token', 'secret', 'key', 'auth']
+): Record<string, any> {
+  return omit(params, sensitiveKeys)
+}
+
+/**
+ * Extract only safe parameters for client-side usage
+ */
+export function getSafeClientParams<T extends Record<string, any>>(params: T, allowedKeys: string[]): Record<string, any> {
+  return pick(params, allowedKeys)
 }
