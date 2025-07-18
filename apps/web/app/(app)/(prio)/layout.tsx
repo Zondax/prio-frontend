@@ -1,6 +1,6 @@
 'use client'
 
-import { CustomUserButton } from '@zondax/auth-web'
+import { UserButton } from '@zondax/auth-web'
 import { Breadcrumb, SidebarList, SidebarTree, ThemeToggle, useAppShell, useLeftSidebarItem, useTopBarItem } from '@zondax/ui-common/client'
 import { useEffect, useMemo } from 'react'
 import { useBreadcrumbData } from '../demo/lib/use-breadcrumb-data'
@@ -61,7 +61,7 @@ export default function PrioLayout({ children }: { children: React.ReactNode }) 
 
   const breadcrumbComponent = useMemo(() => <BreadcrumbNavigation />, [])
   const themeToggleComponent = useMemo(() => <ThemeToggle />, [])
-  const userButtonComponent = useMemo(() => <CustomUserButton />, [])
+  const userButtonComponent = useMemo(() => <UserButton />, [])
 
   useTopBarItem('prio-breadcrumb', breadcrumbComponent, 'start', 5)
   useTopBarItem('theme-toggle', themeToggleComponent, 'end', 10)

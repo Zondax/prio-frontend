@@ -1,4 +1,40 @@
-import type { Team, TeamManagementOperations, TeamMember, TeamRole } from '@zondax/ui-common/client'
+// import type { Team, TeamManagementOperations, TeamMember, TeamRole } from '@zondax/ui-common/client'
+
+// Temporary type definitions until they are available in @zondax/ui-common
+type TeamRole = 'owner' | 'admin' | 'member' | 'viewer'
+
+interface Team {
+  id: string
+  name: string
+  description?: string
+  createdAt: Date
+  updatedAt: Date
+  currentUserRole: TeamRole
+}
+
+interface TeamMember {
+  id: string
+  name: string
+  email: string
+  role: TeamRole
+  status: 'active' | 'invited' | 'requesting'
+  joinedAt: Date
+}
+
+interface TeamManagementOperations {
+  getTeams: () => Promise<Team[]>
+  createTeam: (teamData: { name: string; description?: string }) => Promise<Team>
+  updateTeam: (teamId: string, teamData: { name?: string; description?: string }) => Promise<Team>
+  deleteTeam: (teamId: string) => Promise<void>
+  selectTeam: (teamId: string) => Promise<void>
+  getCurrentTeam: () => Promise<Team | null>
+  inviteMember: (teamId: string, email: string, role: TeamRole) => Promise<void>
+  removeMember: (teamId: string, memberId: string) => Promise<void>
+  cancelInvitation: (teamId: string, memberId: string) => Promise<void>
+  changeRole: (teamId: string, memberId: string, newRole: TeamRole) => Promise<void>
+  getMembers: (teamId: string) => Promise<TeamMember[]>
+  getCurrentUser: () => Promise<{ id: string; role: TeamRole }>
+}
 
 export const createMockTeamOperations = (): TeamManagementOperations => {
   // Mock teams data
