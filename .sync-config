@@ -1,0 +1,29 @@
+# z Sync Configuration for prio-frontend
+# This file controls template synchronization behavior
+
+[ignore]
+# Project-specific features
+Missions and Goals functionality
+prio-specific business logic
+apps/web/app/(app)/(prio)/ directory
+src/features/prio/
+
+[priority]
+# High-priority patterns that should be synced first
+State management improvements
+Security fixes
+Core UI components
+Authentication patterns
+KsBody and layout improvements
+Dependency security updates
+
+[rules]
+# Custom sync rules and instructions
+Always sync package.json security updates
+Sync UI components but preserve prio-specific variants
+CustomUserButton should be considered for upstream sync to template
+Preserve local business logic customizations
+
+[notes]
+# Additional notes for AI and human operators
+This is prio-frontend - priority management application
