@@ -6,12 +6,12 @@
     "paths": {
       "@mono-ui/*": ["../../packages/ui/src/*"],
       "@mono-ui": ["../../packages/ui/src/index.ts"],
-      "@zondax/ui-common": ["../../libs/ui-common/src/index.ts"],
-      "@zondax/ui-common/server": ["../../libs/ui-common/src/server"],
-      "@zondax/ui-common/client": ["../../libs/ui-common/src/client"],
-      "@zondax/ui-common/styles/*": ["../../libs/ui-common/src/styles/*"],
-      "@zondax/ui-common/*": ["../../libs/ui-common/src/*"]
+      "@zondax/ui-web": ["../../libs/ui-web/src/index.ts"],
+      "@zondax/ui-web/server": ["../../libs/ui-web/src/server"],
+      "@zondax/ui-web/client": ["../../libs/ui-web/src/client"],
+      "@zondax/ui-web/styles/*": ["../../libs/ui-web/src/styles/*"],
+      "@zondax/ui-web/*": ["../../libs/ui-web/src/*"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", "../../libs/ui-common/src/stories/Typography.stories.tsx"]
+  "include": ["**/*.ts", "**/*.tsx", "../../libs/ui-web/src/stories/Typography.stories.tsx"]
 }
