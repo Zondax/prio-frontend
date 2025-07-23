@@ -1,5 +1,5 @@
 import { AuthProvider } from '@zondax/auth-web'
-import { KsBody } from '@zondax/ui-web/client'
+import { KsBody } from '@zondax/ui-web'
 import type { Metadata } from 'next'
 import { Figtree, Inter as FontSans, Parkinsans } from 'next/font/google'
 import TurnstileOtelProvider from '@/app/telemetry/TurnstileOtelProvider'
