@@ -1,10 +1,10 @@
 import type { ChatService, GrpcConfig } from '@mono-grpc'
-import { createGrpcSingleMethodStore } from '@zondax/stores'
+import { createSimpleStore } from '@zondax/stores'
 
 import { createChatClient, sendChatMessage } from '../api/chat'
 
 // Store for sending chat messages
-export const useChatStore = createGrpcSingleMethodStore<
+export const useChatStore = createSimpleStore<
   GrpcConfig,
   ChatService.ChatServiceClient,
   { message: string; userId: string; conversationId?: string },
@@ -20,7 +20,7 @@ export const useChatStore = createGrpcSingleMethodStore<
 export const useChatLoading = () => {
   const store = useChatStore()
   // Check if any operation is loading
-  return store.isAnyLoading()
+  return store.isLoading
 }
 export const useChatError = () => useChatStore().error
 export const useChatResponse = () => useChatStore().data

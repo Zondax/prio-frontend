@@ -34,9 +34,8 @@ export default defineConfig({
       '@mono-ui': resolve(__dirname, '../../packages/ui/src'),
       '@zondax/auth-core': resolve(__dirname, '../../libs/auth-core/src'),
       '@zondax/auth-web': resolve(__dirname, '../../libs/auth-web/src'),
-      '@zondax/ui-common': resolve(__dirname, '../../libs/ui-common/src'),
-      '@zondax/ui-common/server': resolve(__dirname, '../../libs/ui-common/src/server'),
-      '@zondax/ui-common/client': resolve(__dirname, '../../libs/ui-common/src/client'),
+      '@zondax/ui-web/server': resolve(__dirname, '../../libs/ui-common/src/server'),
+      '@zondax/ui-web': resolve(__dirname, '../../libs/ui-common/src/client'),
     },
   },
 })

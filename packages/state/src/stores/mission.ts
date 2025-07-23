@@ -1,5 +1,5 @@
 import type { GrpcConfig } from '@mono-grpc'
-import { createGrpcSingleMethodStore } from '@zondax/stores'
+import { createSimpleStore } from '@zondax/stores'
 
 import {
   type AddObjectiveRequest,
@@ -25,7 +25,7 @@ import {
 } from '../api/mission'
 
 // Store for getting mission details
-export const useMissionDetailsStore = createGrpcSingleMethodStore<
+export const useMissionDetailsStore = createSimpleStore<
   GrpcConfig,
   ReturnType<typeof createMissionClient>,
   GetMissionDetailsRequest,
@@ -38,12 +38,7 @@ export const useMissionDetailsStore = createGrpcSingleMethodStore<
 })
 
 // Store for updating missions
-export const useUpdateMissionStore = createGrpcSingleMethodStore<
-  GrpcConfig,
-  ReturnType<typeof createMissionClient>,
-  UpdateMissionRequest,
-  Mission
->({
+export const useUpdateMissionStore = createSimpleStore<GrpcConfig, ReturnType<typeof createMissionClient>, UpdateMissionRequest, Mission>({
   createClient: createMissionClient,
   method: async (client, clientParams, input) => {
     return await updateMission(client, clientParams, input)
@@ -51,7 +46,7 @@ export const useUpdateMissionStore = createGrpcSingleMethodStore<
 })
 
 // Store for adding objectives to mission
-export const useAddMissionObjectiveStore = createGrpcSingleMethodStore<
+export const useAddMissionObjectiveStore = createSimpleStore<
   GrpcConfig,
   ReturnType<typeof createMissionClient>,
   AddObjectiveRequest,
@@ -64,7 +59,7 @@ export const useAddMissionObjectiveStore = createGrpcSingleMethodStore<
 })
 
 // Store for updating objectives in mission
-export const useUpdateMissionObjectiveStore = createGrpcSingleMethodStore<
+export const useUpdateMissionObjectiveStore = createSimpleStore<
   GrpcConfig,
   ReturnType<typeof createMissionClient>,
   UpdateObjectiveRequest,
@@ -77,7 +72,7 @@ export const useUpdateMissionObjectiveStore = createGrpcSingleMethodStore<
 })
 
 // Store for deleting objectives from mission
-export const useDeleteMissionObjectiveStore = createGrpcSingleMethodStore<
+export const useDeleteMissionObjectiveStore = createSimpleStore<
   GrpcConfig,
   ReturnType<typeof createMissionClient>,
   DeleteObjectiveRequest,
@@ -90,7 +85,7 @@ export const useDeleteMissionObjectiveStore = createGrpcSingleMethodStore<
 })
 
 // Store for adding team members
-export const useAddTeamMemberStore = createGrpcSingleMethodStore<
+export const useAddTeamMemberStore = createSimpleStore<
   GrpcConfig,
   ReturnType<typeof createMissionClient>,
   AddTeamMemberRequest,
@@ -103,7 +98,7 @@ export const useAddTeamMemberStore = createGrpcSingleMethodStore<
 })
 
 // Store for removing team members
-export const useRemoveTeamMemberStore = createGrpcSingleMethodStore<
+export const useRemoveTeamMemberStore = createSimpleStore<
   GrpcConfig,
   ReturnType<typeof createMissionClient>,
   RemoveTeamMemberRequest,

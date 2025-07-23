@@ -1,7 +1,7 @@
 'use client'
 
 import { useGrpcSetup } from '@zondax/auth-web/hooks'
-import { Button } from '@zondax/ui-common/client'
+import { Button } from '@zondax/ui-web/client'
 import { CreditCard, Loader2, Lock } from 'lucide-react'
 import { createPortalSessionRequest, useCreatePortalSessionStore, useEndpointStore } from 'mono-state'
 import { useCallback, useEffect } from 'react'
@@ -43,10 +43,10 @@ export function ManageBillingButton({ variant = 'outline', size = 'default', cla
     }
   }, [portalStore.data])
 
-  const isLoading = portalStore.isAnyLoading()
+  const isLoading = portalStore.isLoading
   const _hasError = !!portalStore.error
 
-  const isButtonDisabled = isLoading || portalStore.data === null || !hasActiveBilling
+  const isButtonDisabled = isLoading || !hasActiveBilling
 
   return (
     <div className="inline-flex flex-col">

@@ -1,7 +1,7 @@
 'use client'
 
 import { CustomUserButton } from '@zondax/auth-web'
-import { AppShell, BarLayoutPosition, type ChromeConfig, ThemeToggle, useTopBarItem } from '@zondax/ui-common/client'
+import { AppShell, BarLayoutPosition, type ChromeConfig, ThemeToggle, useTopBarItem } from '@zondax/ui-web/client'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { DevLinkItem } from '@/components/DevLinkItem'

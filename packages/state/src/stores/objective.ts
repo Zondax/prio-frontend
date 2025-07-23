@@ -1,5 +1,5 @@
 import type { GrpcConfig } from '@mono-grpc'
-import { createGrpcSingleMethodStore } from '@zondax/stores'
+import { createSimpleStore } from '@zondax/stores'
 
 import {
   createObjectiveClient,
@@ -14,12 +14,7 @@ import {
 } from '../api/objective'
 
 // Store for getting objective details
-export const useObjectiveStore = createGrpcSingleMethodStore<
-  GrpcConfig,
-  ReturnType<typeof createObjectiveClient>,
-  GetObjectiveRequest,
-  Objective
->({
+export const useObjectiveStore = createSimpleStore<GrpcConfig, ReturnType<typeof createObjectiveClient>, GetObjectiveRequest, Objective>({
   createClient: createObjectiveClient,
   method: async (client, clientParams, input) => {
     return await getObjective(client, clientParams, input)
@@ -27,7 +22,7 @@ export const useObjectiveStore = createGrpcSingleMethodStore<
 })
 
 // Store for updating objectives
-export const useUpdateObjectiveStore = createGrpcSingleMethodStore<
+export const useUpdateObjectiveStore = createSimpleStore<
   GrpcConfig,
   ReturnType<typeof createObjectiveClient>,
   UpdateObjectiveRequest,
@@ -40,7 +35,7 @@ export const useUpdateObjectiveStore = createGrpcSingleMethodStore<
 })
 
 // Store for deleting objectives
-export const useDeleteObjectiveStore = createGrpcSingleMethodStore<
+export const useDeleteObjectiveStore = createSimpleStore<
   GrpcConfig,
   ReturnType<typeof createObjectiveClient>,
   DeleteObjectiveRequest,

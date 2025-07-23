@@ -1,7 +1,7 @@
 'use client'
 
 import type { ColumnDef } from '@tanstack/react-table'
-import { Badge, Button, useAppShell, VirtualizedTable } from '@zondax/ui-common/client'
+import { Badge, Button, useAppShell, VirtualizedTable } from '@zondax/ui-web/client'
 import { Calendar, Clock, MessageSquare, MoreHorizontal, Settings, Target, Users } from 'lucide-react'
 import { notFound, useParams, useRouter } from 'next/navigation'
 import { useCallback, useMemo, useState } from 'react'

@@ -1,5 +1,5 @@
 import type { GrpcConfig } from '@mono-grpc'
-import { createGrpcSingleMethodStore } from '@zondax/stores'
+import { createSimpleStore } from '@zondax/stores'
 import type { PaymentGatewayClient } from '../../../grpc/src/entities/proto/api/v1/Payment-gatewayServiceClientPb'
 import type {
   CreateCheckoutSessionRequest,
@@ -12,7 +12,7 @@ import type {
 
 import { createCheckoutSession, createPaymentGatewayClient, createPortalSession, getCheckoutSessionStatus } from '../api/payment-gateway'
 
-export const useCreateCheckoutSessionStore = createGrpcSingleMethodStore<
+export const useCreateCheckoutSessionStore = createSimpleStore<
   GrpcConfig,
   PaymentGatewayClient,
   CreateCheckoutSessionRequest,
@@ -22,7 +22,7 @@ export const useCreateCheckoutSessionStore = createGrpcSingleMethodStore<
   method: createCheckoutSession,
 })
 
-export const useGetCheckoutSessionStatusStore = createGrpcSingleMethodStore<
+export const useGetCheckoutSessionStatusStore = createSimpleStore<
   GrpcConfig,
   PaymentGatewayClient,
   GetCheckoutSessionStatusRequest,
@@ -32,7 +32,7 @@ export const useGetCheckoutSessionStatusStore = createGrpcSingleMethodStore<
   method: getCheckoutSessionStatus,
 })
 
-export const useCreatePortalSessionStore = createGrpcSingleMethodStore<
+export const useCreatePortalSessionStore = createSimpleStore<
   GrpcConfig,
   PaymentGatewayClient,
   CreatePortalSessionRequest,

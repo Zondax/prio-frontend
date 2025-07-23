@@ -2,7 +2,7 @@
 
 import { useAuth } from '@zondax/auth-web'
 import { OtelProvider } from '@zondax/otel-web/client'
-import { TelemetryErrorBoundary, TurnstileProvider, useTurnstile } from '@zondax/ui-common/client'
+import { TelemetryErrorBoundary, TurnstileProvider, useTurnstile } from '@zondax/ui-web/client'
 import type { ReactNode } from 'react'
 import { useCallback, useMemo } from 'react'
 import { useAppAuthorization } from '@/lib/authorization/useAppAuthorization'

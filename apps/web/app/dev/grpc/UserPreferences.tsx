@@ -3,12 +3,12 @@
 import { usePreferencesStore } from '@mono-state'
 import { useEndpointStore } from '@mono-state/stores'
 import { useGrpcSetup } from '@zondax/auth-web/hooks'
-import { Input, Label, Skeleton } from '@zondax/ui-common/client'
+import { Input, Label, Skeleton } from '@zondax/ui-web/client'
 import { RefreshCcw } from 'lucide-react'
 import { useId } from 'react'
 
 export default function UserPreferencesPage() {
-  const { setParams, refresh, getData, write, isLoading, getError } = usePreferencesStore()
+  const { setParams, refresh, data, write, isLoading, errors } = usePreferencesStore()
 
   const { selectedEndpoint } = useEndpointStore()
   useGrpcSetup(setParams, selectedEndpoint)
@@ -18,7 +18,7 @@ export default function UserPreferencesPage() {
   const handleDisplayNameChange = (newDisplayName: string) => {
     if (!write) return
 
-    const oldData = getData()
+    const oldData = data
     if (oldData === undefined || oldData === null) return
 
     const tmp = oldData.clone()
@@ -40,7 +40,7 @@ export default function UserPreferencesPage() {
         </button>
       </div>
 
-      {getError('read') && <div className="mt-4 text-red-500">{getError('read')?.message || String(getError('read'))}</div>}
+      {errors?.read && <div className="mt-4 text-red-500">{errors.read.message || String(errors.read)}</div>}
 
       {isLoading('read') ? (
         <div className="mt-4">
@@ -48,15 +48,15 @@ export default function UserPreferencesPage() {
         </div>
       ) : (
         (() => {
-          const data = getData()
+          const currentData = data
           return (
-            data && (
+            currentData && (
               <>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="rounded-lg bg-muted p-3 sm:p-4 overflow-auto">
                     <h3 className="mb-2 text-sm font-semibold">User Preferences</h3>
                     <pre className="text-xs sm:text-sm overflow-x-auto">
-                      <code>{JSON.stringify(data.toObject(), null, 2)}</code>
+                      <code>{JSON.stringify(currentData.toObject(), null, 2)}</code>
                     </pre>
                   </div>
                   <div className="rounded-lg bg-muted p-3 sm:p-4 overflow-auto">
@@ -66,8 +66,8 @@ export default function UserPreferencesPage() {
                         {JSON.stringify(
                           {
                             isLoading: isLoading('read'),
-                            error: getError('read'),
-                            lastUpdated: data ? 'Available' : 'None',
+                            error: errors?.read,
+                            lastUpdated: currentData ? 'Available' : 'None',
                           },
                           null,
                           2

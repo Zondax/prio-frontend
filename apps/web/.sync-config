@@ -1,0 +1,81 @@
+# z Sync Configuration
+# This file contains instructions and patterns for the sync command.
+# It can include exclusions, priorities, custom rules, and any sync-related configurations.
+#
+# Format:
+# - Lines starting with # are comments
+# - Sections are marked with [section_name]
+# - Plain text descriptions and patterns are supported
+
+[repos]
+# Git repositories to include in sync analysis
+# These will be auto-discovered on first run if not specified
+
+[ignored_repos]
+# Git repositories to permanently ignore
+# These will not be prompted for inclusion in future runs
+
+[template]
+# The template repository (source of truth for syncing)
+# Will be prompted for selection on first run if not specified
+
+[relationships]
+# Repository relationships (auto-discovered and user-confirmed)
+# template = ks-frontend
+# derivatives = prio-frontend, kedge-frontend, paseo-frontend
+
+[patterns]
+# Learned patterns for automatic classification
+# template_indicators = template, base, starter, kickstarter, ks-
+# derivative_indicators = -frontend, -app, -client, -service
+
+[history]
+# Track sync decisions for learning
+# 2025-01-19: Synced gRPC patterns from ks-frontend to paseo-frontend
+# 2025-01-19: User rejected team management sync to kedge-frontend
+
+[ignore]
+# Patterns and features to exclude from synchronization
+Custom authentication implementations
+Derivative-specific branding
+Environment configuration files
+.env*
+Local development settings
+Deployment configurations
+Customer-specific features
+API endpoint customizations
+Internal documentation
+docs/internal/*
+config/local/*
+
+[priority]
+# High-priority patterns that should be synced first
+Security fixes
+Critical bug fixes
+Dependency security updates
+
+[rules]
+# Custom sync rules and instructions
+# Always sync package.json security updates
+# Preserve local authentication customizations
+# Sync UI components but not business logic
+# Keep derivative-specific API endpoints
+
+[mappings]
+# File/directory mappings for different structures
+# template:src/components -> derivative:src/ui/components
+# template:config/shared -> derivative:config/common
+
+[timeouts]
+# Timeout values in seconds for different operations
+# git_operations=30
+# package_analysis=15
+# submodule_check=20
+# default=30
+
+[notes]
+# Additional notes for AI and human operators
+# This is prio-frontend - customer-specific features in src/features/prio/
+# Authentication uses different OAuth provider than template
+# Custom analytics implementation - do not override
+

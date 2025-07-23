@@ -1,0 +1,10 @@
+repo: https://github.com/zondax/prio-backend.git
+ref: main
+source: proto-generated/ts
+target: packages/grpc/src/entities
+clean: true
+include:
+  - "**/*"
+exclude:
+  - "**/*.test.ts"
+  - "**/test/**"

@@ -1,6 +1,6 @@
 'use client'
 
-import { Badge, BlockNoteEditorComponent, Button, Progress, Tabs, TabsContent, TabsList, TabsTrigger } from '@zondax/ui-common/client'
+import { Badge, BlockNoteEditorComponent, Button, Progress, Tabs, TabsContent, TabsList, TabsTrigger } from '@zondax/ui-web/client'
 import { ArrowLeft, Calendar, CheckCircle, Edit, FileText, MessageSquare, MoreHorizontal, Users } from 'lucide-react'
 import { notFound, useParams, useRouter } from 'next/navigation'
 import { useCallback } from 'react'

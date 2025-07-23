@@ -2,7 +2,7 @@
 
 import { useEndpointStore } from '@mono-state'
 import { useUser } from '@zondax/auth-web'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@zondax/ui-common/client'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@zondax/ui-web/client'
 
 function EndpointSelector() {
   const { endpoints, selectedEndpoint, setSelectedEndpoint } = useEndpointStore()
