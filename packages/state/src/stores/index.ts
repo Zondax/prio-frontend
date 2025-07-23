@@ -14,4 +14,4 @@ export * from './payment-gateway'
 export * from './product'
 export * from './thread-entity-store'
 export * from './user'
-export * from "./userPreferencesStream";
+export * from './userPreferencesStream'
