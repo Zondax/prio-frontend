@@ -46,3 +46,4 @@ apps/**/coverage
 !pnpm-lock.yaml
 .qodo
 biome-report.json
+~/.claude/tmp/z-actions/*
