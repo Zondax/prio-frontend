@@ -12,20 +12,20 @@ This document logs the implementation progress of the hybrid styling architectur
 
 ### 2025-07-04 - Implementation Analysis  
 - ✅ **Theme system implemented** - CSS variables and theme architecture in place
-  - `libs/ui-common/src/styles/themes/theme-basic.css` - Basic theme with CSS variables
-  - `libs/ui-common/src/styles/themes/theme-alternative.css` - Alternative theme variant
+  - `libs/ui-web/src/styles/themes/theme-basic.css` - Basic theme with CSS variables
+  - `libs/ui-web/src/styles/themes/theme-alternative.css` - Alternative theme variant
   - CSS custom properties for all design tokens (background, foreground, primary, etc.)
 - ✅ **Tailwind integration** - Multiple Tailwind setups across applications
   - `apps/web/styles/globals.css` - Web application Tailwind integration
   - `apps/expo/global.css` - Expo application styling
   - `apps/ext/src/assets/styles/tailwind.css` - Extension Tailwind setup
-  - `libs/ui-common/src/styles/globals.css` - Shared component styles
+  - `libs/ui-web/src/styles/globals.css` - Shared component styles
 - ✅ **Component styling structure** - Organization for different use cases
-  - `libs/ui-common/src/styles/app.css` - Application-level styles
-  - `libs/ui-common/src/styles/debug.css` - Debug and development styles
-  - `libs/ui-common/src/styles/vgrid.css` - Virtual grid component styles
-  - `libs/ui-common/src/styles/vtable.css` - Virtual table component styles
-  - `libs/ui-common/src/storybook.css` - Storybook-specific styling
+  - `libs/ui-web/src/styles/app.css` - Application-level styles
+  - `libs/ui-web/src/styles/debug.css` - Debug and development styles
+  - `libs/ui-web/src/styles/vgrid.css` - Virtual grid component styles
+  - `libs/ui-web/src/styles/vtable.css` - Virtual table component styles
+  - `libs/ui-web/src/storybook.css` - Storybook-specific styling
 - ✅ **CVA implementation evidence** - CVA pattern usage throughout chat components with type-safe variant systems in place
   - Semantic class generation working
 

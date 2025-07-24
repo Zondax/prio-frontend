@@ -20,7 +20,7 @@ export const useChatStore = createSimpleStore<
 export const useChatLoading = () => {
   const store = useChatStore()
   // Check if any operation is loading
-  return store.isAnyLoading()
+  return store.isLoading
 }
 export const useChatError = () => useChatStore().error
 export const useChatResponse = () => useChatStore().data

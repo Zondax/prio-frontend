@@ -8,7 +8,7 @@
 ## Executive Summary
 
 ### Current Problem
-The existing chat components in `libs/ui-common/src/components/chat/` suffer from several architectural issues that limit their flexibility, maintainability, and reusability:
+The existing chat components in `libs/ui-web/src/components/chat/` suffer from several architectural issues that limit their flexibility, maintainability, and reusability:
 
 1. **Monolithic Design**: Components like `ChatContainer` (380 lines), `ChatMessage` (300 lines), and `ChatMessageList` (400 lines) try to handle too many responsibilities
 2. **Hardcoded Assumptions**: Role types (`'user' | 'assistant' | 'system'`) and content types (`string`) are baked into the component interfaces
@@ -318,7 +318,7 @@ The new architecture MUST support all existing advanced features to avoid regres
 
 ### 3. Component Hierarchy
 
-#### New File Structure (ui-common)
+#### New File Structure (ui-web)
 ```text
 chat/
 ├── core/
@@ -341,25 +341,25 @@ chat/
 │   ├── InteractionMenu.tsx      # Dropdown/popover menu variant
 │   ├── InteractionToolbar.tsx   # Toolbar variant (floating/inline)
 │   └── ReactionPicker.tsx       # Emoji/reaction picker
-├── streaming/                # Core extension (shipped with ui-common)
+├── streaming/                # Core extension (shipped with ui-web)
 │   ├── ChatStreamingMessage.tsx  # Message with streaming support
 │   ├── StreamingProvider.tsx     # Streaming state management
 │   ├── StreamingIndicator.tsx    # Visual streaming indicator
 │   └── useStreaming.ts           # Streaming hooks
-├── bookmarks/               # Core extension (shipped with ui-common)
+├── bookmarks/               # Core extension (shipped with ui-web)
 │   ├── ChatBookmarkPanel.tsx    # Bookmark management panel
 │   ├── ChatBookmarkButton.tsx   # Add bookmark button
 │   ├── BookmarkFilter.tsx       # Bookmark filtering
 │   ├── BookmarkCard.tsx         # Individual bookmark display
 │   ├── BookmarkProvider.tsx     # Bookmark state management
 │   └── useBookmarks.ts          # Bookmark hooks
-├── threads/                 # Core extension (shipped with ui-common)
+├── threads/                 # Core extension (shipped with ui-web)
 │   ├── ChatThreadView.tsx       # Thread display panel
 │   ├── ChatThreadButton.tsx     # Create thread button
 │   ├── ThreadMessage.tsx        # Thread-specific message display
 │   ├── ThreadProvider.tsx       # Thread state management
 │   └── useThreads.ts           # Thread hooks
-├── reactions/              # Core extension (shipped with ui-common)
+├── reactions/              # Core extension (shipped with ui-web)
 │   ├── ChatReactionPicker.tsx   # Emoji picker with categories
 │   ├── ChatReactionDisplay.tsx  # Reaction display/interaction
 │   ├── QuickReactionBar.tsx     # Common emoji reactions
@@ -398,7 +398,7 @@ chat/
 └── index.ts                     # Clean exports - all components available
 ```
 
-**Key Insight**: All streaming, bookmark, thread, and reaction components are **part of ui-common**, not app-specific code. Apps import them ready-to-use.
+**Key Insight**: All streaming, bookmark, thread, and reaction components are **part of ui-web**, not app-specific code. Apps import them ready-to-use.
 
 #### **CRITICAL**: Unified Interaction System
 
@@ -452,11 +452,11 @@ MessageInteractions (main component)
 
 #### UI Component Integration
 
-**Strategy**: Use ui-common components directly, no wrappers needed.
+**Strategy**: Use ui-web components directly, no wrappers needed.
 
 **Benefits**:
 - Direct design system usage - Button, Card, etc. have perfect styling already
-- No maintenance overhead - ui-common updates flow through automatically  
+- No maintenance overhead - ui-web updates flow through automatically  
 - Clean API surface - No duplicated prop interfaces
 - Consistent styling - Same Button behavior everywhere
 - Avoid unnecessary wrapper components
@@ -496,13 +496,13 @@ Single `chat.css` file containing:
 - `ChatContainer` - Layout and responsive behavior
 - `ChatMessageList<TRole, TContent>` - Message virtualization and scrolling (leverages VirtualList from vlist for performance)
 
-**Core Extensions** (Shipped with ui-common, always available):
+**Core Extensions** (Shipped with ui-web, always available):
 - **Streaming** - Real-time message updates (`ChatStreamingMessage`, streaming state management)
 - **Bookmarks** - Save and navigate (`ChatBookmarkPanel`, `ChatBookmarkButton`, bookmark context)
 - **Threads** - Branching conversations (`ChatThreadView`, `ChatThreadButton`, thread management)
 - **Reactions** - Message feedback (`ChatReactionPicker`, `ChatReactionDisplay`, reaction state)
 
-**Optional Extensions** (App-specific, not in ui-common):
+**Optional Extensions** (App-specific, not in ui-web):
 - Custom role types beyond user/assistant/system
 - Custom content types beyond text/structured
 - App-specific integrations (voice, file upload strategies)
@@ -510,7 +510,7 @@ Single `chat.css` file containing:
 
 #### Architecture Strategy: Feature Flags + Payment Tiers
 
-**ui-common ships with ALL core extensions, but they're feature-flag controlled**:
+**ui-web ships with ALL core extensions, but they're feature-flag controlled**:
 - All code is bundled but features are runtime-disabled based on configuration
 - Perfect for SaaS payment tiers - disable expensive features for lower-tier users
 - Tree-shaking eliminates unused code paths in production builds
@@ -1928,12 +1928,12 @@ function SupportChatApp() {
 ### Import Path Changes
 ```typescript
 // Old imports (will break)
-import { ChatContainer, ChatMessage, ChatMessageList } from '@zondax/ui-common/client'
+import { ChatContainer, ChatMessage, ChatMessageList } from '@zondax/ui-web/client'
 
 // New imports
-import { ChatLayout, ChatHeader, ChatContent } from '@zondax/ui-common/client'
-import { MessageCore, MessageList } from '@zondax/ui-common/client'
-import { ChatBookmarkProvider, useChatBookmarks } from '@zondax/ui-common/client'
+import { ChatLayout, ChatHeader, ChatContent } from '@zondax/ui-web/client'
+import { MessageCore, MessageList } from '@zondax/ui-web/client'
+import { ChatBookmarkProvider, useChatBookmarks } from '@zondax/ui-web/client'
 ```
 
 ### Type System Changes

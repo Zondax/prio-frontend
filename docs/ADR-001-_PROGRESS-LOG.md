@@ -24,7 +24,7 @@ This document logs the incremental progress on implementing the chat components 
 
 ### 2025-07-05 - ChatContainer Refactoring and Architecture Completion (ADR-001 Final Phase)
 - ✅ **ChatContainer monolithic refactoring completed** - Successfully broke down 381-line component following ADR-001 patterns
-  - **Created focused layout components** in `libs/ui-common/src/components/chat/layout/` directory
+  - **Created focused layout components** in `libs/ui-web/src/components/chat/layout/` directory
     - `ChatLayoutVariants.tsx` - CVA-based styling variants and responsive breakpoints
     - `useLayoutDimensions.tsx` - Responsive dimensions tracking hook
     - `ChatLayoutContext.tsx` - Context provider and layout state management
@@ -104,7 +104,7 @@ This document logs the incremental progress on implementing the chat components 
 
 ### 2025-07-04 - ChatMessage Component Refactoring (ADR-001 Phase 3)
 - ✅ **GenericChatMessage component created** - Fully generic and flexible message component
-  - Created `libs/ui-common/src/components/chat/core/ChatMessage.tsx` with complete generic implementation
+  - Created `libs/ui-web/src/components/chat/core/ChatMessage.tsx` with complete generic implementation
   - Supports any role type (`ChatRole`, `ModeratorRole`, `SupportRole`, custom roles)
   - Handles both string content and parts-based content (text, tool-invocation, reasoning, media)
   - Extended role support: user, assistant, system, moderator, admin, customer, agent, supervisor
@@ -147,7 +147,7 @@ This document logs the incremental progress on implementing the chat components 
 
 ### 2025-07-04 - Generic Type System Foundation (ADR-001 Phase 2)
 - ✅ **Core types system created** - Implemented `BaseMessage<TRole, TContent>` generic foundation
-  - Created `libs/ui-common/src/components/chat/core/types.ts` with complete generic type system
+  - Created `libs/ui-web/src/components/chat/core/types.ts` with complete generic type system
   - Implemented message parts system for mixed content types (text, tool-invocation, reasoning, media)
   - Added feature mixins: `WithBookmarks`, `WithThreads`, `WithReactions`, `WithTextSelection`, `WithAttachments`
   - Created type utilities: `isPartsContent`, `isStringContent`, `getTextContent`, `createMessageWithParts`
@@ -199,7 +199,7 @@ This document logs the incremental progress on implementing the chat components 
 
 ## Architecture Analysis Summary
 
-**Current System** (`/ks-frontend/libs/ui-common/src/components/chat/`):
+**Current System** (`/ks-frontend/libs/ui-web/src/components/chat/`):
 - ✅ **Strengths**: Comprehensive features, CVA styling, React 19, modern patterns
 - ❌ **Issues**: Hardcoded types, monolithic components, 3 separate interaction systems
 - 📦 **Components**: 12 core components + extensions (types.ts is 475 lines)

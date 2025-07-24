@@ -379,11 +379,11 @@ export default function StripePage() {
   const productGridItems = transformProductsToGridItems(
     productsList,
     handleBuyProduct,
-    checkoutStore.isAnyLoading(),
+    checkoutStore.isLoading,
     checkoutStore.data !== null
   )
 
-  const planGridItems = transformPlansToGridItems(plansList, handleBuyProduct, checkoutStore.isAnyLoading(), checkoutStore.data !== null)
+  const planGridItems = transformPlansToGridItems(plansList, handleBuyProduct, checkoutStore.isLoading, checkoutStore.data !== null)
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -420,7 +420,7 @@ export default function StripePage() {
           <TabsContent value="products" className="mt-6">
             <VirtualizedGrid
               items={productGridItems}
-              isLoading={productsStore.isAnyLoading()}
+              isLoading={productsStore.isLoading}
               hasEverLoaded={!!productsStore.data}
               renderSkeleton={() => <ProductSkeleton />}
               emptyComponent={
@@ -429,7 +429,7 @@ export default function StripePage() {
                   title="No products available"
                   subtitle="There are no products to display at the moment."
                   button={{
-                    onClick: productsStore.forceRefresh,
+                    onClick: productsStore.refresh,
                     label: 'Refresh',
                     icon: RefreshCw,
                   }}
@@ -447,7 +447,7 @@ export default function StripePage() {
           <TabsContent value="plans" className="mt-6">
             <VirtualizedGrid
               items={planGridItems}
-              isLoading={plansStore.isAnyLoading()}
+              isLoading={plansStore.isLoading}
               hasEverLoaded={!!plansStore.data}
               renderSkeleton={() => <ProductSkeleton />}
               emptyComponent={
@@ -456,7 +456,7 @@ export default function StripePage() {
                   title="No plans available"
                   subtitle="There are no subscription plans to display at the moment."
                   button={{
-                    onClick: plansStore.forceRefresh,
+                    onClick: plansStore.refresh,
                     label: 'Refresh',
                     icon: RefreshCw,
                   }}

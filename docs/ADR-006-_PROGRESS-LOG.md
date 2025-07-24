@@ -12,8 +12,8 @@ This document logs the implementation progress of the VCommon virtualization arc
 
 ### 2025-07-04 - Implementation Analysis
 - ✅ **Complete virtualization system implemented** - Full VCommon architecture deployed
-  - `libs/ui-common/src/components/vgrid/` - Virtual grid implementation
-  - `libs/ui-common/src/components/vtable/` - Virtual table implementation
+  - `libs/ui-web/src/components/vgrid/` - Virtual grid implementation
+  - `libs/ui-web/src/components/vtable/` - Virtual table implementation
   - Comprehensive virtualization for all large dataset scenarios
 - ✅ **VGrid (Virtual Grid) fully implemented** - Grid virtualization complete
   - `virtualized-grid.tsx` - Core grid virtualization component

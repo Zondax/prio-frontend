@@ -59,7 +59,7 @@ For details on how this project evolved from the original ks-frontend kickstarte
 **Shared Libraries:**
 - **libs/auth-*** - Modular authentication system (core, web, expo)
 - **libs/stores** - Advanced gRPC-optimized Zustand state management
-- **libs/ui-common** - Comprehensive React UI component library
+- **libs/ui-web** - Comprehensive React UI component library
 - **libs/otel-web** - OpenTelemetry instrumentation
 
 ## Essential Commands
@@ -113,8 +113,8 @@ Modular architecture with:
 
 ### Component Architecture
 The UI system provides:
-- Server Component safe exports via `@zondax/ui-common/server`
-- Client Component exports via `@zondax/ui-common`
+- Server Component safe exports via `@zondax/ui-web/server`
+- Client Component exports via `@zondax/ui-web`
 - Advanced components: virtualized tables, flow diagrams, contextual providers
 - Full accessibility compliance and theme support
 
@@ -150,13 +150,13 @@ The UI system provides:
 ```
 
 ### Server vs Client Components
-**NEVER** import from `@zondax/ui-common` in React Server Components:
+**NEVER** import from `@zondax/ui-web` in React Server Components:
 ```typescript
 // ✅ Server Components
-import { cn } from '@zondax/ui-common/server'
+import { cn } from '@zondax/ui-web/server'
 
 // ✅ Client Components
-import { Button } from '@zondax/ui-common'
+import { Button } from '@zondax/ui-web'
 ```
 
 ### gRPC Store Usage
@@ -240,7 +240,7 @@ store.setInput({ startDate, endDate })
 - Comprehensive error handling and request cancellation
 - Type-safe protobuf message handling
 
-### UI Components (libs/ui-common)
+### UI Components (libs/ui-web)
 - Dual export strategy for server/client component safety
 - Virtualization utilities for performance with large datasets
 - Full accessibility compliance and responsive design

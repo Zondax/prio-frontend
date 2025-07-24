@@ -50,7 +50,7 @@ libs/
 ├── auth-web/       # Web-specific auth with Auth.js
 ├── auth-expo/      # Mobile auth with device attestation
 ├── stores/         # Advanced gRPC-optimized state management
-├── ui-common/      # Comprehensive React UI components
+├── ui-web/      # Comprehensive React UI components
 └── otel-web/       # OpenTelemetry instrumentation
 ```
 

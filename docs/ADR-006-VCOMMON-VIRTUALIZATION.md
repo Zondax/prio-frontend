@@ -255,8 +255,8 @@ interface VirtualCustomProps<T> {
 **Design System Integration** - **IMPLEMENTED**:
 ```typescript
 // VirtualList integrates with our design system
-import { VirtualList } from '@zondax/ui-common/client'
-import { cn } from '@zondax/ui-common/server'
+import { VirtualList } from '@zondax/ui-web/client'
+import { cn } from '@zondax/ui-web/server'
 
 // Works seamlessly with CVA variants
 const messageVariants = cva('message-base', {

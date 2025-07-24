@@ -17,7 +17,7 @@ This document logs the implementation progress of the multi-layer layout preset 
   - Theme integration (auto, light, dark, high-contrast)
   - Sidebar presets (bookmarks, threads, users, none)
 - ✅ **Flow layout components** - Flow layout system implemented  
-  - `libs/ui-common/src/components/flow/LayoutControls.tsx` - Layout control component
+  - `libs/ui-web/src/components/flow/LayoutControls.tsx` - Layout control component
   - Flow layout presets for data visualization and workflow interfaces
 - ✅ **Storybook documentation** - Comprehensive layout preset documentation
   - `stories/layouts/Layouts.stories.tsx` - General layout documentation

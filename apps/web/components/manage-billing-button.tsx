@@ -43,7 +43,7 @@ export function ManageBillingButton({ variant = 'outline', size = 'default', cla
     }
   }, [portalStore.data])
 
-  const isLoading = portalStore.isAnyLoading()
+  const isLoading = portalStore.isLoading
   const _hasError = !!portalStore.error
 
   const isButtonDisabled = isLoading || portalStore.data === null || !hasActiveBilling

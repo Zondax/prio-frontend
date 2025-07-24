@@ -12,7 +12,7 @@ This document logs the implementation progress of the embeddable components and 
 
 ### 2025-07-04 - Implementation Analysis
 - ✅ **Embeddable components system fully implemented** - Complete implementation found in codebase
-  - `libs/ui-common/src/components/embedded/` directory contains full implementation
+  - `libs/ui-web/src/components/embedded/` directory contains full implementation
   - Provider pattern implemented with type-safe contexts
   - Generic context factory for different container types
 - ✅ **Core components implemented** - All major components working
