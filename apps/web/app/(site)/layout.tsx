@@ -1,7 +1,7 @@
 'use client'
 
 import { CustomUserButton } from '@zondax/auth-web'
-import { ThemeToggle, useTopBarItem, WebShell } from '@zondax/ui-common/client'
+import { ThemeToggle, useTopBarItem, WebShell } from '@zondax/ui-web/client'
 import { useMemo } from 'react'
 import { LogoItem } from '../../components/LogoItem'
 

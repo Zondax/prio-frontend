@@ -3,12 +3,12 @@
 import { usePreferencesStore } from '@mono-state'
 import { useEndpointStore } from '@mono-state/stores'
 import { useGrpcSetup } from '@zondax/auth-web/hooks'
-import { Input, Label, Skeleton } from '@zondax/ui-common/client'
+import { Input, Label, Skeleton } from '@zondax/ui-web/client'
 import { RefreshCcw } from 'lucide-react'
 import { useId } from 'react'
 
 export default function UserPreferencesPage() {
-  const { setParams, refresh, getData, write, isLoading, getError } = usePreferencesStore()
+  const { setParams, refresh, data, write, isLoading, getError } = usePreferencesStore()
 
   const { selectedEndpoint } = useEndpointStore()
   useGrpcSetup(setParams, selectedEndpoint)
@@ -18,10 +18,9 @@ export default function UserPreferencesPage() {
   const handleDisplayNameChange = (newDisplayName: string) => {
     if (!write) return
 
-    const oldData = getData()
-    if (oldData === undefined || oldData === null) return
+    if (data === undefined || data === null) return
 
-    const tmp = oldData.clone()
+    const tmp = data.clone()
     tmp.setDisplayName(newDisplayName)
     write(tmp)
   }
@@ -48,15 +47,15 @@ export default function UserPreferencesPage() {
         </div>
       ) : (
         (() => {
-          const data = getData()
+          const currentData = data
           return (
-            data && (
+            currentData && (
               <>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="rounded-lg bg-muted p-3 sm:p-4 overflow-auto">
                     <h3 className="mb-2 text-sm font-semibold">User Preferences</h3>
                     <pre className="text-xs sm:text-sm overflow-x-auto">
-                      <code>{JSON.stringify(data.toObject(), null, 2)}</code>
+                      <code>{JSON.stringify(currentData.toObject(), null, 2)}</code>
                     </pre>
                   </div>
                   <div className="rounded-lg bg-muted p-3 sm:p-4 overflow-auto">
@@ -67,7 +66,7 @@ export default function UserPreferencesPage() {
                           {
                             isLoading: isLoading('read'),
                             error: getError('read'),
-                            lastUpdated: data ? 'Available' : 'None',
+                            lastUpdated: currentData ? 'Available' : 'None',
                           },
                           null,
                           2
@@ -80,7 +79,7 @@ export default function UserPreferencesPage() {
                   <Label htmlFor={displayNameInputId}>Display Name</Label>
                   <Input
                     id={displayNameInputId}
-                    value={data.toObject().displayName}
+                    value={currentData.toObject().displayName}
                     onChange={(e) => handleDisplayNameChange(e.target.value)}
                     className="w-full max-w-[400px]"
                   />

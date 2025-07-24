@@ -1,7 +1,7 @@
 'use client'
 
 import { ProtectedComponent } from '@zondax/auth-web'
-import { Alert, AlertDescription, Badge } from '@zondax/ui-common/client'
+import { Alert, AlertDescription, Badge } from '@zondax/ui-web/client'
 import { CheckCircle, Code, Shield, XCircle } from 'lucide-react'
 import { useAppAuthorization } from '@/lib/authorization/useAppAuthorization'
 

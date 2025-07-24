@@ -21,7 +21,7 @@
       "@assets/*": ["src/assets/*"],
       "@locales/*": ["src/locales/*"],
       "@pages/*": ["src/pages/*"],
-      "@zondax/ui-common": ["../../libs/ui-common/src/index.ts"]
+      "@zondax/ui-web": ["../../libs/ui-web/src/index.ts"]
     },
     "incremental": true,
     "isolatedModules": true

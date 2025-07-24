@@ -8,7 +8,7 @@ import {
   SidebarVariant,
   ThemeToggle,
   useTopBarItem,
-} from '@zondax/ui-common/client'
+} from '@zondax/ui-web/client'
 import { useMemo } from 'react'
 import { TeamUserButton } from '@/components/teams/TeamUserButton'
 

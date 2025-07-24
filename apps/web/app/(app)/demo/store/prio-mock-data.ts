@@ -6,7 +6,7 @@
  * Computed data and UI views are derived from base collections
  */
 
-import type { ListItem, TreeNode } from '@zondax/ui-common'
+import type { ListItem, TreeNode } from '@zondax/ui-web'
 
 // ============================================================================
 // Core Type Definitions

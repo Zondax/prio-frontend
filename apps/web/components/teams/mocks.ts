@@ -1,6 +1,6 @@
-// import type { Team, TeamManagementOperations, TeamMember, TeamRole } from '@zondax/ui-common/client'
+// import type { Team, TeamManagementOperations, TeamMember, TeamRole } from '@zondax/ui-web'
 
-// Temporary type definitions until they are available in @zondax/ui-common
+// Temporary type definitions until they are available in @zondax/ui-web
 type TeamRole = 'owner' | 'admin' | 'member' | 'viewer'
 
 interface Team {

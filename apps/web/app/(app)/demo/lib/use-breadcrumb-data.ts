@@ -1,4 +1,4 @@
-import type { BreadcrumbDataItem } from '@zondax/ui-common/client'
+import type { BreadcrumbDataItem } from '@zondax/ui-web/client'
 import { usePathname } from 'next/navigation'
 import { useMemo } from 'react'
 import { HOME_BREADCRUMB, prioRouteConfig } from './breadcrumb-config'

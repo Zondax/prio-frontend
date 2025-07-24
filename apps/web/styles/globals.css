@@ -1,4 +1,4 @@
-@import "@zondax/ui-common/styles/globals.css";
+@import "@zondax/ui-web/styles/globals.css";
 
 /* App-specific source paths */
 @source "../app/**/*.{js,ts,jsx,tsx}";
@@ -6,7 +6,7 @@
 
 /* App-specific theme customizations can go here */
 @theme {
-  /* Override or extend ui-common theme variables here if needed */
+  /* Override or extend ui-web theme variables here if needed */
 }
 
 /* App-specific custom styles can go here */

@@ -1,17 +1,6 @@
 'use client'
 
-import {
-  Badge,
-  Button,
-  Input,
-  Label,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  Textarea,
-} from '@zondax/ui-common/client'
+import { Badge, Button, Input, Label, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Textarea } from '@zondax/ui-web/client'
 import { MessageSquare, Plus } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'

@@ -1,6 +1,6 @@
 'use client'
 
-import { Card, CardContent, CardHeader, CardTitle } from '@zondax/ui-common/client'
+import { Card, CardContent, CardHeader, CardTitle } from '@zondax/ui-web/client'
 import { User } from 'lucide-react'
 
 import UserPreferencesPage from './UserPreferences'

@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@zondax/ui-common/client'
+import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@zondax/ui-web/client'
 import { Plus, Target, TrendingUp, Users } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useMemo } from 'react'

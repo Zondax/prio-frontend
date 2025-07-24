@@ -1,4 +1,4 @@
-# @zondax/ui-common
+# @zondax/ui-web
 
 Shared React UI components and utilities for Zondax applications.
 
@@ -18,7 +18,7 @@ This package is internal to the Zondax monorepo and uses workspace dependencies:
 ```json
 {
   "dependencies": {
-    "@zondax/ui-common": "workspace:*"
+    "@zondax/ui-web": "workspace:*"
   }
 }
 ```
@@ -28,7 +28,7 @@ This package is internal to the Zondax monorepo and uses workspace dependencies:
 ### Components
 
 ```tsx
-import { Button, Card, Input } from "@zondax/ui-common";
+import { Button, Card, Input } from "@zondax/ui-web";
 
 export default function MyComponent() {
   return (
@@ -43,7 +43,7 @@ export default function MyComponent() {
 ### Hooks
 
 ```tsx
-import { useLocalStorage, useDebounce } from "@zondax/ui-common/hooks";
+import { useLocalStorage, useDebounce } from "@zondax/ui-web/hooks";
 
 export default function MyComponent() {
   const [value, setValue] = useLocalStorage("myKey", "");
@@ -56,7 +56,7 @@ export default function MyComponent() {
 ### Utilities
 
 ```tsx
-import { cn, formatDate } from "@zondax/ui-common/utils";
+import { cn, formatDate } from "@zondax/ui-web/utils";
 
 export default function MyComponent() {
   return (

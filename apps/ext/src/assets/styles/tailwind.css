@@ -1,4 +1,4 @@
-@import "../../../../../libs/ui-common/src/styles/globals.css";
+@import "../../../../../libs/ui-web/src/styles/globals.css";
 
 /* Extension-specific source paths */
 @source "../../**/*.{js,ts,jsx,tsx}";

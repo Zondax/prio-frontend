@@ -23,7 +23,7 @@ const aliasRoots: Record<string, string> = {
   '@mono-grpc': 'packages/grpc/src',
   '@zondax/auth-core': 'libs/auth-core/src',
   '@zondax/auth-web': 'libs/auth-web/src',
-  '@zondax/ui-common': 'libs/ui-common/src',
+  '@zondax/ui-web': 'libs/ui-web/src',
   '@mono-state': 'packages/state/src',
 }
 

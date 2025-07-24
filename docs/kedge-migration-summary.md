@@ -83,7 +83,7 @@ The migration aimed to bring kedge-frontend's best practices and advanced featur
 **Changes made in web app:**
 ```tsx
 // apps/web/app/layout.tsx
-import { TopBarProvider } from '@zondax/ui-common'
+import { TopBarProvider } from '@zondax/ui-web'
 
 // Replace StickyTopProvider with TopBarProvider
 <TopBarProvider>{children}</TopBarProvider>
@@ -107,7 +107,7 @@ function DevNavigation() {
 
 **What was migrated:**
 - Removed duplicate UI components
-- Updated to use shared @zondax/ui-common library
+- Updated to use shared @zondax/ui-web library
 
 **Changes made:**
 ```bash
@@ -117,7 +117,7 @@ function DevNavigation() {
 - use-mobile.ts (duplicate hook)
 
 # Updated imports to use shared library
-import { Button, Card, Input } from '@zondax/ui-common'
+import { Button, Card, Input } from '@zondax/ui-web'
 ```
 
 **Benefits:**

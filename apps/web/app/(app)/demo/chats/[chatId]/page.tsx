@@ -18,7 +18,7 @@ import {
   useAppShell,
   useRightSidebarItem,
   useToolRegistry,
-} from '@zondax/ui-common/client'
+} from '@zondax/ui-web/client'
 import { Bot, Code, Database, FileText, Palette, Users, Zap } from 'lucide-react'
 import { notFound, useParams } from 'next/navigation'
 import type React from 'react'

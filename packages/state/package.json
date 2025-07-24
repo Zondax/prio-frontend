@@ -27,7 +27,7 @@
   "dependencies": {
     "@date-fns/tz": "^1.2.0",
     "@zondax/stores": "workspace:*",
-    "axios": "^1.10.0",
+    "axios": "^1.11.0",
     "date-fns": "^4.1.0",
     "es-toolkit": "^1.39.5",
     "@tanstack/react-virtual": "^3.13.11",

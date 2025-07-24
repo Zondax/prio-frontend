@@ -33,16 +33,22 @@ The decision point: How do we create a state management architecture that provid
 ### Store Builder Types
 ```typescript
 // Simple request-response operations
-createGrpcSingleMethodStore<TClient, TInput, TData>()
+createSimpleStore<TClientParams, TClient, TInput, TOutput>()
 
-// Read/write with optimistic updates  
-createGrpcOptimisticStore<TClient, TData, TWriteResult>()
+// Read/write with optimistic updates + optional streaming
+createRealtimeStore<TClientParams, TClient, TInput, TOutput, TStreamData>()
 
-// Pagination and infinite scrolling
-createPageableStore<TClient, TInput, TData, TMetadata>()
+// Entity collections with CRUD operations
+createEntityStore<TEntity, TCreateInput, TUpdateInput>()
 
-// Real-time streaming data
-createGrpcReadStreamStore<TClient, TData>()
+// List management (frontend-only, simplified)
+createListStore<TItem>()
+
+// Backend-driven list management with server-side filtering/sorting
+createBackendListStore<TClientParams, TClient, TItem, TFilter>()
+
+// Caching with LRU/TTL strategies
+createCacheStore<TKey, TValue>()
 ```
 
 ## Alternatives Considered
@@ -125,56 +131,107 @@ createGrpcReadStreamStore<TClient, TData>()
 
 ### Store Builder Patterns
 
-**Single Method Store** (Simple CRUD):
+**Simple Store** (Request/Response Operations):
 ```typescript
-export const useProductStore = createGrpcSingleMethodStore<
+export const useProductStore = createSimpleStore<
+  GrpcConfig,
   ProductServiceClient,
   GetProductRequest,
   Product
 >({
   createClient: createProductServiceClient,
-  method: getProduct,
+  method: (client, params, input) => client.getProduct(input),
 })
 
 // Usage
-const { data, loading, error, execute } = useProductStore()
+const { data, isLoading, hasError, execute } = useProductStore()
 ```
 
-**Optimistic Store** (Read/Write Operations):
+**Realtime Store** (Read/Write with Optional Streaming):
 ```typescript
-export const usePreferencesStore = createGrpcOptimisticStore({
+// Basic read/write
+export const usePreferencesStore = createRealtimeStore({
   createClient: createUserServiceClient,
-  read: readPreferences,
-  write: writePreferences,
-  handlers: {
-    mergeUpdate: (current, update) => ({ ...current, ...update }),
-    processResponse: (response) => response.preferences
+  read: (client, params) => client.readPreferences(),
+  write: (client, params, input) => client.writePreferences(input),
+})
+
+// With streaming support
+export const useStreamingPreferencesStore = createRealtimeStore({
+  createClient: createUserServiceClient,
+  write: (client, params, input) => client.writePreferences(input),
+  stream: {
+    start: (client, params) => {
+      const stream = client.streamPreferences()
+      return { stream, cancel: () => stream.cancel() }
+    },
+    transformData: (streamData) => streamData.preferences
   }
 })
 
 // Usage  
-const { data, loading, update, undo } = usePreferencesStore()
+const { data, write, isLoading, connect, disconnect, streamStatus } = usePreferencesStore()
 ```
 
-**Pageable Store** (Infinite Scrolling):
+**Backend List Store** (Scalable List Management):
 ```typescript
-export const useMessagesStore = createPageableStore({
+export const useTeamListStore = createGrpcListStore({
+  createClient: createTeamServiceClient,
+  method: searchTeams,
+  createRequest: (queryParams) => {
+    const request = new SearchTeamsRequest()
+    if (queryParams.pageRequest) {
+      request.setPageRequest(queryParams.pageRequest)
+    }
+    return request
+  },
+  extractItems: (response) => response.getTeamsList(),
+  itemIdExtractor: (team) => team.getId(),
+})
+
+// Usage with backend filtering/sorting
+const teams = useTeamListStore()
+teams.updateQueryParams({ 
+  pageRequest: createPageRequest({ sort: { kind: 'name', orderAscending: true } })
+})
+teams.fetchItems()
+```
+
+**Entity Store** (CRUD Operations):
+```typescript
+export const useUserStore = createEntityStore<User, CreateUserInput, UpdateUserInput>({
+  name: 'Users',
+  operations: {
+    create: { endpoint: createUser },
+    read: { endpoint: getUser },
+    update: { endpoint: updateUser },
+    delete: { endpoint: deleteUser },
+    list: { endpoint: listUsers }
+  }
+})
+
+// Usage
+const { entities, create, update, delete: deleteUser, getById } = useUserStore()
+```
+
+**Realtime Store with Streaming** (Optimistic Updates + Real-time):
+```typescript
+export const useChatStore = createRealtimeStore({
   createClient: createChatServiceClient,
-  fetch: getMessages,
+  write: (client, params, message) => client.sendMessage(message),
+  stream: {
+    start: (client) => {
+      const stream = client.streamMessages()
+      return { stream, cancel: () => stream.cancel() }
+    }
+  }
 })
 
-// Usage
-const { data, loading, hasMore, fetchNext } = useMessagesStore()
-```
-
-**Stream Store** (Real-time Data):
-```typescript
-export const useChatStreamStore = createGrpcReadStreamStore({
-  createStream: createChatStream,
-})
-
-// Usage
-const { data, connected, error, connect, disconnect } = useChatStreamStore()
+// Usage - unified read/write + streaming
+const chat = useChatStore()
+await chat.write(newMessage) // Optimistic update + send to server
+chat.connect() // Start real-time stream
+const { data, streamStatus, hasPendingWrites } = chat
 ```
 
 ### Configuration and Extension
@@ -231,19 +288,50 @@ interface StoreError {
 - Implement proper cleanup in effects
 - Monitor re-render frequency
 
+## Evolution and Consolidation
+
+### Store Consolidation (2025-01)
+
+Based on usage patterns and maintenance concerns, we consolidated overlapping stores:
+
+**Deprecated Stores**:
+- `createGrpcSingleMethodStore` → Migrated to `createSimpleStore`
+- `createOptimisticStore` → Replaced by `createRealtimeStore`
+- `createGrpcStreamOptimisticStore` → Replaced by `createRealtimeStore` with stream config
+- `createPageableStore` → Replaced by `createBackendListStore`
+- `createStreamStore` → Replaced by `createRealtimeStore` with stream config
+
+This consolidation:
+- Reduced codebase by ~1000 lines (removed 4 redundant stores)
+- Unified APIs for real-time data patterns
+- Replaced frontend filtering with scalable backend queries
+- Simplified the learning curve from 9+ stores to 6 core composers
+- Maintained backward compatibility through migration guides
+
+### Current Store Landscape
+
+| Store Type | Use Case | Key Features |
+|------------|----------|---------------|
+| `createSimpleStore` | API calls, operations | Boolean states, minimal overhead |
+| `createRealtimeStore` | Data with updates | Optimistic updates, optional streaming |
+| `createEntityStore` | Collections | Full CRUD, relationships |
+| `createListStore` | Simple lists | Frontend-only management |
+| `createBackendListStore` | Large datasets | Backend filtering, sorting, pagination |
+| `createCacheStore` | Expensive data | LRU, TTL strategies |
+
 ## Future Considerations
 
 ### Planned Enhancements
-- **Cache Management**: Global cache coordination across stores
-- **Offline Support**: Store state persistence and sync
-- **DevTools Integration**: Enhanced debugging capabilities
-- **Metrics Collection**: Performance and usage analytics
+- **Global State Sync**: Cross-store state coordination
+- **Offline-First**: Built-in offline support with sync
+- **DevTools**: Enhanced debugging and time-travel
+- **Performance Monitoring**: Built-in metrics dashboard
 
 ### Ecosystem Evolution
-- **React Native**: Extend builders for mobile-specific patterns
-- **Server Components**: Adapt patterns for React Server Components
-- **Concurrent Features**: Leverage React 18 concurrent features
-- **State Synchronization**: Cross-tab state synchronization
+- **React Native**: Mobile-optimized store patterns
+- **Server Components**: RSC-compatible stores
+- **Concurrent Rendering**: Optimized for React 18+
+- **Cross-Tab Sync**: Real-time state synchronization
 
 ## Related Decisions
 
