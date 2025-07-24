@@ -12,8 +12,8 @@
       "@mono-state/*": ["../../packages/state/src/*"],
       "@zondax/auth-core": ["../../libs/auth-core/src"],
       "@zondax/auth-core/*": ["../../libs/auth-core/src/*"],
-      "@zondax/ui-common": ["../../libs/ui-common/src"],
-      "@zondax/ui-common/*": ["../../libs/ui-common/src/*"]
+      "@zondax/ui-web": ["../../libs/ui-web/src"],
+      "@zondax/ui-web/*": ["../../libs/ui-web/src/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "nativewind-env.d.ts"],

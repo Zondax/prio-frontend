@@ -1,6 +1,6 @@
 'use client'
 
-import { Alert, AlertDescription, Badge, Button } from '@zondax/ui-common/client'
+import { Alert, AlertDescription, Badge, Button } from '@zondax/ui-web/client'
 import { CheckCircle, Clock, RefreshCw, User, XCircle } from 'lucide-react'
 import { useState } from 'react'
 import { useAppAuthorization } from '@/lib/authorization/useAppAuthorization'

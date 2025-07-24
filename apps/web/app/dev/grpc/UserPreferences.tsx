@@ -3,7 +3,7 @@
 import { usePreferencesStore } from '@mono-state'
 import { useEndpointStore } from '@mono-state/stores'
 import { useGrpcSetup } from '@zondax/auth-web/hooks'
-import { Input, Label, Skeleton } from '@zondax/ui-common/client'
+import { Input, Label, Skeleton } from '@zondax/ui-web/client'
 import { RefreshCcw } from 'lucide-react'
 import { useId } from 'react'
 

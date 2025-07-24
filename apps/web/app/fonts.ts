@@ -23,7 +23,7 @@ const fontBody = Figtree({
 
 // Configure Parkinsans for headings with Next.js patch
 // PATCH: adjustFontFallback: false fixes "Failed to find font override values"
-// See: @zondax/ui-common/server PARKINSANS_PATCH_INFO for details
+// See: @zondax/ui-web/server PARKINSANS_PATCH_INFO for details
 const fontHeading = Parkinsans({
   subsets: ['latin'],
   variable: '--font-heading',

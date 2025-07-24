@@ -32,11 +32,8 @@
       "@zondax/auth-core/*": ["../../libs/auth-core/src/*"],
       "@zondax/auth-web": ["../../libs/auth-web/src"],
       "@zondax/auth-web/*": ["../../libs/auth-web/src/*"],
-      "@zondax/ui-common": ["../../libs/ui-common/src"],
-      "@zondax/ui-common/server": ["../../libs/ui-common/src/server"],
-      "@zondax/ui-common/client": ["../../libs/ui-common/src/client"],
-      "@zondax/ui-common/styles/*": ["../../libs/ui-common/src/styles/*"],
-      "@zondax/ui-common/*": ["../../libs/ui-common/src/*"]
+      "@zondax/ui-web": ["../../libs/ui-web/src"],
+      "@zondax/ui-web/*": ["../../libs/ui-web/src/*"]
     }
   },
   "include": [
@@ -44,9 +41,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "../../libs/ui-common/src/hooks/use-is-client.ts",
-    "../../libs/ui-common/src/components/debug/floating-settings-panel.tsx",
-    "../../libs/ui-common/src/components/debug/floating-settings-provider.tsx"
+    "../../libs/ui-web/src/hooks/use-is-client.ts",
+    "../../libs/ui-web/src/components/debug/floating-settings-panel.tsx",
+    "../../libs/ui-web/src/components/debug/floating-settings-provider.tsx"
   ],
   "exclude": ["node_modules", "dist"]
 }

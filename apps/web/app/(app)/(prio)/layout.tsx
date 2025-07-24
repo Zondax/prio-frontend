@@ -1,7 +1,7 @@
 'use client'
 
 import { CustomUserButton } from '@zondax/auth-web'
-import { Breadcrumb, SidebarList, SidebarTree, ThemeToggle, useAppShell, useLeftSidebarItem, useTopBarItem } from '@zondax/ui-common/client'
+import { Breadcrumb, SidebarList, SidebarTree, ThemeToggle, useAppShell, useLeftSidebarItem, useTopBarItem } from '@zondax/ui-web/client'
 import { useEffect, useMemo } from 'react'
 import { useBreadcrumbData } from '../demo/lib/use-breadcrumb-data'
 import { NAVIGATION_NODES, RECENT_ACTIVITY_ITEMS } from '../demo/store/prio-mock-data'

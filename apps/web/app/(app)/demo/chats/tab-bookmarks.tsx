@@ -1,7 +1,7 @@
 'use client'
 
 import type { ColumnDef } from '@tanstack/react-table'
-import { Button, Input, VirtualizedTable } from '@zondax/ui-common/client'
+import { Button, Input, VirtualizedTable } from '@zondax/ui-web/client'
 import { Eye, Search } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useMemo, useState } from 'react'

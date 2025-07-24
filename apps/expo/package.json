@@ -61,7 +61,7 @@
     "@rn-primitives/tooltip": "~1.2.0",
     "@rn-primitives/types": "~1.1.0",
     "@zondax/auth-core": "workspace:*",
-    "@zondax/ui-common": "workspace:*",
+    "@zondax/ui-web": "workspace:*",
     "babel-preset-expo": "~13.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -128,7 +128,7 @@
           "mono-state",
           "@zondax/auth-core",
           "@zondax/auth-web",
-          "@zondax/ui-common",
+          "@zondax/ui-web",
           "lucide-react-native"
         ]
       }
@@ -138,7 +138,7 @@
         "mono-state",
         "@zondax/auth-core",
         "@zondax/auth-web",
-        "@zondax/ui-common"
+        "@zondax/ui-web"
       ]
     }
   }

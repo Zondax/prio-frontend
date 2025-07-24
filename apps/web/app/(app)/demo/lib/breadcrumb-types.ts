@@ -1,4 +1,4 @@
-import type { BreadcrumbDataItem } from '@zondax/ui-common/client'
+import type { BreadcrumbDataItem } from '@zondax/ui-web'
 import type { LucideIcon } from 'lucide-react'
 
 export interface BreadcrumbItem {

@@ -1,4 +1,4 @@
-import type { BreadcrumbDataItem } from '@zondax/ui-common/client'
+import type { BreadcrumbDataItem } from '@zondax/ui-web'
 import { Home } from 'lucide-react'
 import { getChatInfo, getObjectiveDetail, MISSIONS } from '../store/prio-mock-data'
 import type { BreadcrumbRoute } from './breadcrumb-types'

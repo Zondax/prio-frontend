@@ -1,7 +1,7 @@
 'use client'
 
 import { useGrpcSetup } from '@zondax/auth-web/hooks'
-import { Button } from '@zondax/ui-common/client'
+import { Button } from '@zondax/ui-web/client'
 import { CreditCard, Loader2, Lock } from 'lucide-react'
 import { createPortalSessionRequest, useCreatePortalSessionStore, useEndpointStore } from 'mono-state'
 import { useCallback, useEffect } from 'react'

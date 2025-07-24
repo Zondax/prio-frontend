@@ -1,7 +1,7 @@
 'use client'
 
 import { useGrpcSetup } from '@zondax/auth-web/hooks'
-import type { GridRenderItem } from '@zondax/ui-common/client'
+import type { GridRenderItem } from '@zondax/ui-web'
 import {
   Badge,
   Button,
@@ -17,7 +17,7 @@ import {
   TabsList,
   TabsTrigger,
   VirtualizedGrid,
-} from '@zondax/ui-common/client'
+} from '@zondax/ui-web/client'
 import { CreditCard, Crown, Loader2, Package, RefreshCw, ShoppingCart } from 'lucide-react'
 import {
   createCheckoutSessionRequest,

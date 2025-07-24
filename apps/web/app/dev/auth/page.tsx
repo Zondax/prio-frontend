@@ -16,7 +16,7 @@ import {
   TableBody,
   TableCell,
   TableRow,
-} from '@zondax/ui-common/client'
+} from '@zondax/ui-web/client'
 import { format } from 'date-fns'
 import { Clock, KeyRound, Shield, User, UserCheck } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'

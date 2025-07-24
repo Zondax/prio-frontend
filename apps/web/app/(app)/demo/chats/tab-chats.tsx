@@ -1,7 +1,7 @@
 'use client'
 
 import type { ColumnDef } from '@tanstack/react-table'
-import { Badge, Button, Input, VirtualizedTable } from '@zondax/ui-common/client'
+import { Badge, Button, Input, VirtualizedTable } from '@zondax/ui-web/client'
 import { Eye, Key, MessageSquare, Search, Share2, Users } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useMemo, useState } from 'react'
