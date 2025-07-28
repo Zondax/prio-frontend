@@ -1,217 +1,196 @@
-import type { GrpcConfig } from '@mono-grpc'
-import { MOCK_MISSIONS } from './mission-list.mocks'
+import { createMetadataAwareMethod, type GrpcConfig } from '@mono-grpc'
+import { PageRequest as PageRequestPb } from '../../../grpc/src/entities/proto/api/v1/common_pb'
+import type { MissionServiceClient } from '../../../grpc/src/entities/proto/api/v1/MissionServiceClientPb'
+import {
+  SearchMissionMembersRequest as SearchMissionMembersRequestPb,
+  type SearchMissionMembersResponse as SearchMissionMembersResponsePb,
+  SearchMissionsRequest as SearchMissionsRequestPb,
+  type SearchMissionsResponse as SearchMissionsResponsePb,
+} from '../../../grpc/src/entities/proto/api/v1/mission_pb'
+import type { createMissionClient } from './mission'
+import type { Mission, MissionMember } from './mission.types'
 import type {
-  CreateMissionRequest,
-  DeleteMissionRequest,
-  Mission,
-  MissionListFilters,
   MissionListMetadata,
   MissionListResponse,
-  StandardResponse,
-  UpdateMissionStatusRequest,
+  SearchMissionMembersRequest,
+  SearchMissionMembersResponse,
+  SearchMissionsRequest,
+  SearchMissionsResponse,
 } from './mission-list.types'
 
 // Re-export types for convenience
 export type {
-  Mission,
-  MissionListFilters,
-  MissionListMetadata,
+  SearchMissionsRequest,
+  SearchMissionsResponse,
+  SearchMissionMembersRequest,
+  SearchMissionMembersResponse,
   MissionListResponse,
-  CreateMissionRequest,
-  UpdateMissionStatusRequest,
-  DeleteMissionRequest,
-  StandardResponse,
+  MissionListMetadata,
 }
 
-// Mock client creator - would be replaced with real gRPC client
-export const createMissionListClient = (cp: GrpcConfig) => {
+// Create metadata-aware method wrappers
+const searchMissionsWithAuth = createMetadataAwareMethod<MissionServiceClient, SearchMissionsRequestPb, SearchMissionsResponsePb>(
+  (client, request, metadata) => client.searchMissions(request, metadata as any)
+)
+
+const searchMissionMembersWithAuth = createMetadataAwareMethod<
+  MissionServiceClient,
+  SearchMissionMembersRequestPb,
+  SearchMissionMembersResponsePb
+>((client, request, metadata) => client.searchMissionMembers(request, metadata as any))
+
+// Helper functions to create request objects
+export const searchMissionsRequest = (params: SearchMissionsRequest): SearchMissionsRequestPb => {
+  const request = new SearchMissionsRequestPb()
+
+  if (params.query) {
+    request.setQuery(params.query)
+  }
+
+  if (params.teamId) {
+    request.setTeamId(params.teamId)
+  }
+
+  if (params.status !== undefined) {
+    request.setStatus(params.status)
+  }
+
+  if (params.pageRequest) {
+    const pageRequest = new PageRequestPb()
+    if (params.pageRequest.pageSize) {
+      pageRequest.setPageSize(params.pageRequest.pageSize)
+    }
+    if (params.pageRequest.pageToken) {
+      pageRequest.setCursor(params.pageRequest.pageToken)
+    }
+    request.setPageRequest(pageRequest)
+  }
+
+  return request
+}
+
+export const searchMissionMembersRequest = (params: SearchMissionMembersRequest): SearchMissionMembersRequestPb => {
+  const request = new SearchMissionMembersRequestPb()
+
+  request.setId(params.id)
+
+  if (params.role !== undefined) {
+    request.setRole(params.role)
+  }
+
+  if (params.pageRequest) {
+    const pageRequest = new PageRequestPb()
+    if (params.pageRequest.pageSize) {
+      pageRequest.setPageSize(params.pageRequest.pageSize)
+    }
+    if (params.pageRequest.pageToken) {
+      pageRequest.setCursor(params.pageRequest.pageToken)
+    }
+    request.setPageRequest(pageRequest)
+  }
+
+  return request
+}
+
+// Helper to convert protobuf Mission to TypeScript interface
+const convertMissionFromPb = (missionPb: any): Mission => {
+  const startDate = missionPb.getStartDate()
+  const endDate = missionPb.getEndDate()
+  const createdAt = missionPb.getCreatedAt()
+  const updatedAt = missionPb.getUpdatedAt()
+  const metadata = missionPb.getMetadata()
+
   return {
-    // Mock client object that mimics gRPC client interface
-    baseUrl: cp.baseUrl,
-    metadata: cp.metadata,
+    id: missionPb.getId(),
+    name: missionPb.getName(),
+    description: missionPb.getDescription(),
+    teamId: missionPb.getTeamId(),
+    creatorUserId: missionPb.getCreatorUserId(),
+    status: missionPb.getStatus(),
+    startDate: startDate ? startDate.toDate() : undefined,
+    endDate: endDate ? endDate.toDate() : undefined,
+    metadata: metadata ? metadata.toJavaScript() : undefined,
+    createdAt: createdAt ? createdAt.toDate() : undefined,
+    updatedAt: updatedAt ? updatedAt.toDate() : undefined,
   }
 }
 
-// Mock API functions that follow the same pattern as chat-list.ts
-export const getMissionList = async (
-  _client: ReturnType<typeof createMissionListClient>,
-  _clientParams: GrpcConfig,
-  filters?: MissionListFilters
-): Promise<MissionListResponse> => {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 100))
-
-  let missions = Object.values(MOCK_MISSIONS)
-
-  // Apply filters
-  if (filters?.status) {
-    missions = missions.filter((mission) => mission.status === filters.status)
-  }
-  if (filters?.type) {
-    missions = missions.filter((mission) => mission.type === filters.type)
-  }
-  if (filters?.organizationId) {
-    missions = missions.filter((mission) => mission.organizationId === filters.organizationId)
-  }
-  if (filters?.participantId) {
-    const participantId = filters.participantId
-    missions = missions.filter((mission) => mission.participantIds.includes(participantId))
-  }
-
-  // Apply search
-  if (filters?.searchQuery) {
-    const query = filters.searchQuery.toLowerCase()
-    missions = missions.filter(
-      (mission) =>
-        mission.name.toLowerCase().includes(query) ||
-        mission.description.toLowerCase().includes(query) ||
-        mission.tags.some((tag) => tag.toLowerCase().includes(query))
-    )
-  }
-
-  // Apply sorting
-  const sortBy = filters?.sortBy || 'startDate'
-  const sortOrder = filters?.sortOrder || 'desc'
-
-  missions.sort((a, b) => {
-    let aValue: any
-    let bValue: any
-
-    switch (sortBy) {
-      case 'name':
-        aValue = a.name.toLowerCase()
-        bValue = b.name.toLowerCase()
-        break
-      case 'progress':
-        aValue = a.progress
-        bValue = b.progress
-        break
-      case 'startDate':
-        aValue = a.startDate.getTime()
-        bValue = b.startDate.getTime()
-        break
-      case 'targetDate':
-        aValue = a.targetDate?.getTime() || 0
-        bValue = b.targetDate?.getTime() || 0
-        break
-      case 'createdAt':
-        aValue = a.createdAt.getTime()
-        bValue = b.createdAt.getTime()
-        break
-      default:
-        aValue = a.startDate.getTime()
-        bValue = b.startDate.getTime()
-    }
-
-    if (sortOrder === 'asc') {
-      return aValue < bValue ? -1 : aValue > bValue ? 1 : 0
-    }
-    return aValue > bValue ? -1 : aValue < bValue ? 1 : 0
-  })
-
-  // Apply pagination
-  const page = filters?.page || 1
-  const limit = filters?.limit || 20 // Default to 20 for infinite scroll
-  const startIndex = (page - 1) * limit
-  const endIndex = startIndex + limit
-
-  const paginatedMissions = missions.slice(startIndex, endIndex)
-  const totalPages = Math.ceil(missions.length / limit)
-
-  // Generate cursor for cursor-based pagination (using last item's ID)
-  const nextCursor = paginatedMissions.length > 0 ? paginatedMissions[paginatedMissions.length - 1].id : undefined
+// Helper to convert protobuf MissionMember to TypeScript interface
+const convertMissionMemberFromPb = (memberPb: any): MissionMember => {
+  const joinedAt = memberPb.getJoinedAt()
 
   return {
-    data: paginatedMissions,
+    userId: memberPb.getUserId(),
+    missionId: memberPb.getMissionId(),
+    role: memberPb.getRole(),
+    joinedAt: joinedAt ? joinedAt.toDate() : undefined,
+  }
+}
+
+// Helper to convert protobuf response to TypeScript interface
+const convertSearchMissionsResponse = (responsePb: SearchMissionsResponsePb): SearchMissionsResponse => {
+  const missionsList = responsePb.getMissionsList()
+  const pageResponse = responsePb.getPageResponse()
+
+  return {
+    missions: missionsList.map(convertMissionFromPb),
+    pageResponse: pageResponse
+      ? {
+          nextPageToken: pageResponse.getNextCursor(),
+          totalItems: pageResponse.getTotalItems(),
+        }
+      : undefined,
+  }
+}
+
+const convertSearchMissionMembersResponse = (responsePb: SearchMissionMembersResponsePb): SearchMissionMembersResponse => {
+  const membersList = responsePb.getMembersList()
+  const pageResponse = responsePb.getPageResponse()
+
+  return {
+    members: membersList.map(convertMissionMemberFromPb),
+    pageResponse: pageResponse
+      ? {
+          nextPageToken: pageResponse.getNextCursor(),
+          totalItems: pageResponse.getTotalItems(),
+        }
+      : undefined,
+  }
+}
+
+// API functions
+export const searchMissions = async (
+  client: ReturnType<typeof createMissionClient>,
+  clientParams: GrpcConfig,
+  params: SearchMissionsRequest
+): Promise<SearchMissionsResponse> => {
+  const request = searchMissionsRequest(params)
+  const response = await searchMissionsWithAuth(client, clientParams, request)
+  return convertSearchMissionsResponse(response)
+}
+
+export const searchMissionMembers = async (
+  client: ReturnType<typeof createMissionClient>,
+  clientParams: GrpcConfig,
+  params: SearchMissionMembersRequest
+): Promise<SearchMissionMembersResponse> => {
+  const request = searchMissionMembersRequest(params)
+  const response = await searchMissionMembersWithAuth(client, clientParams, request)
+  return convertSearchMissionMembersResponse(response)
+}
+
+// Helper function to convert gRPC response to store-compatible format
+export const convertToMissionListResponse = (response: SearchMissionsResponse, _currentData?: Mission[]): MissionListResponse => {
+  const hasMore = !!response.pageResponse?.nextPageToken
+
+  return {
+    data: response.missions,
     metadata: {
-      totalCount: missions.length,
-      hasMore: endIndex < missions.length,
-      currentPage: page,
-      totalPages,
-      pageSize: limit,
+      totalCount: response.pageResponse?.totalItems,
+      hasMore,
+      nextPageToken: response.pageResponse?.nextPageToken,
     },
-    cursor: nextCursor || '',
-  }
-}
-
-export const createMission = async (
-  _client: ReturnType<typeof createMissionListClient>,
-  _clientParams: GrpcConfig,
-  data: CreateMissionRequest
-): Promise<Mission> => {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 200))
-
-  const newMission: Mission = {
-    id: `mission-${Date.now()}`,
-    name: data.name,
-    description: data.description || '',
-    type: data.type,
-    status: 'planning',
-    priority: data.priority || 'medium',
-    progress: 0,
-    participantIds: data.participantIds || [],
-    startDate: new Date(),
-    targetDate: data.targetDate || null,
-    tags: data.tags || [],
-    organizationId: data.organizationId,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  }
-
-  // In real implementation, this would be saved to backend
-  MOCK_MISSIONS[newMission.id] = newMission
-
-  return newMission
-}
-
-export const updateMissionStatus = async (
-  _client: ReturnType<typeof createMissionListClient>,
-  _clientParams: GrpcConfig,
-  data: UpdateMissionStatusRequest
-): Promise<Mission> => {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 150))
-
-  const existingMission = MOCK_MISSIONS[data.missionId]
-  if (!existingMission) {
-    throw new Error(`Mission with ID ${data.missionId} not found`)
-  }
-
-  const updatedMission: Mission = {
-    ...existingMission,
-    ...(data.status && { status: data.status }),
-    ...(data.progress !== undefined && { progress: data.progress }),
-    updatedAt: new Date(),
-  }
-
-  // In real implementation, this would be saved to backend
-  MOCK_MISSIONS[data.missionId] = updatedMission
-
-  return updatedMission
-}
-
-export const deleteMission = async (
-  _client: ReturnType<typeof createMissionListClient>,
-  _clientParams: GrpcConfig,
-  data: DeleteMissionRequest
-): Promise<StandardResponse> => {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 100))
-
-  const existingMission = MOCK_MISSIONS[data.missionId]
-  if (!existingMission) {
-    return {
-      success: false,
-      message: `Mission with ID ${data.missionId} not found`,
-    }
-  }
-
-  // In real implementation, this would be deleted from backend
-  delete MOCK_MISSIONS[data.missionId]
-
-  return {
-    success: true,
-    message: 'Mission deleted successfully',
+    // For pageable store compatibility
+    cursor: response.pageResponse?.nextPageToken || '',
   }
 }

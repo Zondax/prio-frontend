@@ -1,282 +1,360 @@
-import type { GrpcConfig } from '@mono-grpc'
-import { MOCK_MISSIONS, MOCK_OBJECTIVES, MOCK_TEAM_MEMBERS } from './mission.mocks'
+import { createMetadataAwareMethod, type GrpcConfig } from '@mono-grpc'
+import type { Empty } from 'google-protobuf/google/protobuf/empty_pb'
+import { Struct } from 'google-protobuf/google/protobuf/struct_pb'
+import { Timestamp } from 'google-protobuf/google/protobuf/timestamp_pb'
+import { StringValue } from 'google-protobuf/google/protobuf/wrappers_pb'
+import { MissionServiceClient } from '../../../grpc/src/entities/proto/api/v1/MissionServiceClientPb'
+import {
+  AddMissionMemberRequest as AddMissionMemberRequestPb,
+  type AddMissionMemberResponse as AddMissionMemberResponsePb,
+  CanAccessMissionRequest as CanAccessMissionRequestPb,
+  type CanAccessMissionResponse as CanAccessMissionResponsePb,
+  CreateMissionRequest as CreateMissionRequestPb,
+  type CreateMissionResponse as CreateMissionResponsePb,
+  DeleteMissionRequest as DeleteMissionRequestPb,
+  GetMissionRequest as GetMissionRequestPb,
+  type GetMissionResponse as GetMissionResponsePb,
+  MissionMemberRole,
+  MissionStatus,
+  RemoveMissionMemberRequest as RemoveMissionMemberRequestPb,
+  UpdateMissionMemberRoleRequest as UpdateMissionMemberRoleRequestPb,
+  type UpdateMissionMemberRoleResponse as UpdateMissionMemberRoleResponsePb,
+  UpdateMissionRequest as UpdateMissionRequestPb,
+  type UpdateMissionResponse as UpdateMissionResponsePb,
+} from '../../../grpc/src/entities/proto/api/v1/mission_pb'
 import type {
-  AddObjectiveRequest,
-  AddTeamMemberRequest,
-  DeleteObjectiveRequest,
-  GetMissionDetailsRequest,
+  AddMissionMemberRequest,
+  AddMissionMemberResponse,
+  CanAccessMissionRequest,
+  CanAccessMissionResponse,
+  CreateMissionRequest,
+  CreateMissionResponse,
+  DeleteMissionRequest,
+  GetMissionRequest,
+  GetMissionResponse,
   Mission,
-  MissionDetails,
-  Objective,
-  RemoveTeamMemberRequest,
-  StandardResponse,
-  TeamMember,
+  MissionMember,
+  RemoveMissionMemberRequest,
+  UpdateMissionMemberRoleRequest,
+  UpdateMissionMemberRoleResponse,
   UpdateMissionRequest,
-  UpdateObjectiveRequest,
+  UpdateMissionResponse,
 } from './mission.types'
 
-// Re-export types for convenience
+// Re-export types and enums
+export { MissionStatus, MissionMemberRole }
 export type {
   Mission,
-  Objective,
-  TeamMember,
-  MissionDetails,
-  GetMissionDetailsRequest,
+  MissionMember,
+  CreateMissionRequest,
+  CreateMissionResponse,
+  GetMissionRequest,
+  GetMissionResponse,
   UpdateMissionRequest,
-  AddObjectiveRequest,
-  UpdateObjectiveRequest,
-  DeleteObjectiveRequest,
-  AddTeamMemberRequest,
-  RemoveTeamMemberRequest,
-  StandardResponse,
+  UpdateMissionResponse,
+  DeleteMissionRequest,
+  AddMissionMemberRequest,
+  AddMissionMemberResponse,
+  UpdateMissionMemberRoleRequest,
+  UpdateMissionMemberRoleResponse,
+  RemoveMissionMemberRequest,
+  CanAccessMissionRequest,
+  CanAccessMissionResponse,
 }
 
-// Mock client creator - would be replaced with real gRPC client
+// Client factory
 export const createMissionClient = (cp: GrpcConfig) => {
+  return new MissionServiceClient(cp.baseUrl, cp.metadata as any)
+}
+
+// Create metadata-aware method wrappers
+const createMissionWithAuth = createMetadataAwareMethod<MissionServiceClient, CreateMissionRequestPb, CreateMissionResponsePb>(
+  (client, request, metadata) => client.createMission(request, metadata as any)
+)
+
+const getMissionWithAuth = createMetadataAwareMethod<MissionServiceClient, GetMissionRequestPb, GetMissionResponsePb>(
+  (client, request, metadata) => client.getMission(request, metadata as any)
+)
+
+const updateMissionWithAuth = createMetadataAwareMethod<MissionServiceClient, UpdateMissionRequestPb, UpdateMissionResponsePb>(
+  (client, request, metadata) => client.updateMission(request, metadata as any)
+)
+
+const deleteMissionWithAuth = createMetadataAwareMethod<MissionServiceClient, DeleteMissionRequestPb, Empty>((client, request, metadata) =>
+  client.deleteMission(request, metadata as any)
+)
+
+const addMissionMemberWithAuth = createMetadataAwareMethod<MissionServiceClient, AddMissionMemberRequestPb, AddMissionMemberResponsePb>(
+  (client, request, metadata) => client.addMissionMember(request, metadata as any)
+)
+
+const updateMissionMemberRoleWithAuth = createMetadataAwareMethod<
+  MissionServiceClient,
+  UpdateMissionMemberRoleRequestPb,
+  UpdateMissionMemberRoleResponsePb
+>((client, request, metadata) => client.updateMissionMemberRole(request, metadata as any))
+
+const removeMissionMemberWithAuth = createMetadataAwareMethod<MissionServiceClient, RemoveMissionMemberRequestPb, Empty>(
+  (client, request, metadata) => client.removeMissionMember(request, metadata as any)
+)
+
+const canAccessMissionWithAuth = createMetadataAwareMethod<MissionServiceClient, CanAccessMissionRequestPb, CanAccessMissionResponsePb>(
+  (client, request, metadata) => client.canAccessMission(request, metadata as any)
+)
+
+// Helper functions to create request objects
+export const createMissionRequest = (params: CreateMissionRequest): CreateMissionRequestPb => {
+  const request = new CreateMissionRequestPb()
+
+  request.setName(params.name)
+  request.setDescription(params.description)
+  request.setTeamId(params.teamId)
+
+  if (params.startDate) {
+    const timestamp = new Timestamp()
+    timestamp.fromDate(params.startDate)
+    request.setStartDate(timestamp)
+  }
+
+  if (params.endDate) {
+    const timestamp = new Timestamp()
+    timestamp.fromDate(params.endDate)
+    request.setEndDate(timestamp)
+  }
+
+  if (params.metadata) {
+    const struct = Struct.fromJavaScript(params.metadata)
+    request.setMetadata(struct)
+  }
+
+  return request
+}
+
+export const getMissionRequest = (id: string): GetMissionRequestPb => {
+  const request = new GetMissionRequestPb()
+  request.setId(id)
+  return request
+}
+
+export const updateMissionRequest = (params: UpdateMissionRequest): UpdateMissionRequestPb => {
+  const request = new UpdateMissionRequestPb()
+
+  request.setId(params.id)
+
+  if (params.name !== undefined) {
+    const nameValue = new StringValue()
+    nameValue.setValue(params.name)
+    request.setName(nameValue)
+  }
+
+  if (params.description !== undefined) {
+    const descValue = new StringValue()
+    descValue.setValue(params.description)
+    request.setDescription(descValue)
+  }
+
+  if (params.status !== undefined) {
+    request.setStatus(params.status)
+  }
+
+  if (params.startDate) {
+    const timestamp = new Timestamp()
+    timestamp.fromDate(params.startDate)
+    request.setStartDate(timestamp)
+  }
+
+  if (params.endDate) {
+    const timestamp = new Timestamp()
+    timestamp.fromDate(params.endDate)
+    request.setEndDate(timestamp)
+  }
+
+  if (params.metadata) {
+    const struct = Struct.fromJavaScript(params.metadata)
+    request.setMetadata(struct)
+  }
+
+  return request
+}
+
+export const deleteMissionRequest = (id: string): DeleteMissionRequestPb => {
+  const request = new DeleteMissionRequestPb()
+  request.setId(id)
+  return request
+}
+
+export const addMissionMemberRequest = (params: AddMissionMemberRequest): AddMissionMemberRequestPb => {
+  const request = new AddMissionMemberRequestPb()
+
+  request.setId(params.id)
+  request.setUserEmail(params.userEmail)
+  request.setRole(params.role)
+
+  return request
+}
+
+export const updateMissionMemberRoleRequest = (params: UpdateMissionMemberRoleRequest): UpdateMissionMemberRoleRequestPb => {
+  const request = new UpdateMissionMemberRoleRequestPb()
+
+  request.setId(params.id)
+  request.setUserEmail(params.userEmail)
+  request.setRole(params.role)
+
+  return request
+}
+
+export const removeMissionMemberRequest = (params: RemoveMissionMemberRequest): RemoveMissionMemberRequestPb => {
+  const request = new RemoveMissionMemberRequestPb()
+
+  request.setId(params.id)
+  request.setUserEmail(params.userEmail)
+
+  return request
+}
+
+export const canAccessMissionRequest = (params: CanAccessMissionRequest): CanAccessMissionRequestPb => {
+  const request = new CanAccessMissionRequestPb()
+
+  request.setId(params.id)
+  request.setAction(params.action)
+
+  return request
+}
+
+// Helper to convert protobuf Mission to TypeScript interface
+const convertMissionFromPb = (missionPb: any): Mission => {
+  const startDate = missionPb.getStartDate()
+  const endDate = missionPb.getEndDate()
+  const createdAt = missionPb.getCreatedAt()
+  const updatedAt = missionPb.getUpdatedAt()
+  const metadata = missionPb.getMetadata()
+
   return {
-    // Mock client object that mimics gRPC client interface
-    baseUrl: cp.baseUrl,
-    metadata: cp.metadata,
+    id: missionPb.getId(),
+    name: missionPb.getName(),
+    description: missionPb.getDescription(),
+    teamId: missionPb.getTeamId(),
+    creatorUserId: missionPb.getCreatorUserId(),
+    status: missionPb.getStatus(),
+    startDate: startDate ? startDate.toDate() : undefined,
+    endDate: endDate ? endDate.toDate() : undefined,
+    metadata: metadata ? metadata.toJavaScript() : undefined,
+    createdAt: createdAt ? createdAt.toDate() : undefined,
+    updatedAt: updatedAt ? updatedAt.toDate() : undefined,
   }
 }
 
-// Mock API functions that follow the same pattern as chat.ts
-export const getMissionDetails = async (
-  _client: ReturnType<typeof createMissionClient>,
-  _clientParams: GrpcConfig,
-  request: GetMissionDetailsRequest
-): Promise<MissionDetails> => {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 150))
-
-  const mission = MOCK_MISSIONS[request.missionId]
-  if (!mission) {
-    throw new Error(`Mission with ID ${request.missionId} not found`)
-  }
-
-  const objectives = Object.values(MOCK_OBJECTIVES).filter((obj) => obj.missionId === request.missionId)
-  const teamMembers = MOCK_TEAM_MEMBERS[request.missionId] || []
-
-  // Mock chat channels for this mission
-  const chatChannels = [
-    {
-      id: '00000000-0000-0000-0000-000000000000',
-      name: 'General Discussion',
-      type: 'team',
-      lastActivity: new Date(Date.now() - 1000 * 60 * 15),
-    },
-    {
-      id: '00000000-0000-0000-0000-000000000001',
-      name: 'AI Assistant',
-      type: 'ai',
-      lastActivity: new Date(Date.now() - 1000 * 60 * 60 * 2),
-    },
-  ]
-
-  const completedObjectives = objectives.filter((obj) => obj.status === 'completed').length
-  const totalHours = objectives.reduce((sum, obj) => sum + (obj.estimatedHours || 0), 0)
-  const completedHours = objectives.reduce((sum, obj) => sum + obj.actualHours, 0)
+// Helper to convert protobuf MissionMember to TypeScript interface
+const convertMissionMemberFromPb = (memberPb: any): MissionMember => {
+  const joinedAt = memberPb.getJoinedAt()
 
   return {
-    mission,
-    objectives,
-    teamMembers,
-    chatChannels,
-    stats: {
-      totalObjectives: objectives.length,
-      completedObjectives,
-      totalHours,
-      completedHours,
-    },
+    userId: memberPb.getUserId(),
+    missionId: memberPb.getMissionId(),
+    role: memberPb.getRole(),
+    joinedAt: joinedAt ? joinedAt.toDate() : undefined,
+  }
+}
+
+// API functions
+export const createMission = async (
+  client: ReturnType<typeof createMissionClient>,
+  clientParams: GrpcConfig,
+  params: CreateMissionRequest
+): Promise<CreateMissionResponse> => {
+  const request = createMissionRequest(params)
+  const response = await createMissionWithAuth(client, clientParams, request)
+
+  const mission = response.getMission()
+  return {
+    mission: mission ? convertMissionFromPb(mission) : undefined,
+  }
+}
+
+export const getMission = async (
+  client: ReturnType<typeof createMissionClient>,
+  clientParams: GrpcConfig,
+  id: string
+): Promise<GetMissionResponse> => {
+  const request = getMissionRequest(id)
+  const response = await getMissionWithAuth(client, clientParams, request)
+
+  const mission = response.getMission()
+  return {
+    mission: mission ? convertMissionFromPb(mission) : undefined,
   }
 }
 
 export const updateMission = async (
-  _client: ReturnType<typeof createMissionClient>,
-  _clientParams: GrpcConfig,
-  request: UpdateMissionRequest
-): Promise<Mission> => {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 200))
+  client: ReturnType<typeof createMissionClient>,
+  clientParams: GrpcConfig,
+  params: UpdateMissionRequest
+): Promise<UpdateMissionResponse> => {
+  const request = updateMissionRequest(params)
+  const response = await updateMissionWithAuth(client, clientParams, request)
 
-  const existingMission = MOCK_MISSIONS[request.missionId]
-  if (!existingMission) {
-    throw new Error(`Mission with ID ${request.missionId} not found`)
+  const mission = response.getMission()
+  return {
+    mission: mission ? convertMissionFromPb(mission) : undefined,
   }
-
-  const updatedMission: Mission = {
-    ...existingMission,
-    ...(request.name && { name: request.name }),
-    ...(request.description && { description: request.description }),
-    ...(request.status && { status: request.status }),
-    ...(request.progress !== undefined && { progress: request.progress }),
-    ...(request.targetDate !== undefined && { targetDate: request.targetDate }),
-    ...(request.priority && { priority: request.priority }),
-    ...(request.tags && { tags: request.tags }),
-    updatedAt: new Date(),
-  }
-
-  // In real implementation, this would be saved to backend
-  MOCK_MISSIONS[request.missionId] = updatedMission
-
-  return updatedMission
 }
 
-export const addObjective = async (
-  _client: ReturnType<typeof createMissionClient>,
-  _clientParams: GrpcConfig,
-  request: AddObjectiveRequest
-): Promise<Objective> => {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 200))
-
-  const mission = MOCK_MISSIONS[request.missionId]
-  if (!mission) {
-    throw new Error(`Mission with ID ${request.missionId} not found`)
-  }
-
-  const newObjective: Objective = {
-    id: `obj-${Date.now()}`,
-    title: request.title,
-    description: request.description || '',
-    status: 'active',
-    priority: request.priority || 'medium',
-    progress: 0,
-    assigneeId: request.assigneeId || 'user-you',
-    missionId: request.missionId,
-    dueDate: request.dueDate || null,
-    startDate: new Date(),
-    estimatedHours: request.estimatedHours || null,
-    actualHours: 0,
-    tags: request.tags || [],
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  }
-
-  // In real implementation, this would be saved to backend
-  MOCK_OBJECTIVES[newObjective.id] = newObjective
-
-  return newObjective
+export const deleteMission = async (
+  client: ReturnType<typeof createMissionClient>,
+  clientParams: GrpcConfig,
+  id: string
+): Promise<void> => {
+  const request = deleteMissionRequest(id)
+  await deleteMissionWithAuth(client, clientParams, request)
 }
 
-export const updateObjective = async (
-  _client: ReturnType<typeof createMissionClient>,
-  _clientParams: GrpcConfig,
-  request: UpdateObjectiveRequest
-): Promise<Objective> => {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 150))
+export const addMissionMember = async (
+  client: ReturnType<typeof createMissionClient>,
+  clientParams: GrpcConfig,
+  params: AddMissionMemberRequest
+): Promise<AddMissionMemberResponse> => {
+  const request = addMissionMemberRequest(params)
+  const response = await addMissionMemberWithAuth(client, clientParams, request)
 
-  const existingObjective = MOCK_OBJECTIVES[request.objectiveId]
-  if (!existingObjective) {
-    throw new Error(`Objective with ID ${request.objectiveId} not found`)
+  const member = response.getMember()
+  return {
+    member: member ? convertMissionMemberFromPb(member) : undefined,
   }
-
-  const updatedObjective: Objective = {
-    ...existingObjective,
-    ...(request.title && { title: request.title }),
-    ...(request.description && { description: request.description }),
-    ...(request.status && { status: request.status }),
-    ...(request.assigneeId && { assigneeId: request.assigneeId }),
-    ...(request.dueDate !== undefined && { dueDate: request.dueDate }),
-    ...(request.priority && { priority: request.priority }),
-    ...(request.progress !== undefined && { progress: request.progress }),
-    ...(request.estimatedHours !== undefined && { estimatedHours: request.estimatedHours }),
-    ...(request.actualHours !== undefined && { actualHours: request.actualHours }),
-    ...(request.tags && { tags: request.tags }),
-    updatedAt: new Date(),
-  }
-
-  // In real implementation, this would be saved to backend
-  MOCK_OBJECTIVES[request.objectiveId] = updatedObjective
-
-  return updatedObjective
 }
 
-export const deleteObjective = async (
-  _client: ReturnType<typeof createMissionClient>,
-  _clientParams: GrpcConfig,
-  request: DeleteObjectiveRequest
-): Promise<StandardResponse> => {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 100))
+export const updateMissionMemberRole = async (
+  client: ReturnType<typeof createMissionClient>,
+  clientParams: GrpcConfig,
+  params: UpdateMissionMemberRoleRequest
+): Promise<UpdateMissionMemberRoleResponse> => {
+  const request = updateMissionMemberRoleRequest(params)
+  const response = await updateMissionMemberRoleWithAuth(client, clientParams, request)
 
-  const existingObjective = MOCK_OBJECTIVES[request.objectiveId]
-  if (!existingObjective) {
-    return {
-      success: false,
-      message: `Objective with ID ${request.objectiveId} not found`,
-    }
+  const member = response.getMember()
+  return {
+    member: member ? convertMissionMemberFromPb(member) : undefined,
   }
+}
 
-  // In real implementation, this would be deleted from backend
-  delete MOCK_OBJECTIVES[request.objectiveId]
+export const removeMissionMember = async (
+  client: ReturnType<typeof createMissionClient>,
+  clientParams: GrpcConfig,
+  params: RemoveMissionMemberRequest
+): Promise<void> => {
+  const request = removeMissionMemberRequest(params)
+  await removeMissionMemberWithAuth(client, clientParams, request)
+}
+
+export const canAccessMission = async (
+  client: ReturnType<typeof createMissionClient>,
+  clientParams: GrpcConfig,
+  params: CanAccessMissionRequest
+): Promise<CanAccessMissionResponse> => {
+  const request = canAccessMissionRequest(params)
+  const response = await canAccessMissionWithAuth(client, clientParams, request)
 
   return {
-    success: true,
-    message: 'Objective deleted successfully',
-  }
-}
-
-export const addTeamMember = async (
-  _client: ReturnType<typeof createMissionClient>,
-  _clientParams: GrpcConfig,
-  request: AddTeamMemberRequest
-): Promise<TeamMember> => {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 150))
-
-  const mission = MOCK_MISSIONS[request.missionId]
-  if (!mission) {
-    throw new Error(`Mission with ID ${request.missionId} not found`)
-  }
-
-  const newTeamMember: TeamMember = {
-    id: `tm-${Date.now()}`,
-    userId: request.userId,
-    missionId: request.missionId,
-    role: request.role || 'Member',
-    joinedAt: new Date(),
-  }
-
-  // In real implementation, this would be saved to backend
-  if (!MOCK_TEAM_MEMBERS[request.missionId]) {
-    MOCK_TEAM_MEMBERS[request.missionId] = []
-  }
-  MOCK_TEAM_MEMBERS[request.missionId].push(newTeamMember)
-
-  return newTeamMember
-}
-
-export const removeTeamMember = async (
-  _client: ReturnType<typeof createMissionClient>,
-  _clientParams: GrpcConfig,
-  request: RemoveTeamMemberRequest
-): Promise<StandardResponse> => {
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 100))
-
-  const teamMembers = MOCK_TEAM_MEMBERS[request.missionId]
-  if (!teamMembers) {
-    return {
-      success: false,
-      message: `Mission with ID ${request.missionId} not found`,
-    }
-  }
-
-  const memberIndex = teamMembers.findIndex((member) => member.userId === request.userId)
-  if (memberIndex === -1) {
-    return {
-      success: false,
-      message: `User ${request.userId} is not a member of mission ${request.missionId}`,
-    }
-  }
-
-  // In real implementation, this would be deleted from backend
-  MOCK_TEAM_MEMBERS[request.missionId].splice(memberIndex, 1)
-
-  return {
-    success: true,
-    message: 'Team member removed successfully',
+    canAccess: response.getCanAccess(),
+    reason: response.getReason(),
   }
 }

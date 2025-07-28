@@ -1,151 +1,197 @@
 import type { GrpcConfig } from '@mono-grpc'
-import { createSimpleStore } from '@zondax/stores'
+import { createBackendListStore, createSimpleStore } from '@zondax/stores'
 
 import {
-  type AddObjectiveRequest,
-  type AddTeamMemberRequest,
-  addObjective,
-  addTeamMember,
+  type AddMissionMemberRequest,
+  type AddMissionMemberResponse,
+  addMissionMember,
+  type CanAccessMissionRequest,
+  type CanAccessMissionResponse,
+  type CreateMissionRequest,
+  type CreateMissionResponse,
+  canAccessMission,
+  createMission,
   createMissionClient,
-  type DeleteObjectiveRequest,
-  deleteObjective,
-  type GetMissionDetailsRequest,
-  getMissionDetails,
+  deleteMission,
+  type GetMissionResponse,
+  getMission,
   type Mission,
-  type MissionDetails,
-  type Objective,
-  type RemoveTeamMemberRequest,
-  removeTeamMember,
-  type StandardResponse,
-  type TeamMember,
+  type MissionMember,
+  type RemoveMissionMemberRequest,
+  removeMissionMember,
+  type UpdateMissionMemberRoleRequest,
+  type UpdateMissionMemberRoleResponse,
   type UpdateMissionRequest,
-  type UpdateObjectiveRequest,
+  type UpdateMissionResponse,
   updateMission,
-  updateObjective,
+  updateMissionMemberRole,
 } from '../api/mission'
 
-// Store for getting mission details
-export const useMissionDetailsStore = createSimpleStore<
+import {
+  convertToMissionListResponse,
+  type SearchMissionMembersRequest,
+  type SearchMissionsRequest,
+  searchMissionMembers,
+  searchMissions,
+} from '../api/mission-list'
+
+// Store for creating a new mission
+export const useCreateMissionStore = createSimpleStore<
   GrpcConfig,
   ReturnType<typeof createMissionClient>,
-  GetMissionDetailsRequest,
-  MissionDetails
+  CreateMissionRequest,
+  CreateMissionResponse
 >({
   createClient: createMissionClient,
   method: async (client, clientParams, input) => {
-    return await getMissionDetails(client, clientParams, input)
+    return await createMission(client, clientParams, input)
+  },
+})
+
+// Store for getting a single mission
+export const useGetMissionStore = createSimpleStore<GrpcConfig, ReturnType<typeof createMissionClient>, string, GetMissionResponse>({
+  createClient: createMissionClient,
+  method: async (client, clientParams, missionId) => {
+    return await getMission(client, clientParams, missionId)
   },
 })
 
 // Store for updating missions
-export const useUpdateMissionStore = createSimpleStore<GrpcConfig, ReturnType<typeof createMissionClient>, UpdateMissionRequest, Mission>({
+export const useUpdateMissionStore = createSimpleStore<
+  GrpcConfig,
+  ReturnType<typeof createMissionClient>,
+  UpdateMissionRequest,
+  UpdateMissionResponse
+>({
   createClient: createMissionClient,
   method: async (client, clientParams, input) => {
     return await updateMission(client, clientParams, input)
   },
 })
 
-// Store for adding objectives to mission
-export const useAddMissionObjectiveStore = createSimpleStore<
-  GrpcConfig,
-  ReturnType<typeof createMissionClient>,
-  AddObjectiveRequest,
-  Objective
->({
+// Store for deleting missions
+export const useDeleteMissionStore = createSimpleStore<GrpcConfig, ReturnType<typeof createMissionClient>, string, void>({
   createClient: createMissionClient,
-  method: async (client, clientParams, input) => {
-    return await addObjective(client, clientParams, input)
+  method: async (client, clientParams, missionId) => {
+    return await deleteMission(client, clientParams, missionId)
   },
 })
 
-// Store for updating objectives in mission
-export const useUpdateMissionObjectiveStore = createSimpleStore<
+// Store for searching missions (pageable)
+export const useSearchMissionsStore = createBackendListStore<
   GrpcConfig,
   ReturnType<typeof createMissionClient>,
-  UpdateObjectiveRequest,
-  Objective
+  Mission,
+  SearchMissionsRequest
+>({
+  createClient: createMissionClient,
+  fetchData: async (client, clientParams, queryParams) => {
+    const input: SearchMissionsRequest = queryParams as SearchMissionsRequest
+    const response = await searchMissions(client, clientParams, input)
+    const listResponse = convertToMissionListResponse(response)
+    return {
+      items: listResponse.data,
+      pageResponse: {
+        nextPageToken: listResponse.metadata?.nextPageToken,
+        totalItems: listResponse.metadata?.totalCount,
+      },
+    }
+  },
+  itemIdExtractor: (mission) => mission.id,
+  defaultPageSize: 20,
+})
+
+// Store for adding mission members
+export const useAddMissionMemberStore = createSimpleStore<
+  GrpcConfig,
+  ReturnType<typeof createMissionClient>,
+  AddMissionMemberRequest,
+  AddMissionMemberResponse
 >({
   createClient: createMissionClient,
   method: async (client, clientParams, input) => {
-    return await updateObjective(client, clientParams, input)
+    return await addMissionMember(client, clientParams, input)
   },
 })
 
-// Store for deleting objectives from mission
-export const useDeleteMissionObjectiveStore = createSimpleStore<
+// Store for updating mission member role
+export const useUpdateMissionMemberRoleStore = createSimpleStore<
   GrpcConfig,
   ReturnType<typeof createMissionClient>,
-  DeleteObjectiveRequest,
-  StandardResponse
+  UpdateMissionMemberRoleRequest,
+  UpdateMissionMemberRoleResponse
 >({
   createClient: createMissionClient,
   method: async (client, clientParams, input) => {
-    return await deleteObjective(client, clientParams, input)
+    return await updateMissionMemberRole(client, clientParams, input)
   },
 })
 
-// Store for adding team members
-export const useAddTeamMemberStore = createSimpleStore<
+// Store for removing mission members
+export const useRemoveMissionMemberStore = createSimpleStore<
   GrpcConfig,
   ReturnType<typeof createMissionClient>,
-  AddTeamMemberRequest,
-  TeamMember
+  RemoveMissionMemberRequest,
+  void
 >({
   createClient: createMissionClient,
   method: async (client, clientParams, input) => {
-    return await addTeamMember(client, clientParams, input)
+    return await removeMissionMember(client, clientParams, input)
   },
 })
 
-// Store for removing team members
-export const useRemoveTeamMemberStore = createSimpleStore<
+// Store for searching mission members (pageable)
+export const useSearchMissionMembersStore = createBackendListStore<
   GrpcConfig,
   ReturnType<typeof createMissionClient>,
-  RemoveTeamMemberRequest,
-  StandardResponse
+  MissionMember,
+  SearchMissionMembersRequest
+>({
+  createClient: createMissionClient,
+  fetchData: async (client, clientParams, queryParams) => {
+    const input: SearchMissionMembersRequest = queryParams as SearchMissionMembersRequest
+    const response = await searchMissionMembers(client, clientParams, input)
+    return {
+      items: response.members,
+      pageResponse: response.pageResponse,
+    }
+  },
+  itemIdExtractor: (member) => `${member.missionId}-${member.userId}`,
+  defaultPageSize: 20,
+})
+
+// Store for checking mission access
+export const useCanAccessMissionStore = createSimpleStore<
+  GrpcConfig,
+  ReturnType<typeof createMissionClient>,
+  CanAccessMissionRequest,
+  CanAccessMissionResponse
 >({
   createClient: createMissionClient,
   method: async (client, clientParams, input) => {
-    return await removeTeamMember(client, clientParams, input)
+    return await canAccessMission(client, clientParams, input)
   },
 })
 
-// Convenience hooks for mission details
-export const useMissionDetailsLoading = () => useMissionDetailsStore().isLoading
-export const useMissionDetailsError = () => useMissionDetailsStore().error
-export const useMissionDetailsData = () => useMissionDetailsStore().data
-export const useRefreshMissionDetails = () => useMissionDetailsStore().refresh
-export const useSetMissionDetailsInput = () => useMissionDetailsStore().setInput
-
-// Convenience hooks for mission updates
+// Export convenience hooks for loading and error states
+export const useCreateMissionLoading = () => useCreateMissionStore().isLoading
+export const useGetMissionLoading = () => useGetMissionStore().isLoading
 export const useUpdateMissionLoading = () => useUpdateMissionStore().isLoading
+export const useDeleteMissionLoading = () => useDeleteMissionStore().isLoading
+export const useSearchMissionsLoading = () => useSearchMissionsStore().isLoading
+export const useAddMissionMemberLoading = () => useAddMissionMemberStore().isLoading
+export const useUpdateMissionMemberRoleLoading = () => useUpdateMissionMemberRoleStore().isLoading
+export const useRemoveMissionMemberLoading = () => useRemoveMissionMemberStore().isLoading
+export const useSearchMissionMembersLoading = () => useSearchMissionMembersStore().isLoading
+export const useCanAccessMissionLoading = () => useCanAccessMissionStore().isLoading
+
+export const useCreateMissionError = () => useCreateMissionStore().error
+export const useGetMissionError = () => useGetMissionStore().error
 export const useUpdateMissionError = () => useUpdateMissionStore().error
-export const useUpdateMissionData = () => useUpdateMissionStore().data
-export const useUpdateMissionAction = () => useUpdateMissionStore().setInput
-
-// Convenience hooks for mission objective management
-export const useAddMissionObjectiveLoading = () => useAddMissionObjectiveStore().isLoading
-export const useAddMissionObjectiveError = () => useAddMissionObjectiveStore().error
-export const useAddMissionObjectiveData = () => useAddMissionObjectiveStore().data
-export const useAddMissionObjectiveAction = () => useAddMissionObjectiveStore().setInput
-
-export const useUpdateMissionObjectiveLoading = () => useUpdateMissionObjectiveStore().isLoading
-export const useUpdateMissionObjectiveError = () => useUpdateMissionObjectiveStore().error
-export const useUpdateMissionObjectiveData = () => useUpdateMissionObjectiveStore().data
-export const useUpdateMissionObjectiveAction = () => useUpdateMissionObjectiveStore().setInput
-
-export const useDeleteMissionObjectiveLoading = () => useDeleteMissionObjectiveStore().isLoading
-export const useDeleteMissionObjectiveError = () => useDeleteMissionObjectiveStore().error
-export const useDeleteMissionObjectiveData = () => useDeleteMissionObjectiveStore().data
-export const useDeleteMissionObjectiveAction = () => useDeleteMissionObjectiveStore().setInput
-
-// Convenience hooks for team member management
-export const useAddTeamMemberLoading = () => useAddTeamMemberStore().isLoading
-export const useAddTeamMemberError = () => useAddTeamMemberStore().error
-export const useAddTeamMemberData = () => useAddTeamMemberStore().data
-export const useAddTeamMemberAction = () => useAddTeamMemberStore().setInput
-
-export const useRemoveTeamMemberLoading = () => useRemoveTeamMemberStore().isLoading
-export const useRemoveTeamMemberError = () => useRemoveTeamMemberStore().error
-export const useRemoveTeamMemberData = () => useRemoveTeamMemberStore().data
-export const useRemoveTeamMemberAction = () => useRemoveTeamMemberStore().setInput
+export const useDeleteMissionError = () => useDeleteMissionStore().error
+export const useSearchMissionsError = () => useSearchMissionsStore().errors
+export const useAddMissionMemberError = () => useAddMissionMemberStore().error
+export const useUpdateMissionMemberRoleError = () => useUpdateMissionMemberRoleStore().error
+export const useRemoveMissionMemberError = () => useRemoveMissionMemberStore().error
+export const useSearchMissionMembersError = () => useSearchMissionMembersStore().errors
+export const useCanAccessMissionError = () => useCanAccessMissionStore().error

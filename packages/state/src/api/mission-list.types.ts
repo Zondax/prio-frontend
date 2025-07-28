@@ -1,63 +1,54 @@
-import type { Mission } from './mission.types'
+import type { TPageableResponse } from '@zondax/stores'
+import { MissionMemberRole, MissionStatus } from '../../../grpc/src/entities/proto/api/v1/mission_pb'
 
-// Re-export the Mission type
-export type { Mission }
+// Re-export types from individual mission types
+export type { Mission, MissionMember } from './mission.types'
+export { MissionStatus, MissionMemberRole }
 
-// Types for mission list operations
-export interface MissionListFilters {
-  status?: 'active' | 'planning' | 'completed'
-  type?: 'individual' | 'team'
-  organizationId?: string
-  participantId?: string
-  // Pagination for infinite scroll
-  page?: number
-  limit?: number
-  // Cursor-based pagination (alternative to page-based)
-  cursor?: string
-  // Search and sorting
-  searchQuery?: string
-  sortBy?: 'name' | 'progress' | 'startDate' | 'targetDate' | 'createdAt'
-  sortOrder?: 'asc' | 'desc'
+// Types for mission list operations matching gRPC SearchMissionsRequest
+export interface SearchMissionsRequest {
+  pageRequest?: {
+    pageSize?: number
+    pageToken?: string
+  }
+  query?: string
+  teamId?: string
+  status?: MissionStatus
 }
 
-// Metadata for pagination
+// Response structure matching gRPC SearchMissionsResponse
+export interface SearchMissionsResponse {
+  missions: Array<import('./mission.types').Mission>
+  pageResponse?: {
+    nextPageToken: string
+    totalItems?: number
+  }
+}
+
+// Types for searching mission members
+export interface SearchMissionMembersRequest {
+  id: string
+  pageRequest?: {
+    pageSize?: number
+    pageToken?: string
+  }
+  role?: MissionMemberRole
+}
+
+export interface SearchMissionMembersResponse {
+  members: Array<import('./mission.types').MissionMember>
+  pageResponse?: {
+    nextPageToken: string
+    totalItems?: number
+  }
+}
+
+// Metadata for pagination (for store compatibility)
 export interface MissionListMetadata {
-  totalCount: number
+  totalCount?: number
   hasMore: boolean
-  currentPage: number
-  totalPages: number
-  pageSize: number
+  nextPageToken?: string
 }
 
-// Response using the standard TPageableResponse pattern
-export interface MissionListResponse {
-  data: Mission[]
-  metadata: MissionListMetadata
-  cursor: string
-}
-
-export interface CreateMissionRequest {
-  name: string
-  description?: string
-  type: 'individual' | 'team'
-  organizationId?: string
-  priority?: 'high' | 'medium' | 'low'
-  targetDate?: Date | null
-  participantIds?: string[]
-  tags?: string[]
-}
-
-export interface UpdateMissionStatusRequest {
-  missionId: string
-  status?: 'active' | 'planning' | 'completed'
-  progress?: number
-}
-
-export interface DeleteMissionRequest {
-  missionId: string
-}
-
-export interface StandardResponse {
-  success: boolean
-  message: string
-}
+// Response using the standard TPageableResponse pattern for stores
+export interface MissionListResponse extends TPageableResponse<import('./mission.types').Mission, MissionListMetadata> {}

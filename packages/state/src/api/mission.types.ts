@@ -1,121 +1,102 @@
-// Types that would match gRPC protobuf definitions for missions
+// Types that match gRPC protobuf definitions for missions
+import { MissionMemberRole, MissionStatus } from '../../../grpc/src/entities/proto/api/v1/mission_pb'
+
+// Re-export enums from protobuf
+export { MissionStatus, MissionMemberRole }
+
+// TypeScript interfaces matching protobuf messages
 export interface Mission {
   id: string
   name: string
   description: string
-  status: 'active' | 'planning' | 'completed'
-  type: 'individual' | 'team'
-  priority: 'high' | 'medium' | 'low'
-  progress: number
-  participantIds: string[]
-  startDate: Date
-  targetDate: Date | null
-  tags: string[]
-  organizationId?: string
-  createdAt: Date
-  updatedAt: Date
+  teamId: string
+  creatorUserId: string
+  status: MissionStatus
+  startDate?: Date
+  endDate?: Date
+  metadata?: Record<string, any>
+  createdAt?: Date
+  updatedAt?: Date
 }
 
-export interface Objective {
-  id: string
-  title: string
-  description: string
-  status: 'active' | 'in-progress' | 'completed' | 'pending'
-  priority: 'high' | 'medium' | 'low'
-  progress: number
-  assigneeId: string
-  missionId: string
-  dueDate: Date | null
-  startDate: Date
-  estimatedHours: number | null
-  actualHours: number
-  tags: string[]
-  createdAt: Date
-  updatedAt: Date
-}
-
-export interface TeamMember {
-  id: string
+export interface MissionMember {
   userId: string
   missionId: string
-  role: string
-  joinedAt: Date
+  role: MissionMemberRole
+  joinedAt?: Date
 }
 
-export interface MissionDetails {
-  mission: Mission
-  objectives: Objective[]
-  teamMembers: TeamMember[]
-  chatChannels: Array<{
-    id: string
-    name: string
-    type: string
-    lastActivity: Date
-  }>
-  stats: {
-    totalObjectives: number
-    completedObjectives: number
-    totalHours: number
-    completedHours: number
-  }
+// Request/Response types for individual mission operations
+export interface CreateMissionRequest {
+  name: string
+  description: string
+  teamId: string
+  startDate?: Date
+  endDate?: Date
+  metadata?: Record<string, any>
 }
 
-export interface GetMissionDetailsRequest {
-  missionId: string
+export interface CreateMissionResponse {
+  mission?: Mission
+}
+
+export interface GetMissionRequest {
+  id: string
+}
+
+export interface GetMissionResponse {
+  mission?: Mission
 }
 
 export interface UpdateMissionRequest {
-  missionId: string
+  id: string
   name?: string
   description?: string
-  status?: 'active' | 'planning' | 'completed'
-  progress?: number
-  targetDate?: Date | null
-  priority?: 'high' | 'medium' | 'low'
-  tags?: string[]
+  status?: MissionStatus
+  startDate?: Date
+  endDate?: Date
+  metadata?: Record<string, any>
 }
 
-export interface AddObjectiveRequest {
-  missionId: string
-  title: string
-  description?: string
-  assigneeId?: string
-  dueDate?: Date | null
-  priority?: 'high' | 'medium' | 'low'
-  estimatedHours?: number
-  tags?: string[]
+export interface UpdateMissionResponse {
+  mission?: Mission
 }
 
-export interface UpdateObjectiveRequest {
-  objectiveId: string
-  title?: string
-  description?: string
-  status?: 'active' | 'in-progress' | 'completed' | 'pending'
-  assigneeId?: string
-  dueDate?: Date | null
-  priority?: 'high' | 'medium' | 'low'
-  progress?: number
-  estimatedHours?: number
-  actualHours?: number
-  tags?: string[]
+export interface DeleteMissionRequest {
+  id: string
 }
 
-export interface DeleteObjectiveRequest {
-  objectiveId: string
+export interface AddMissionMemberRequest {
+  id: string
+  userEmail: string
+  role: MissionMemberRole
 }
 
-export interface AddTeamMemberRequest {
-  missionId: string
-  userId: string
-  role?: string
+export interface AddMissionMemberResponse {
+  member?: MissionMember
 }
 
-export interface RemoveTeamMemberRequest {
-  missionId: string
-  userId: string
+export interface UpdateMissionMemberRoleRequest {
+  id: string
+  userEmail: string
+  role: MissionMemberRole
 }
 
-export interface StandardResponse {
-  success: boolean
-  message: string
+export interface UpdateMissionMemberRoleResponse {
+  member?: MissionMember
+}
+
+export interface RemoveMissionMemberRequest {
+  id: string
+  userEmail: string
+}
+
+export interface CanAccessMissionRequest {
+  id: string
+  action: string
+}
+
+export interface CanAccessMissionResponse {
+  canAccess: boolean
+  reason: string
 }

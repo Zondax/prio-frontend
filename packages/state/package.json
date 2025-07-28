@@ -26,11 +26,11 @@
   },
   "dependencies": {
     "@date-fns/tz": "^1.2.0",
+    "@tanstack/react-virtual": "^3.13.11",
     "@zondax/stores": "workspace:*",
     "axios": "^1.11.0",
     "date-fns": "^4.1.0",
     "es-toolkit": "^1.39.5",
-    "@tanstack/react-virtual": "^3.13.11",
     "mono-grpc": "workspace:*",
     "nanoid": "^5.1.5",
     "next-auth": "beta",
@@ -40,8 +40,10 @@
   },
   "devDependencies": {
     "@testing-library/react": "16.3.0",
+    "@types/google-protobuf": "^3.15.12",
     "@types/node": ">=22.15.17",
     "@types/react": "19.0.10",
+    "google-protobuf": "^3.21.4",
     "typescript": "^5.8.3",
     "vitest": "^3.2.4"
   }
