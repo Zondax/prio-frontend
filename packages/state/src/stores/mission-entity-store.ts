@@ -1,23 +1,21 @@
 import { createEntityStore, type EntityStore } from '@zondax/stores'
 import {
-  addObjective,
-  addTeamMember,
+  addMissionMember,
+  createMission,
   createMissionClient,
-  deleteObjective,
-  getMissionDetails,
-  removeTeamMember,
+  deleteMission,
+  getMission,
+  removeMissionMember,
   updateMission,
-  updateObjective,
+  updateMissionMemberRole,
 } from '../api/mission'
 import type {
-  AddObjectiveRequest,
-  AddTeamMemberRequest,
-  DeleteObjectiveRequest,
+  AddMissionMemberRequest,
+  CreateMissionRequest,
   Mission,
-  MissionDetails,
-  RemoveTeamMemberRequest,
+  RemoveMissionMemberRequest,
+  UpdateMissionMemberRoleRequest,
   UpdateMissionRequest,
-  UpdateObjectiveRequest,
 } from '../api/mission.types'
 
 // Create the unified mission store with clean API
@@ -32,32 +30,56 @@ export const missionStore = createEntityStore<Mission>((mission) => mission.id, 
 
 // Enhanced store with clean CRUD methods
 const extendedStore = Object.assign(missionStore, {
-  // Get mission details
-  getDetails: async (missionId: string): Promise<MissionDetails> => {
+  // Create mission
+  create: async (data: CreateMissionRequest): Promise<Mission | undefined> => {
     const state = missionStore.getState()
 
     try {
-      if ('setLoading' in state) state.setLoading('getDetails', true)
+      if ('setLoading' in state) state.setLoading('create', true)
 
       const client = createMissionClient({ baseUrl: '', metadata: {} })
-      const details = await getMissionDetails(client, { baseUrl: '', metadata: {} }, { missionId })
+      const response = await createMission(client, { baseUrl: '', metadata: {} }, data)
 
-      // Update the basic mission info in the store
-      if (details.mission) {
-        state.addEntity(details.mission)
+      // Add the new mission to the store
+      if (response.mission) {
+        state.addEntity(response.mission)
       }
 
-      return details
+      return response.mission
     } catch (error) {
-      if ('setError' in state) state.setError('getDetails', error as Error)
+      if ('setError' in state) state.setError('create', error as Error)
       throw error
     } finally {
-      if ('setLoading' in state) state.setLoading('getDetails', false)
+      if ('setLoading' in state) state.setLoading('create', false)
+    }
+  },
+
+  // Get mission by ID
+  getMission: async (missionId: string): Promise<Mission | undefined> => {
+    const state = missionStore.getState()
+
+    try {
+      if ('setLoading' in state) state.setLoading('getMission', true)
+
+      const client = createMissionClient({ baseUrl: '', metadata: {} })
+      const response = await getMission(client, { baseUrl: '', metadata: {} }, missionId)
+
+      // Update the mission info in the store
+      if (response.mission) {
+        state.addEntity(response.mission)
+      }
+
+      return response.mission
+    } catch (error) {
+      if ('setError' in state) state.setError('getMission', error as Error)
+      throw error
+    } finally {
+      if ('setLoading' in state) state.setLoading('getMission', false)
     }
   },
 
   // Update mission
-  update: async (missionId: string, data: Partial<UpdateMissionRequest>): Promise<Mission> => {
+  update: async (missionId: string, data: Partial<UpdateMissionRequest>): Promise<Mission | undefined> => {
     const state = missionStore.getState()
 
     const existing = state.getEntity(missionId)
@@ -71,18 +93,20 @@ const extendedStore = Object.assign(missionStore, {
       state.updateEntity(missionId, optimistic)
 
       const client = createMissionClient({ baseUrl: '', metadata: {} })
-      const updated = await updateMission(
+      const response = await updateMission(
         client,
         { baseUrl: '', metadata: {} },
         {
-          missionId,
+          id: missionId,
           ...data,
         }
       )
 
       // Update with real data
-      state.updateEntity(missionId, updated)
-      return updated
+      if (response.mission) {
+        state.updateEntity(missionId, response.mission)
+      }
+      return response.mission
     } catch (error) {
       // Rollback on error
       state.updateEntity(missionId, existing)
@@ -93,91 +117,74 @@ const extendedStore = Object.assign(missionStore, {
     }
   },
 
-  // Add objective to mission
-  addObjective: async (data: AddObjectiveRequest): Promise<void> => {
+  // Delete mission
+  delete: async (missionId: string): Promise<void> => {
     const state = missionStore.getState()
 
     try {
-      if ('setLoading' in state) state.setLoading('addObjective', true)
+      if ('setLoading' in state) state.setLoading('delete', true)
 
       const client = createMissionClient({ baseUrl: '', metadata: {} })
-      await addObjective(client, { baseUrl: '', metadata: {} }, data)
+      await deleteMission(client, { baseUrl: '', metadata: {} }, missionId)
 
-      // Note: This doesn't return the updated mission, so we'd need to refresh
-      // the mission details to see the new objective
+      // Remove from store
+      state.removeEntity(missionId)
     } catch (error) {
-      if ('setError' in state) state.setError('addObjective', error as Error)
+      if ('setError' in state) state.setError('delete', error as Error)
       throw error
     } finally {
-      if ('setLoading' in state) state.setLoading('addObjective', false)
+      if ('setLoading' in state) state.setLoading('delete', false)
     }
   },
 
-  // Update objective
-  updateObjective: async (data: UpdateObjectiveRequest): Promise<void> => {
+  // Add mission member
+  addMember: async (data: AddMissionMemberRequest): Promise<void> => {
     const state = missionStore.getState()
 
     try {
-      if ('setLoading' in state) state.setLoading('updateObjective', true)
+      if ('setLoading' in state) state.setLoading('addMember', true)
 
       const client = createMissionClient({ baseUrl: '', metadata: {} })
-      await updateObjective(client, { baseUrl: '', metadata: {} }, data)
+      await addMissionMember(client, { baseUrl: '', metadata: {} }, data)
     } catch (error) {
-      if ('setError' in state) state.setError('updateObjective', error as Error)
+      if ('setError' in state) state.setError('addMember', error as Error)
       throw error
     } finally {
-      if ('setLoading' in state) state.setLoading('updateObjective', false)
+      if ('setLoading' in state) state.setLoading('addMember', false)
     }
   },
 
-  // Delete objective
-  deleteObjective: async (data: DeleteObjectiveRequest): Promise<void> => {
+  // Update mission member role
+  updateMemberRole: async (data: UpdateMissionMemberRoleRequest): Promise<void> => {
     const state = missionStore.getState()
 
     try {
-      if ('setLoading' in state) state.setLoading('deleteObjective', true)
+      if ('setLoading' in state) state.setLoading('updateMemberRole', true)
 
       const client = createMissionClient({ baseUrl: '', metadata: {} })
-      await deleteObjective(client, { baseUrl: '', metadata: {} }, data)
+      await updateMissionMemberRole(client, { baseUrl: '', metadata: {} }, data)
     } catch (error) {
-      if ('setError' in state) state.setError('deleteObjective', error as Error)
+      if ('setError' in state) state.setError('updateMemberRole', error as Error)
       throw error
     } finally {
-      if ('setLoading' in state) state.setLoading('deleteObjective', false)
+      if ('setLoading' in state) state.setLoading('updateMemberRole', false)
     }
   },
 
-  // Add team member
-  addTeamMember: async (data: AddTeamMemberRequest): Promise<void> => {
+  // Remove mission member
+  removeMember: async (data: RemoveMissionMemberRequest): Promise<void> => {
     const state = missionStore.getState()
 
     try {
-      if ('setLoading' in state) state.setLoading('addTeamMember', true)
+      if ('setLoading' in state) state.setLoading('removeMember', true)
 
       const client = createMissionClient({ baseUrl: '', metadata: {} })
-      await addTeamMember(client, { baseUrl: '', metadata: {} }, data)
+      await removeMissionMember(client, { baseUrl: '', metadata: {} }, data)
     } catch (error) {
-      if ('setError' in state) state.setError('addTeamMember', error as Error)
+      if ('setError' in state) state.setError('removeMember', error as Error)
       throw error
     } finally {
-      if ('setLoading' in state) state.setLoading('addTeamMember', false)
-    }
-  },
-
-  // Remove team member
-  removeTeamMember: async (data: RemoveTeamMemberRequest): Promise<void> => {
-    const state = missionStore.getState()
-
-    try {
-      if ('setLoading' in state) state.setLoading('removeTeamMember', true)
-
-      const client = createMissionClient({ baseUrl: '', metadata: {} })
-      await removeTeamMember(client, { baseUrl: '', metadata: {} }, data)
-    } catch (error) {
-      if ('setError' in state) state.setError('removeTeamMember', error as Error)
-      throw error
-    } finally {
-      if ('setLoading' in state) state.setLoading('removeTeamMember', false)
+      if ('setLoading' in state) state.setLoading('removeMember', false)
     }
   },
 
@@ -201,45 +208,22 @@ export const useMission = (missionId: string) => {
   return { mission, loading, error }
 }
 
-export const useMissionDetails = (missionId: string) => {
-  const loading = useMissionStore((state: EntityStore<Mission>) => state.isLoading('getDetails'))
-  const error = useMissionStore((state: EntityStore<Mission>) => state.getError('getDetails'))
+export const useMissions = () => {
+  const missions = useMissionStore((state: EntityStore<Mission>) => state.getAllEntities())
+  const loading = useMissionStore((state: EntityStore<Mission>) => state.isLoading('list'))
+  const error = useMissionStore((state: EntityStore<Mission>) => state.getError('list'))
 
-  return {
-    loading,
-    error,
-    getDetails: () => useMissionStore.getDetails(missionId),
-  }
+  return { missions, loading, error }
 }
 
-export const useUpdateMission = (missionId: string) => {
-  const loading = useMissionStore((state: EntityStore<Mission>) => state.isLoading('update'))
-  const error = useMissionStore((state: EntityStore<Mission>) => state.getError('update'))
+export const useSelectedMission = () => {
+  const selectedId = useMissionStore((state: EntityStore<Mission>) => state.selectedEntityId)
+  const getEntity = useMissionStore((state: EntityStore<Mission>) => state.getEntity)
+  const selectEntity = useMissionStore((state: EntityStore<Mission>) => state.selectEntity)
+  const clearSelection = useMissionStore((state: EntityStore<Mission>) => state.clearSelection)
 
-  return {
-    loading,
-    error,
-    update: (data: Partial<UpdateMissionRequest>) => useMissionStore.update(missionId, data),
-  }
-}
+  const selectedMission = selectedId ? getEntity(selectedId) : null
+  const selectMission = (id: string) => selectEntity(id)
 
-// Selectors for common queries
-export const missionSelectors = {
-  // Get all missions
-  getAll: () => useMissionStore.getState().getAllEntities(),
-
-  // Get mission by ID
-  getById: (id: string) => useMissionStore.getState().getEntity(id),
-
-  // Get selected mission
-  getSelected: () => {
-    const state = useMissionStore.getState()
-    return state.selectedEntityId ? state.getEntity(state.selectedEntityId) : undefined
-  },
-
-  // Check if mission exists
-  exists: (id: string) => useMissionStore.getState().hasEntity(id),
-
-  // Get mission count
-  getCount: () => useMissionStore.getState().getEntityCount(),
+  return { selectedMission, selectedId, selectMission, clearSelection }
 }

@@ -338,6 +338,57 @@ Each API entity follows this pattern:
 - Implement request cancellation and cleanup
 - Type-safe protobuf message handling
 
+## gRPC Service Integration Pattern
+
+When new gRPC services are vendored into `packages/grpc`, follow this structured approach in `packages/state/src/api`:
+
+### File Structure for Each Service
+
+Each gRPC service should have the following files:
+- `service.types.ts` - TypeScript interfaces matching protobuf definitions
+- `service.ts` - gRPC client implementation for individual operations
+- `service.mocks.ts` - Mock data for testing
+- `service-list.types.ts` - Types for search/list operations
+- `service-list.ts` - gRPC implementation for paginated operations
+- `service-list.mocks.ts` - Mock data for list operations
+
+### Implementation Pattern
+
+1. **Types Files** (`*.types.ts`)
+   - Import and re-export enums from protobuf definitions
+   - Define TypeScript interfaces that match protobuf messages
+   - Use optional fields where protobuf uses wrappers or nullable fields
+   - Convert protobuf Timestamp to JavaScript Date in interfaces
+
+2. **API Implementation** (`*.ts`)
+   - Use `createMetadataAwareMethod` for all gRPC method wrappers
+   - Create request builder functions that convert TypeScript objects to protobuf
+   - Create converter functions to transform protobuf responses to TypeScript
+   - Export both the client factory and all API functions
+
+3. **List Operations** (`*-list.ts`)
+   - Handle paginated operations using PageRequest/PageResponse pattern
+   - Provide a converter function for store compatibility (TPageableResponse)
+   - Include search/filter functionality where applicable
+
+### Store Creation Pattern
+
+In `packages/state/src/stores/`:
+- Use `createSimpleStore` for single entity operations
+- Use `createPageableStore` for list/search operations with pagination
+- Export convenience hooks for loading and error states
+- Implement cursor-based pagination for pageable stores
+
+### Example References
+- Simple gRPC service: See `payment-gateway.ts` implementation
+- Complex service with full structure: See `mission` and `team` implementations
+
+### Key Conventions
+1. Always convert protobuf timestamps to JavaScript Date objects
+2. Use the exact same names as protobuf for consistency
+3. Handle optional/nullable fields appropriately
+4. Test with both real gRPC and mock implementations
+
 ## Ongoing Development Notes
 
 - Let's put the CI large files on pause, we will continue later

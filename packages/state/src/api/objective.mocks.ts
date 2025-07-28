@@ -1,2 +1,56 @@
-// Re-export objectives from the mission mock file to maintain consistency
-export { MOCK_OBJECTIVES } from './mission.mocks'
+// Mock objectives data (objectives are not part of the new gRPC API)
+import type { Objective } from './objective.types'
+
+export const MOCK_OBJECTIVES: Record<string, Objective> = {
+  'obj-1': {
+    id: 'obj-1',
+    missionId: 'mission-1',
+    title: 'Complete user research',
+    description: 'Conduct interviews with 10 potential users',
+    status: 'in-progress',
+    priority: 'high',
+    progress: 60,
+    assigneeId: 'user-1',
+    dueDate: new Date('2024-02-01T00:00:00Z'),
+    startDate: new Date('2024-01-15T10:00:00Z'),
+    estimatedHours: 40,
+    actualHours: 24,
+    tags: ['research', 'user-feedback'],
+    createdAt: new Date('2024-01-15T10:00:00Z'),
+    updatedAt: new Date('2024-01-16T14:30:00Z'),
+  },
+  'obj-2': {
+    id: 'obj-2',
+    missionId: 'mission-1',
+    title: 'Design MVP wireframes',
+    description: 'Create low-fidelity wireframes for core features',
+    status: 'pending',
+    priority: 'medium',
+    progress: 0,
+    assigneeId: 'user-2',
+    dueDate: new Date('2024-02-15T00:00:00Z'),
+    startDate: new Date('2024-01-20T09:00:00Z'),
+    estimatedHours: 20,
+    actualHours: 0,
+    tags: ['design', 'mvp'],
+    createdAt: new Date('2024-01-16T09:00:00Z'),
+    updatedAt: new Date('2024-01-16T09:00:00Z'),
+  },
+  'obj-3': {
+    id: 'obj-3',
+    missionId: 'mission-2',
+    title: 'Set up CI/CD pipeline',
+    description: 'Configure automated testing and deployment',
+    status: 'completed',
+    priority: 'high',
+    progress: 100,
+    assigneeId: 'user-3',
+    dueDate: null,
+    startDate: new Date('2024-01-10T08:00:00Z'),
+    estimatedHours: 16,
+    actualHours: 18,
+    tags: ['devops', 'automation'],
+    createdAt: new Date('2024-01-10T08:00:00Z'),
+    updatedAt: new Date('2024-01-14T16:20:00Z'),
+  },
+}
